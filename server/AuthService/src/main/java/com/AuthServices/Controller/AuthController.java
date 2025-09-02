@@ -1,0 +1,79 @@
+package com.AuthServices.Controller;
+
+import com.AuthServices.DTO.LoginDTO;
+import com.AuthServices.Repository.UserRepo;
+import com.AuthServices.Service.JwtUtil;
+import com.AuthServices.Service.MyUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PATCH, RequestMethod.DELETE})
+@RequestMapping("/auth")
+public class AuthController {
+
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+    @Autowired
+    UserDetailsService userDetailsService;
+    @Autowired
+    JwtUtil jwtUtil;
+    @Autowired
+    private UserRepo userRepo;
+    @PostMapping("/login")
+    public ResponseEntity<?> loginControl(@RequestBody LoginDTO loginDto)
+    {
+
+        System.out.println(loginDto.getEmail() + ":::" + loginDto.getPassword());
+        try {
+
+            Authentication auth=authenticationManager.authenticate
+                    (new UsernamePasswordAuthenticationToken(loginDto.getEmail(),loginDto.getPassword()));
+            System.out.println("after authentication is successful: ");
+            UserDetails userDetails = (UserDetails) auth.getPrincipal();
+
+
+
+                   String token = jwtUtil.generateToken(userDetails);
+//            System.out.println(token);
+                   Map<String,String> response= new HashMap<>();
+                   response.put("jwt",token);
+                   return new ResponseEntity<>(response, HttpStatus.OK);
+
+           }
+           catch(DisabledException e )
+           {
+               return new ResponseEntity<>("User InActive",HttpStatus.FORBIDDEN);
+           }
+        catch (BadCredentialsException e) {
+            return new ResponseEntity<>("Invalid User Name or Password ",HttpStatus.BAD_GATEWAY);
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>("Login Failed, Something Went Wrong",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+
+    @GetMapping("/test")
+    public String authTest()
+    {
+        return "Authcontroller zinda hai";
+    }
+
+
+}
+
