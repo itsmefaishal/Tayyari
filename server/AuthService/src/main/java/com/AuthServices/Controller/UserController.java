@@ -53,23 +53,23 @@ public class UserController {
             Set<Role> roles = new HashSet<>();
 
             //First Name
-            if (user.getFirstName() != null && !user.getFirstName().isEmpty()) {
-                firstName = user.getFirstName().toUpperCase();
-            }
+            if (user.getFirstName() != null && !user.getFirstName().isBlank()) {
+                firstName = user.getFirstName().toUpperCase().trim();
+            } else return ResponseEntity.ok(new ApiResponse<>(false,"First Name cannot be blank !!",null));
 
             //Last Name
-            if (user.getLastName() != null && !user.getLastName().isEmpty()) {
-                lastName = user.getLastName().toUpperCase();
-            }
+            if (user.getLastName() != null && !user.getLastName().isBlank()) {
+                lastName = user.getLastName().toUpperCase().trim();
+            } else return ResponseEntity.ok(new ApiResponse<>(false,"Last Name cannot be blank !!",null));
 
             //Username
-            if (user.getEmail() != null && !user.getEmail().isEmpty()) {
+            if (user.getEmail() != null && !user.getEmail().isBlank()) {
                 userName = user.getEmail();
-            }
+            } else return ResponseEntity.ok(new ApiResponse<>(false,"Email cannot be blank !!",null));
 
             // Password (encode, and if empty ,fallback to username)
-            if (user.getPassword() != null && !user.getPassword().isEmpty()) {
-                password = encoder.encode(user.getPassword());
+            if (user.getPassword() != null && !user.getPassword().isBlank()) {
+                password = encoder.encode(user.getPassword().trim());
             } else {
                 password = encoder.encode(userName); // default fallback
             }
@@ -88,7 +88,7 @@ public class UserController {
             }
 
             // Status (default = InActive)
-            if (user.getStatus() != null || !user.getStatus().isEmpty()) {
+            if (user.getStatus() != null || !user.getStatus().isBlank()) {
                 status = "INACTIVE";
             }
 

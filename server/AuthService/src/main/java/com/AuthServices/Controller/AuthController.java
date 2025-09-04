@@ -36,12 +36,15 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> loginControl(@RequestBody LoginDTO loginDto)
     {
-
+        if(loginDto.getEmail().isBlank() || loginDto.getPassword().isBlank())
+        {
+            return new ResponseEntity<>("UserName or Password cannot be blank" , HttpStatus.BAD_REQUEST);
+        }
         System.out.println(loginDto.getEmail() + ":::" + loginDto.getPassword());
         try {
 
             Authentication auth=authenticationManager.authenticate
-                    (new UsernamePasswordAuthenticationToken(loginDto.getEmail(),loginDto.getPassword()));
+                    (new UsernamePasswordAuthenticationToken(loginDto.getEmail().trim(),loginDto.getPassword().trim()));
             System.out.println("after authentication is successful: ");
             UserDetails userDetails = (UserDetails) auth.getPrincipal();
 
