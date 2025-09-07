@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 export default function DashboardPage() {
   const { user, logout } = useAuth();
   const router = useRouter();
-  // const [name, setName] = useState('Student');
+  
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [stats, setStats] = useState({
     testsCompleted: 12,
