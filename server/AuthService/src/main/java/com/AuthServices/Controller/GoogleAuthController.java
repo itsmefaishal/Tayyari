@@ -87,10 +87,15 @@ public class GoogleAuthController {
                     user.setRoles(roles);
                     userRepository.save(user);
                 }
+
                 userDetails = (UserDetails) userDetailsService.loadUserByUsername(email);
                 String jwtToken = jwtUtil.generateToken(userDetails);
+                return ResponseEntity.ok(Collections.singletonMap("Jwt", jwtToken));
             }
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         } catch (Exception e) {
+            System.out.println("Exception occurred while handleGoogleCallback " +e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 }
