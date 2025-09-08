@@ -15,7 +15,8 @@ export default function HomePage() {
           <div className="flex justify-between h-16">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <h1 className="text-2xl font-bold text-indigo-600">TestBook</h1>
+                <h1 className="text-2xl font-bold text-indigo-600">Tayyari</h1>
+                {/* <h3 className="text-2xl font-bold ">Exams</h3> */}
               </div>
             </div>
             
@@ -196,7 +197,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-              <h3 className="text-xl font-bold mb-4">TestBook</h3>
+              <h3 className="text-xl font-bold mb-4">Tayyari</h3>
               <p className="text-gray-300">Your ultimate destination for online testing and skill assessment.</p>
             </div>
             <div>
@@ -209,12 +210,12 @@ export default function HomePage() {
             </div>
             <div>
               <h4 className="text-lg font-semibold mb-4">Contact Info</h4>
-              <p className="text-gray-300">Email: support@testbook.com</p>
-              <p className="text-gray-300">Phone: (555) 123-4567</p>
+              <p className="text-gray-300">Email: support@tayyari.com</p>
+              <p className="text-gray-300">Phone: 06562 1800255</p>
             </div>
           </div>
           <div className="border-t border-gray-700 mt-8 pt-8 text-center">
-            <p className="text-gray-300">&copy; 2024 TestBook. All rights reserved.</p>
+            <p className="text-gray-300">&copy; 2024 Tayyari. All rights reserved.</p>
           </div>
         </div>
       </footer>

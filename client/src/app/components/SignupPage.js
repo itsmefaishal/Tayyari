@@ -87,7 +87,7 @@ export default function SignupPage() {
         {/* Header */}
         <div className="text-center">
           <Link href="/" className="inline-block">
-            <h1 className="text-3xl font-bold text-indigo-600 mb-2">TestBook</h1>
+            <h1 className="text-3xl font-bold text-indigo-600 mb-2">Tayyari</h1>
           </Link>
           <h2 className="text-2xl font-bold text-gray-900">Create your account</h2>
           <p className="mt-2 text-gray-600">Join thousands of students improving their skills</p>
@@ -122,7 +122,7 @@ export default function SignupPage() {
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                     className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-300 text-gray-900 bg-white"
-                    placeholder="John"
+                    placeholder="First Name"
                     disabled={loading}
                   />
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
@@ -145,7 +145,7 @@ export default function SignupPage() {
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                     className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-300 text-gray-900 bg-white"
-                    placeholder="Doe"
+                    placeholder="Last Name"
                     disabled={loading}
                   />
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
@@ -169,7 +169,7 @@ export default function SignupPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-300 text-gray-900 bg-white"
-                  placeholder="john.doe@example.com"
+                  placeholder="email@tayyari.com"
                   disabled={loading}
                 />
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
