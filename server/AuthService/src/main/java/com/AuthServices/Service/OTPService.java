@@ -34,7 +34,11 @@ public class OTPService {
         otpRepository.save(otp);
 
         // Send email
-        emailService.sendOTPEmail(email, otpCode);
+        try {
+            emailService.sendOTPEmail(email, otpCode);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to send OTP ");
+        }
 
         return "OTP sent successfully to " + email;
     }
@@ -43,15 +47,12 @@ public class OTPService {
         Optional<OTP> otpOptional = otpRepository.findByEmailAndOtpCodeAndUsedFalse(email, otpCode);
 
         if (otpOptional.isEmpty()) {
-            return false;
-        }
+            return false;        }
 
         OTP otp = otpOptional.get();
-
         if (otp.isExpired()) {
             return false;
         }
-
         // Mark OTP as used
         otp.setUsed(true);
         otpRepository.save(otp);

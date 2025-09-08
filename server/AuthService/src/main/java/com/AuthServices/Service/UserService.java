@@ -51,17 +51,21 @@ public class UserService {
     }
 
     public String resendOTP(String email) {
-        // Check if user exists
+       /*  Check if user exists
         User user = userRepo.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         // Don't resend if user is already active
         if ("ACTIVE".equalsIgnoreCase(user.getStatus())) {
             throw new RuntimeException("User is already verified");
-        }
+        }*/
 
         // Generate and send new OTP
-        return otpService.generateAndSendOTP(email);
+        try {
+            return otpService.generateAndSendOTP(email);
+        } catch (Exception e) {
+            throw new RuntimeException("Error sending OTP");
+        }
     }
 
 

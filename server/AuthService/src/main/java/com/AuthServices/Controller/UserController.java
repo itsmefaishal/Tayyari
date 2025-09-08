@@ -7,9 +7,9 @@ import com.AuthServices.Entity.User;
 import com.AuthServices.Repository.RoleRepo;
 import com.AuthServices.Repository.UserRepo;
 import com.AuthServices.Response.ApiResponse;
+import com.AuthServices.Service.OTPService;
 import com.AuthServices.Service.UserService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST})
 public class UserController {
     @Autowired
     private UserRepo userRepository;
@@ -31,6 +31,8 @@ public class UserController {
     private RoleRepo roleRepo;
     @Autowired
     UserService userService;
+    @Autowired
+    OTPService otpService;
 
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<User>> addUser(@RequestBody UserDTO user)
@@ -91,10 +93,16 @@ public class UserController {
             if (user.getStatus() != null || !user.getStatus().isBlank()) {
                 status = "INACTIVE";
             }
-
+                try
+                {
+                    System.out.println("inside send otp try block");
+                    String msg = otpService.generateAndSendOTP(userName);
+                } catch (Exception e) {
+                    throw new RuntimeException("Error sending OTP");
+                }
             //Finally call service
             User userCreated = userService.addUser(firstName, lastName, userName, password, status, roles);
-            return ResponseEntity.ok(new ApiResponse<>(true,"User Created Succesfully",userCreated));
+            return ResponseEntity.ok(new ApiResponse<>(true,"User created Successfully",userCreated));
 
         }
         catch(RoleNotFoundException e)
@@ -169,7 +177,7 @@ public class UserController {
     {
         if( !rpd.getEmail().isBlank() || !rpd.getPassword().isBlank() || !rpd.getOtpCode().isBlank())
         {
-            Integer retCode = userService.verifyEmailAndOtpAndPassReset(rpd.getEmail(), rpd.getPassword(), rpd.getOtpCode());
+            Integer retCode = userService.verifyEmailAndOtpAndPassReset(rpd.getEmail().trim(), rpd.getPassword().trim(), rpd.getOtpCode().trim());
             if(retCode==2)
             {
                 return ResponseEntity.ok(new ApiResponse<>(true,"Password Changed Successfully" ,null));

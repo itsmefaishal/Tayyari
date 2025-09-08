@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PATCH, RequestMethod.DELETE})
+@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST})
 @RequestMapping("/auth")
 public class AuthController {
 
@@ -65,7 +65,7 @@ public class AuthController {
             return new ResponseEntity<>("Invalid User Name or Password ",HttpStatus.BAD_GATEWAY);
         }
         catch (Exception e) {
-            return new ResponseEntity<>("Login Failed, Something Went Wrong",HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Login Failed, Kuch to gadbad hai Daya",HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }
