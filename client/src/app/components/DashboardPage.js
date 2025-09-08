@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 export default function DashboardPage() {
   const { user, logout } = useAuth();
   const router = useRouter();
+  
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [stats, setStats] = useState({
     testsCompleted: 12,
@@ -39,6 +40,7 @@ export default function DashboardPage() {
   ];
 
   const handleLogout = () => {
+    localStorage.clear();
     logout();
     router.push('/');
   };
@@ -151,7 +153,7 @@ export default function DashboardPage() {
                   <div>
                     <div className="flex items-center">
                       <h1 className="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:leading-9 sm:truncate">
-                        Welcome back, Student!
+                        Welcome back, {`${localStorage.getItem('name').split('-')[0]} `}!
                       </h1>
                     </div>
                     <dl className="mt-6 flex flex-col sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap">

@@ -1,6 +1,5 @@
 package com.AuthServices.Controller;
 
-
 import com.AuthServices.Entity.Role;
 import com.AuthServices.Entity.User;
 import com.AuthServices.Repository.RoleRepo;
@@ -56,7 +55,6 @@ public class GoogleAuthController {
             params.add("client_id", clientId);
             params.add("client_secret", clientSecret);
             params.add("redirect_uri", "http://localhost:8080/auth/google/callback");
-            //https://developers.google.com/oauthplayground
             params.add("grant_type", "authorization_code");
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -71,15 +69,14 @@ public class GoogleAuthController {
                 String firstName = (String) userInfo.get("given_name");
                 String lastName = (String) userInfo.get("family_name");
                 UserDetails userDetails = null;
-                try{
+                try {
                     userDetails = (UserDetails) userDetailsService.loadUserByUsername(email);
-                }catch (Exception e){
+                } catch (Exception e) {
                     User user = new User();
                     user.setFirstName(firstName);
                     user.setLastName(lastName);
                     user.setEmail(email);
                     user.setCreationDate(LocalDate.now());
-                    user.setPassword(passwordEncoder.encode(email));
                     user.setStatus("ACTIVE");
                     Set<Role> roles = new HashSet<>();
                     Role defaultRole = roleRepo.findByRoleName("USER")
@@ -88,6 +85,7 @@ public class GoogleAuthController {
                     user.setRoles(roles);
                     userRepository.save(user);
                 }
+
                 userDetails = (UserDetails) userDetailsService.loadUserByUsername(email);
                 String jwtToken = jwtUtil.generateToken(userDetails);
                 return ResponseEntity.ok(Collections.singletonMap("Jwt", jwtToken));
@@ -97,7 +95,5 @@ public class GoogleAuthController {
             System.out.println("Exception occurred while handleGoogleCallback " +e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-
     }
 }
-

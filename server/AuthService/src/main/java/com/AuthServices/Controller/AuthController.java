@@ -49,12 +49,11 @@ public class AuthController {
             UserDetails userDetails = (UserDetails) auth.getPrincipal();
 
 
-
                    String token = jwtUtil.generateToken(userDetails);
 //            System.out.println(token);
-                   Map<String,String> response= new HashMap<>();
-                   response.put("jwt",token);
-                   return new ResponseEntity<>(response, HttpStatus.OK);
+                Map<String,String> response= new HashMap<>();
+                response.put("jwt",token);
+                return new ResponseEntity<>(response, HttpStatus.OK);
 
            }
            catch(DisabledException e )

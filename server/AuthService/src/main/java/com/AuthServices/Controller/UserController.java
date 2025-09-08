@@ -102,7 +102,11 @@ public class UserController {
                 }
             //Finally call service
             User userCreated = userService.addUser(firstName, lastName, userName, password, status, roles);
+<<<<<<< HEAD
             return ResponseEntity.ok(new ApiResponse<>(true,"User created Successfully",userCreated));
+=======
+                return ResponseEntity.ok(new ApiResponse<>(true,"User Created Succesfully",userCreated));
+>>>>>>> remotes/origin/main
 
         }
         catch(RoleNotFoundException e)
