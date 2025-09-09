@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +17,30 @@ public class QuestionService {
     @Autowired
     private QuestionRepo questionRepo;
 
-    public String addQuestion(QuestionDTO request){
+    public Optional<Question> getQuestion(Long id){
+        try{
+            return questionRepo.findById(id);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Optional<Question>> getMultipleQuestions(List<Long> listOfIds){
+        try{
+            List<Optional<Question>> questionList = new ArrayList<>();
+
+            for(Long id : listOfIds){
+                Optional<Question> q = getQuestion(id);
+                questionList.add(q);
+            }
+
+            return questionList;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String addQuestion(Question request){
         try{
             Question question = new Question();
             question.setCategory(request.getCategory());
@@ -43,9 +67,9 @@ public class QuestionService {
         }
     }
 
-    String addMultipleQuestions(List<QuestionDTO> list){
+    public String addMultipleQuestions(List<Question> list){
         try{
-            for(QuestionDTO q : list) {
+            for(Question q : list) {
                 addQuestion(q);
             }
 
@@ -55,7 +79,7 @@ public class QuestionService {
         }
     }
 
-    Question updateQuestion(Long qId, QuestionDTO request){
+    public Question updateQuestion(Long qId, Question request){
         try{
             Optional<Question> q = questionRepo.findById(qId);
             Question question = q.get();
@@ -116,7 +140,7 @@ public class QuestionService {
         }
     }
 
-    String deleteQuestion(Long qId){
+    public String deleteQuestion(Long qId){
         try{
             questionRepo.deleteById(qId);
 
@@ -126,7 +150,7 @@ public class QuestionService {
         }
     }
 
-    String deleteMultipleQuestions(List<Long> list){
+    public String deleteMultipleQuestions(List<Long> list){
         try{
             for(Long id : list){
                 deleteQuestion(id);
