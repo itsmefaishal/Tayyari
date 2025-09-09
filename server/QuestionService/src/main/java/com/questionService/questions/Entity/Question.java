@@ -28,6 +28,8 @@ public class Question {
     private String optionThree;
     private String optionFour;
     private String category;
+    private String subject;
+    private String subCat;
     private Boolean multipleChoice;
     private String imageUrl;
     private int marks;

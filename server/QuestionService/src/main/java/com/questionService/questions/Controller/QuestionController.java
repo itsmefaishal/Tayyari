@@ -1,6 +1,7 @@
 package com.questionService.questions.Controller;
 
 import com.questionService.questions.Entity.Question;
+import com.questionService.questions.QuestionDTO.QuestionDTO;
 import com.questionService.questions.Service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -45,7 +46,7 @@ public class QuestionController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<String> addQuestion(@RequestBody Question question){
+    public ResponseEntity<String> addQuestion(@RequestBody QuestionDTO question){
         try{
             System.out.println(question.getQuestionContent());
             return ResponseEntity.ok(questionService.addQuestion(question));
@@ -55,7 +56,7 @@ public class QuestionController {
     }
 
     @PostMapping("/addMultipleQuestions")
-    public ResponseEntity<String> addMultipleQuestion(@RequestBody List<Question> list){
+    public ResponseEntity<String> addMultipleQuestion(@RequestBody List<QuestionDTO> list){
         try{
             return ResponseEntity.ok(questionService.addMultipleQuestions(list));
         } catch (RuntimeException e) {
@@ -64,7 +65,7 @@ public class QuestionController {
     }
 
     @PostMapping("/updateQuestion/{id}")
-    public ResponseEntity<Question> updateQuestion(@PathVariable Long id, @RequestBody Question question){
+    public ResponseEntity<Question> updateQuestion(@PathVariable Long id, @RequestBody QuestionDTO question){
         try{
             return ResponseEntity.ok(questionService.updateQuestion(id, question));
         } catch (Exception e) {

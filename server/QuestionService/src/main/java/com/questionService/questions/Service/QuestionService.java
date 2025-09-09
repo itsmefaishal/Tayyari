@@ -40,7 +40,7 @@ public class QuestionService {
         }
     }
 
-    public String addQuestion(Question request){
+    public String addQuestion(QuestionDTO request){
         try{
             Question question = new Question();
             question.setCategory(request.getCategory());
@@ -49,10 +49,12 @@ public class QuestionService {
             question.setDifficulty(request.getDifficulty());
             question.setImageUrl(request.getImageUrl());
             question.setMarks(request.getMarks());
+            question.setSubject(request.getSubject());
             question.setOptionOne(request.getOptionOne());
             question.setOptionTwo(request.getOptionTwo());
             question.setOptionThree(request.getOptionThree());
             question.setOptionFour(request.getOptionFour());
+            question.setSubCat(request.getSubCat());
             if(request.getMultipleChoice() != null){
                 question.setMultipleChoice(request.getMultipleChoice());
             }
@@ -67,9 +69,9 @@ public class QuestionService {
         }
     }
 
-    public String addMultipleQuestions(List<Question> list){
+    public String addMultipleQuestions(List<QuestionDTO> list){
         try{
-            for(Question q : list) {
+            for(QuestionDTO q : list) {
                 addQuestion(q);
             }
 
@@ -79,13 +81,17 @@ public class QuestionService {
         }
     }
 
-    public Question updateQuestion(Long qId, Question request){
+    public Question updateQuestion(Long qId, QuestionDTO request){
         try{
             Optional<Question> q = questionRepo.findById(qId);
             Question question = q.get();
 
             if(request.getCategory() != null){
                 question.setCategory(request.getCategory());
+            }
+
+            if(request.getSubject() != null){
+                question.setSubject(request.getSubject());
             }
 
             if(request.getOptionOne() != null){
@@ -130,6 +136,10 @@ public class QuestionService {
 
             if((Integer)request.getMarks() != null){
                 question.setMarks(request.getMarks());
+            }
+
+            if(request.getSubCat() != null){
+                question.setSubCat(request.getSubCat());
             }
 
             questionRepo.save(question);
