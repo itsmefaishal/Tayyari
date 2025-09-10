@@ -1,8 +1,14 @@
 package com.questionService.questions.Controller;
 
 import com.questionService.questions.Entity.Question;
+import com.questionService.questions.QuestionDTO.QuestionDTO;
 import com.questionService.questions.Service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +25,12 @@ public class QuestionController {
     private QuestionService questionService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Question>> getQuestion(@PathVariable Long id){
+    public ResponseEntity<Question> getQuestion(@PathVariable Long id){
         try{
-            Optional<Question> q = questionService.getQuestion(id);
+            Question q = questionService.getQuestion(id);
 
-            if(q == null){
-                return ResponseEntity.notFound().build();
+            if(q==null){
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             }
 
             return ResponseEntity.ok(q);
@@ -34,9 +40,9 @@ public class QuestionController {
     }
 
     @PostMapping("/getMultipleQuestions")
-    public ResponseEntity<List<Optional<Question>>> getMultipleQuestions(@RequestBody List<Long> ids){
+    public ResponseEntity<List<Question>> getMultipleQuestions(@RequestBody List<Long> ids){
         try{
-            List<Optional<Question>> list = questionService.getMultipleQuestions(ids);
+            List<Question> list = questionService.getMultipleQuestions(ids);
 
             return ResponseEntity.ok(list);
         } catch (Exception e) {
@@ -45,7 +51,7 @@ public class QuestionController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<String> addQuestion(@RequestBody Question question){
+    public ResponseEntity<String> addQuestion(@RequestBody QuestionDTO question){
         try{
             System.out.println(question.getQuestionContent());
             return ResponseEntity.ok(questionService.addQuestion(question));
@@ -55,7 +61,7 @@ public class QuestionController {
     }
 
     @PostMapping("/addMultipleQuestions")
-    public ResponseEntity<String> addMultipleQuestion(@RequestBody List<Question> list){
+    public ResponseEntity<String> addMultipleQuestion(@RequestBody List<QuestionDTO> list){
         try{
             return ResponseEntity.ok(questionService.addMultipleQuestions(list));
         } catch (RuntimeException e) {
@@ -63,7 +69,7 @@ public class QuestionController {
         }
     }
 
-    @PostMapping("/updateQuestion/{id}")
+    @PatchMapping("/updateQuestion/{id}")
     public ResponseEntity<Question> updateQuestion(@PathVariable Long id, @RequestBody Question question){
         try{
             return ResponseEntity.ok(questionService.updateQuestion(id, question));
@@ -88,5 +94,21 @@ public class QuestionController {
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @PostMapping("/search")
+    public Page<Question> searchQuestions(
+            @RequestBody QuestionDTO dto,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDir) {
+
+        Sort sort = sortDir.equalsIgnoreCase("desc")
+                ? Sort.by(sortBy).descending()
+                : Sort.by(sortBy).ascending();
+
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return questionService.searchQuestions(dto, pageable);
     }
 }

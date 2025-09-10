@@ -4,6 +4,9 @@ import com.questionService.questions.Entity.Question;
 import com.questionService.questions.QuestionDTO.QuestionDTO;
 import com.questionService.questions.Repository.QuestionRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -17,20 +20,24 @@ public class QuestionService {
     @Autowired
     private QuestionRepo questionRepo;
 
-    public Optional<Question> getQuestion(Long id){
+    public Question getQuestion(Long id){
         try{
-            return questionRepo.findById(id);
+            Optional<Question> byId = questionRepo.findById(id);
+
+                return byId.get();
+
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    public List<Optional<Question>> getMultipleQuestions(List<Long> listOfIds){
+    public List<Question> getMultipleQuestions(List<Long> listOfIds){
         try{
-            List<Optional<Question>> questionList = new ArrayList<>();
+            List<Question> questionList = new ArrayList<>();
 
             for(Long id : listOfIds){
-                Optional<Question> q = getQuestion(id);
+                Question q = getQuestion(id);
                 questionList.add(q);
             }
 
@@ -40,10 +47,12 @@ public class QuestionService {
         }
     }
 
-    public String addQuestion(Question request){
+    public String addQuestion(QuestionDTO request){
         try{
             Question question = new Question();
             question.setCategory(request.getCategory());
+            question.setSubCat(request.getSubCat());
+            question.setSubject(request.getSubject());
             question.setQuestionContent(request.getQuestionContent());
             question.setCorrectAns(request.getCorrectAns());
             question.setDifficulty(request.getDifficulty());
@@ -53,10 +62,10 @@ public class QuestionService {
             question.setOptionTwo(request.getOptionTwo());
             question.setOptionThree(request.getOptionThree());
             question.setOptionFour(request.getOptionFour());
+            question.setNegativeMarks(request.getNegativeMarks());
             if(request.getMultipleChoice() != null){
                 question.setMultipleChoice(request.getMultipleChoice());
             }
-            question.setNegativeMarks(request.getNegativeMarks());
             question.setCreatedAt(LocalDate.now());
 
             questionRepo.save(question);
@@ -67,9 +76,9 @@ public class QuestionService {
         }
     }
 
-    public String addMultipleQuestions(List<Question> list){
+    public String addMultipleQuestions(List<QuestionDTO> list){
         try{
-            for(Question q : list) {
+            for(QuestionDTO q : list) {
                 addQuestion(q);
             }
 
@@ -114,6 +123,12 @@ public class QuestionService {
 
             if(request.getMultipleChoice() != null){
                 question.setMultipleChoice(request.getMultipleChoice());
+            }
+            if(request.getSubCat() != null){
+                question.setSubCat(request.getSubCat());
+            }
+            if(request.getSubject() != null){
+                question.setSubject(request.getSubject());
             }
 
             if((Integer)request.getNegativeMarks() != null){
@@ -160,5 +175,9 @@ public class QuestionService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Page<Question> searchQuestions(QuestionDTO dto, Pageable pageable) {
+        return questionRepo.findAll(QuestionSpecification.filterBy(dto), pageable);
     }
 }
