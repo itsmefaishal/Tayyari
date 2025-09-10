@@ -10,6 +10,7 @@ public class QuestionDTO {
     private String optionTwo;
     private String optionThree;
     private String optionFour;
+    private String subject;
     private String category;
     private String subCat;
     private Boolean multipleChoice;
