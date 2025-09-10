@@ -1,0 +1,196 @@
+# Quiz Service – High-Level Design (HLD)
+
+## 1) Goals & Scope
+
+**Goals**
+
+* Provide quiz functionality for students (users).
+* Support both **public endpoints** (quiz catalog, preview) and **protected endpoints** (attempt, submit, results).
+* Integrate with API Gateway for authentication and authorization.
+* Ensure scalability, observability, and fault tolerance.
+
+**Out of Scope**
+
+* Question management (belongs to QuestionService).
+* Authentication (belongs to AuthService).
+
+---
+
+## 2) Logical Architecture
+
+```
+Client (Web/Mobile)
+       |
+       v
+API Gateway (enforces JWT)
+       |
+       v
+ +-------------------+
+ |   Quiz Service    |
+ | - Controllers     |
+ | - Services        |
+ | - Repositories    |
+ | - DTO/Entities    |
+ +---------+---------+
+           |
+           v
+        Quiz DB
+```
+
+---
+
+## 3) Key Features
+
+* **Public APIs** (no JWT required):
+
+  * Browse catalog of available quizzes.
+  * View quiz metadata/preview.
+
+* **User APIs** (JWT with role `USER` or higher required):
+
+  * Start a quiz attempt.
+  * Fetch questions for an active attempt.
+  * Submit answers.
+  * View own results.
+
+* **Admin APIs** (optional, restricted to `ADMIN`):
+
+  * Manage quiz metadata (create, update, delete quizzes).
+  * View aggregated statistics.
+
+---
+
+## 4) API Design (Representative)
+
+**Public**
+
+* `GET /quiz/public/catalog` ? list quizzes.
+* `GET /quiz/public/{quizId}/preview` ? quiz info (title, duration, tags).
+
+**User**
+
+* `POST /quiz/{quizId}/start` ? begin an attempt (returns attemptId, questions randomized).
+* `GET  /quiz/attempt/{attemptId}` ? get current attempt state.
+* `POST /quiz/attempt/{attemptId}/submit` ? submit answers.
+* `GET  /quiz/results/self` ? list user’s past results.
+
+**Admin (optional)**
+
+* `POST   /quiz` ? create quiz metadata.
+* `PUT    /quiz/{quizId}` ? update quiz.
+* `DELETE /quiz/{quizId}` ? delete quiz.
+* `GET    /quiz/stats/global` ? analytics.
+
+---
+
+## 5) Data Model (Simplified)
+
+**Quiz**
+
+* `id`
+* `title`
+* `description`
+* `durationMinutes`
+* `tags`
+* `isPublic`
+
+**QuizAttempt**
+
+* `id`
+* `quizId`
+* `userId`
+* `startTime`
+* `endTime`
+* `status` (IN\_PROGRESS, SUBMITTED)
+
+**QuizAnswer**
+
+* `id`
+* `attemptId`
+* `questionId`
+* `selectedOption`
+* `isCorrect`
+
+**Result**
+
+* `attemptId`
+* `score`
+* `submittedAt`
+
+---
+
+## 6) Component Responsibilities
+
+* **Controller Layer**: Expose REST APIs, map DTOs.
+* **Service Layer**: Business logic (scoring, time validation, attempt lifecycle).
+* **Repository Layer**: JPA repositories for Quiz, Attempt, Answer.
+* **DTO/Entity Layer**: Request/response contracts, persistence entities.
+
+---
+
+## 7) Security & Auth
+
+* API Gateway validates JWT before forwarding.
+* Downstream Quiz Service trusts gateway headers (e.g., `X-User-Id`, `X-User-Roles`).
+* Internal authorization checks (e.g., user only sees their own results).
+
+---
+
+## 8) Observability
+
+* Metrics: number of attempts started, average completion time, success rate.
+* Logs: user actions, quiz submissions.
+* Tracing: propagate correlation ID from gateway.
+
+---
+
+## 9) Scalability & Reliability
+
+* Stateless service; scale horizontally.
+* Use DB connection pooling (HikariCP).
+* Cache quiz metadata in Redis for faster catalog responses.
+* Consider asynchronous processing for scoring if complex.
+
+---
+
+## 10) Deployment Topology
+
+* Containerized (Docker/K8s).
+* Backed by relational DB (Postgres/MySQL).
+* Exposed only via API Gateway.
+* Optionally integrate with QuestionService to fetch questions dynamically.
+
+---
+
+## 11) Request Flow Example
+
+**Start Quiz Attempt**
+
+```
+Client ? Gateway (/quiz/123/start, Bearer token)
+Gateway validates token (role: USER)
+ ? QuizService Controller
+   ? QuizServiceImpl
+     ? QuizRepository
+     ? AttemptRepository (create attempt)
+     ? Return attemptId + randomized questions
+```
+
+---
+
+## 12) Future Enhancements
+
+* Support timed quizzes with auto-submit on expiry.
+* Support leaderboards.
+* Support adaptive quizzes (dynamic difficulty).
+* WebSocket events for real-time countdown/status updates.
+
+---
+
+## 13) Acceptance Criteria
+
+* Public catalog accessible without token.
+* Authenticated users can start/submit attempts.
+* Results are tied to user identity and hidden from others.
+* Admins can manage quiz metadata.
+* Service logs metrics and propagates tracing context.
