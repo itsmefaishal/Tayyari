@@ -1,12 +1,11 @@
 package com.QuizService.QuizService.Repository;
-
+import com.QuizService.QuizService.DTO.QuizDTO;
 import com.QuizService.QuizService.Entity.Quiz;
 import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.util.List;
 
 public interface QuizRepo extends JpaRepository<Quiz, Long> {
-    List<Quiz> findByCategory(String category);
-    List<Quiz> findBySubject(String subject);
-    List<Quiz> findByPrev(Boolean isPrev, String cat);
+    List<QuizDTO> findByCategory(String category);
+    List<QuizDTO> findBySubject(String subject);
+    List<QuizDTO> findByPrev(Boolean isPrev, String cat);
 }
