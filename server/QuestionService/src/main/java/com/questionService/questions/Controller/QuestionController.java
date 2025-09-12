@@ -69,8 +69,13 @@ public class QuestionController {
         }
     }
 
+<<<<<<< HEAD
     @PatchMapping("/updateQuestion/{id}")
     public ResponseEntity<Question> updateQuestion(@PathVariable Long id, @RequestBody Question question){
+=======
+    @PostMapping("/updateQuestion/{id}")
+    public ResponseEntity<Question> updateQuestion(@PathVariable Long id, @RequestBody QuestionDTO question){
+>>>>>>> remotes/origin/main
         try{
             return ResponseEntity.ok(questionService.updateQuestion(id, question));
         } catch (Exception e) {
