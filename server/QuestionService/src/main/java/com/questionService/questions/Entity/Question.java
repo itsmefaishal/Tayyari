@@ -27,13 +27,8 @@ public class Question {
     private String optionThree;
     private String optionFour;
     private String category;
-<<<<<<< HEAD
     private String subCat;
     private String subject;
-=======
-    private String subject;
-    private String subCat;
->>>>>>> remotes/origin/main
     private Boolean multipleChoice;
     private String imageUrl;
     private int marks;

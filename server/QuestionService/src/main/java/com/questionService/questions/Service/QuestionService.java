@@ -63,11 +63,7 @@ public class QuestionService {
             question.setOptionTwo(request.getOptionTwo());
             question.setOptionThree(request.getOptionThree());
             question.setOptionFour(request.getOptionFour());
-<<<<<<< HEAD
             question.setNegativeMarks(request.getNegativeMarks());
-=======
-            question.setSubCat(request.getSubCat());
->>>>>>> remotes/origin/main
             if(request.getMultipleChoice() != null){
                 question.setMultipleChoice(request.getMultipleChoice());
             }

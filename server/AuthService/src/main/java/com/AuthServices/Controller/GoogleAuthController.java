@@ -77,6 +77,7 @@ public class GoogleAuthController {
                     user.setLastName(lastName);
                     user.setEmail(email);
                     user.setCreationDate(LocalDate.now());
+                    user.setPassword(passwordEncoder.encode(email));
                     user.setStatus("ACTIVE");
                     Set<Role> roles = new HashSet<>();
                     Role defaultRole = roleRepo.findByRoleName("USER")

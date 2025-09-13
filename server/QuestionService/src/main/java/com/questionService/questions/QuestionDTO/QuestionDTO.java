@@ -1,10 +1,7 @@
 package com.questionService.questions.QuestionDTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-<<<<<<< HEAD
 import lombok.AllArgsConstructor;
-=======
->>>>>>> remotes/origin/main
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,10 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuestionDTO {
-<<<<<<< HEAD
 
-=======
->>>>>>> remotes/origin/main
     @JsonProperty("questionContent")
     private String QuestionContent;
     @JsonProperty("correctAns")
@@ -28,15 +22,9 @@ public class QuestionDTO {
     private String optionThree;
     @JsonProperty("optionFour")
     private String optionFour;
-<<<<<<< HEAD
     @JsonProperty("subject")
     private String subject;
     @JsonProperty("category")
-=======
-    private String subCat;
-    @JsonProperty("subject")
-    private String subject;
->>>>>>> remotes/origin/main
     private String category;
     @JsonProperty("subCat")
     private String subCat;
@@ -51,7 +39,6 @@ public class QuestionDTO {
     @JsonProperty("difficulty")
     private String difficulty;
 
-<<<<<<< HEAD
     public QuestionDTO() {
     }
 
@@ -166,6 +153,4 @@ public class QuestionDTO {
     public void setQuestionContent(String questionContent) {
         QuestionContent = questionContent;
     }
-=======
->>>>>>> remotes/origin/main
 }
