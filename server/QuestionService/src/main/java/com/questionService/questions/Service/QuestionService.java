@@ -2,6 +2,7 @@ package com.questionService.questions.Service;
 
 import com.questionService.questions.Entity.Question;
 import com.questionService.questions.QuestionDTO.QuestionDTO;
+import com.questionService.questions.QuestionDTO.QuestionListDTO;
 import com.questionService.questions.Repository.QuestionRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,20 +18,24 @@ public class QuestionService {
     @Autowired
     private QuestionRepo questionRepo;
 
-    public Optional<Question> getQuestion(Long id){
-        try{
-            return questionRepo.findById(id);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public Question getQuestion(Long id){
+//        try{
+            System.out.println(id + "question service single get ");
+            Optional<Question> q = questionRepo.findById(id);
+            return q.get();
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
     }
 
-    public List<Optional<Question>> getMultipleQuestions(List<Long> listOfIds){
+    public List<Question> getMultipleQuestions(QuestionListDTO listOfIds){
         try{
-            List<Optional<Question>> questionList = new ArrayList<>();
+            List<Question> questionList = new ArrayList<>();
+            List<Long> ids = listOfIds.getIds();
 
-            for(Long id : listOfIds){
-                Optional<Question> q = getQuestion(id);
+            for(Long id : ids){
+                Question q = getQuestion(id);
+                if(q == null) continue;
                 questionList.add(q);
             }
 

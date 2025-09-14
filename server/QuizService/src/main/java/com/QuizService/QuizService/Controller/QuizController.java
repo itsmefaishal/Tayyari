@@ -1,6 +1,7 @@
 package com.QuizService.QuizService.Controller;
 
 import com.QuizService.QuizService.DTO.QuizDTO;
+import com.QuizService.QuizService.DTO.QuizWithQuestions;
 import com.QuizService.QuizService.Entity.Quiz;
 import com.QuizService.QuizService.Service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,8 @@ public class QuizController {
     private QuizService quizService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<QuizDTO> getQuiz(@PathVariable Long id){
-        return ResponseEntity.status(200).body(quizService.getQuiz(id));
+    public ResponseEntity<QuizWithQuestions> getQuiz(@PathVariable Long id){
+        return ResponseEntity.status(200).body(quizService.getQuizWithQuestions(id));
     }
 
     @GetMapping("/delete/{id}")
@@ -29,7 +30,7 @@ public class QuizController {
         return ResponseEntity.ok("Quiz deleted successfully");
     }
 
-    @GetMapping("/delete")
+    @PostMapping("/delete")
     public ResponseEntity<String> deleteMultipleQuiz(@RequestBody List<Long> ids){
         quizService.deleteMultipleQuiz(ids);
 
@@ -37,27 +38,32 @@ public class QuizController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<QuizDTO> addQuiz(@RequestBody Quiz quiz){
+    public ResponseEntity<Quiz> addQuiz(@RequestBody Quiz quiz){
         return ResponseEntity.ok(quizService.addQuiz(quiz));
     }
 
-    @PostMapping("/update")
-    public ResponseEntity<QuizDTO> updateQuiz(@PathVariable Long id, @RequestBody Quiz quiz){
+    @PostMapping("/add-quizzes")
+    public ResponseEntity<String> addQuiz(@RequestBody List<Quiz> quizList){
+        return ResponseEntity.ok(quizService.addQuizzes(quizList));
+    }
+
+    @PostMapping("/update/{id}")
+    public ResponseEntity<Quiz> updateQuiz(@PathVariable Long id, @RequestBody Quiz quiz){
         return ResponseEntity.ok(quizService.updateQuiz(id, quiz));
     }
 
-    @GetMapping("/{category}")
-    public ResponseEntity<List<QuizDTO>> getQuizByCat(@PathVariable String cat){
-        return ResponseEntity.ok(quizService.getQuizByCategory(cat));
+    @GetMapping("/category/{category}")
+    public ResponseEntity<List<Quiz>> getQuizByCat(@PathVariable String category){
+        return ResponseEntity.ok(quizService.getQuizByCategory(category));
     }
 
-    @GetMapping("/{subject}")
-    public ResponseEntity<List<QuizDTO>> getQuizBySub(@PathVariable String sub){
+    @GetMapping("/subject/{sub}")
+    public ResponseEntity<List<Quiz>> getQuizBySub(@PathVariable String sub){
         return ResponseEntity.ok(quizService.getQuizBySubject(sub));
     }
 
-    @GetMapping("/{prev+cat}")
-    public ResponseEntity<List<QuizDTO>> getPrev(@PathVariable Boolean prev, @PathVariable String cat){
-        return ResponseEntity.ok(quizService.getByPrev(prev,cat));
+    @GetMapping("/prev/{prev-cat}")
+    public ResponseEntity<List<QuizDTO>> getPrev(@PathVariable Boolean prev, @PathVariable String category){
+        return ResponseEntity.ok(quizService.getByPrev(prev,category));
     }
 }
