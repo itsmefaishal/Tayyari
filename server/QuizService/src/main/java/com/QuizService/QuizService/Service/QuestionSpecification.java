@@ -10,6 +10,7 @@ import java.util.List;
 
 
 public class QuestionSpecification {
+	//added for searching questions
 
     public static Specification<Question> filterBy(QuestionDTO dto) {
         return (root, query, cb) -> {
