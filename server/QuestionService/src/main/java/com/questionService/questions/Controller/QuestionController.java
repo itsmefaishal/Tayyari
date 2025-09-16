@@ -2,6 +2,7 @@ package com.questionService.questions.Controller;
 
 import com.questionService.questions.Entity.Question;
 import com.questionService.questions.QuestionDTO.QuestionDTO;
+import com.questionService.questions.QuestionDTO.QuestionListDTO;
 import com.questionService.questions.Service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -40,11 +41,12 @@ public class QuestionController {
     }
 
     @PostMapping("/getMultipleQuestions")
-    public ResponseEntity<List<Question>> getMultipleQuestions(@RequestBody List<Long> ids){
+    public List<Question> getMultipleQuestions(@RequestBody QuestionListDTO ids){
         try{
-            List<Question> list = questionService.getMultipleQuestions(ids);
 
-            return ResponseEntity.ok(list);
+            List<Question> list = questionService.getMultipleQuestions(ids);
+            System.out.println(list);
+            return list;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

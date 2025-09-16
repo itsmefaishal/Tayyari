@@ -1,6 +1,7 @@
 package com.AuthServices.Controller;
 
 import com.AuthServices.DTO.LoginDTO;
+import com.AuthServices.Entity.User;
 import com.AuthServices.Repository.UserRepo;
 import com.AuthServices.Service.JwtUtil;
 import com.AuthServices.Service.MyUserDetailsService;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")
@@ -46,11 +48,13 @@ public class AuthController {
                     (new UsernamePasswordAuthenticationToken(loginDto.getEmail().trim(),loginDto.getPassword().trim()));
             System.out.println("after authentication is successful: ");
             UserDetails userDetails = (UserDetails) auth.getPrincipal();
+            Optional<User> user = userRepo.findByEmail(userDetails.getUsername());
 
 
                    String token = jwtUtil.generateToken(userDetails);
 //            System.out.println(token);
                 Map<String,String> response= new HashMap<>();
+                response.put("name",user.get().getFirstName()+" "+user.get().getLastName());
                 response.put("jwt",token);
                 return new ResponseEntity<>(response, HttpStatus.OK);
 

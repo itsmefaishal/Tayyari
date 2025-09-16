@@ -2,6 +2,7 @@ package com.questionService.questions.Service;
 
 import com.questionService.questions.Entity.Question;
 import com.questionService.questions.QuestionDTO.QuestionDTO;
+import com.questionService.questions.QuestionDTO.QuestionListDTO;
 import com.questionService.questions.Repository.QuestionRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,22 +23,23 @@ public class QuestionService {
 
     public Question getQuestion(Long id){
         try{
-            Optional<Question> byId = questionRepo.findById(id);
+            Question q = questionRepo.findById(id)
+                    .orElseThrow(()-> new RuntimeException("Question not found for this id"));
 
-                return byId.get();
-
-
+            return q;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    public List<Question> getMultipleQuestions(List<Long> listOfIds){
+    public List<Question> getMultipleQuestions(QuestionListDTO listOfIds){
         try{
             List<Question> questionList = new ArrayList<>();
+            List<Long> ids = listOfIds.getIds();
 
-            for(Long id : listOfIds){
+            for(Long id : ids){
                 Question q = getQuestion(id);
+                if(q == null) continue;
                 questionList.add(q);
             }
 
