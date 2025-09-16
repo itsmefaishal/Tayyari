@@ -47,9 +47,10 @@ public class QuestionService {
         }
     }
 
-    public String addQuestion(QuestionDTO request){
+    public String addQuestion(QuestionDTO request,String user){
         try{
             Question question = new Question();
+            question.setCreatedBy(user);
             question.setCategory(request.getCategory());
             question.setSubCat(request.getSubCat());
             question.setSubject(request.getSubject());
@@ -77,10 +78,10 @@ public class QuestionService {
         }
     }
 
-    public String addMultipleQuestions(List<QuestionDTO> list){
+    public String addMultipleQuestions(List<QuestionDTO> list,String uName){
         try{
             for(QuestionDTO q : list) {
-                addQuestion(q);
+                addQuestion(q,uName);
             }
 
             return "All questions added successfully";
@@ -89,18 +90,17 @@ public class QuestionService {
         }
     }
 
-    public Question updateQuestion(Long qId, QuestionDTO request){
+    public Question updateQuestion(Long qId, Question request,String userName){
         try{
             Optional<Question> q = questionRepo.findById(qId);
             Question question = q.get();
 
             if(request.getCategory() != null){
                 question.setCategory(request.getCategory());
-            }
-
-            if(request.getSubject() != null){
-                question.setSubject(request.getSubject());
-            }
+				  }
+				  			if(request.getSubject() != null){
+							 question.setSubject(request.getSubject());
+							             }
 
             if(request.getOptionOne() != null){
                 question.setOptionOne(request.getOptionOne());
@@ -155,6 +155,9 @@ public class QuestionService {
             if(request.getSubCat() != null){
                 question.setSubCat(request.getSubCat());
             }
+            question.setUpdatedAt(LocalDate.now());
+            question.setUpdatedBy(userName);
+
 
             questionRepo.save(question);
 

@@ -12,7 +12,7 @@ import java.time.LocalDate;
 
 @Entity
 @Data
-@NoArgsConstructor
+//@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Question {
@@ -37,6 +37,7 @@ public class Question {
     private String createdBy;
     private LocalDate createdAt;
     private String updatedBy;
+    private LocalDate updatedAt;
 
 
     public Question() {
@@ -184,5 +185,13 @@ public class Question {
 
     public void setUpdatedBy(String updatedBy) {
         this.updatedBy = updatedBy;
+    }
+
+    public LocalDate getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDate updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

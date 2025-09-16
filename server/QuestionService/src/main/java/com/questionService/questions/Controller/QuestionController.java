@@ -51,28 +51,32 @@ public class QuestionController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<String> addQuestion(@RequestBody QuestionDTO question){
+    public ResponseEntity<String> addQuestion(@RequestBody QuestionDTO question,
+                                                @RequestHeader("X-User-Id") String uName){
         try{
             System.out.println(question.getQuestionContent());
-            return ResponseEntity.ok(questionService.addQuestion(question));
+            return ResponseEntity.ok(questionService.addQuestion(question,uName));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     @PostMapping("/addMultipleQuestions")
-    public ResponseEntity<String> addMultipleQuestion(@RequestBody List<QuestionDTO> list){
+    public ResponseEntity<String> addMultipleQuestion(@RequestBody List<QuestionDTO> list,
+                                                        @RequestHeader("X-User-Id") String userName){
         try{
-            return ResponseEntity.ok(questionService.addMultipleQuestions(list));
+            return ResponseEntity.ok(questionService.addMultipleQuestions(list,userName));
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
     }
 
     @PatchMapping("/updateQuestion/{id}")
-    public ResponseEntity<Question> updateQuestion(@PathVariable Long id, @RequestBody Question question){
+    public ResponseEntity<Question> updateQuestion(@PathVariable Long id,
+                                                   @RequestBody Question question,
+                                                   @RequestHeader("X-User-Id") String uName){
         try{
-            return ResponseEntity.ok(questionService.updateQuestion(id, question));
+            return ResponseEntity.ok(questionService.updateQuestion(id, question,uName));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -109,6 +113,8 @@ public class QuestionController {
                 : Sort.by(sortBy).ascending();
 
         Pageable pageable = PageRequest.of(page, size, sort);
-        return questionService.searchQuestions(dto, pageable);
+        Page<Question> questions = questionService.searchQuestions(dto, pageable);
+       // questions.getTotalPages()
+        return questions;
     }
 }

@@ -28,6 +28,14 @@ spring:
     name: api-gateway
   cloud:
     gateway:
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:3000"
+            allowedHeaders: "*"
+            allowedMethods: "*"
+            allowCredentials: true
       routes:
         # Auth service routes (no authentication required)
         - id: auth-service
@@ -46,7 +54,8 @@ spring:
 #            - StripPrefix=1
             - name: JwtAuthenticationFilter
               args:
-                required-role: ROLE_ADMIN
+                required-roles:
+                - ROLE_ADMIN
 
         # User service routes (requires USER or ADMIN role)
         - id: user-service

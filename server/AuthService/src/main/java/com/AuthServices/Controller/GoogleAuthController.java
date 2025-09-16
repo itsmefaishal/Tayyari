@@ -21,7 +21,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/auth/google")
-@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST})
+@CrossOrigin(origins = "http://localhost:3000") // Add CORS support
 public class GoogleAuthController {
     @Value("${spring.security.oauth2.client.registration.google.client-id}")
     private String clientId;
@@ -54,7 +54,7 @@ public class GoogleAuthController {
             params.add("code", code);
             params.add("client_id", clientId);
             params.add("client_secret", clientSecret);
-            params.add("redirect_uri", "http://localhost:8080/auth/google/callback");
+            params.add("redirect_uri", "http://localhost:9090/auth/google/callback");
             params.add("grant_type", "authorization_code");
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -89,11 +89,28 @@ public class GoogleAuthController {
 
                 userDetails = (UserDetails) userDetailsService.loadUserByUsername(email);
                 String jwtToken = jwtUtil.generateToken(userDetails);
-                return ResponseEntity.ok(Collections.singletonMap("Jwt", jwtToken));
+
+//                // Option 1: Return JSON response with token
+//                Map<String, Object> response = new HashMap<>();
+//                response.put("token", jwtToken);
+//                response.put("email", email);
+//                response.put("firstName", firstName);
+//                response.put("lastName", lastName);
+//                response.put("message", "Login successful");
+//
+//                return ResponseEntity.ok(response);
+
+                // Option 2: If you prefer redirect, uncomment below and comment above
+                
+                String redirectUrl = "http://localhost:3000/dashboard?token=" + jwtToken;
+                return ResponseEntity.status(HttpStatus.FOUND)
+                                     .header(HttpHeaders.LOCATION, redirectUrl)
+                                     .build();
+
             }
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         } catch (Exception e) {
-            System.out.println("Exception occurred while handleGoogleCallback " +e);
+            System.out.println("Exception occurred while handleGoogleCallback " + e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }

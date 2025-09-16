@@ -21,7 +21,6 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST})
 public class UserController {
     @Autowired
     private UserRepo userRepository;
