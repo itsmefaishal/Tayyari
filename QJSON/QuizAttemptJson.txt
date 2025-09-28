@@ -2,8 +2,13 @@
   "quizAttemptId": 101,
   "userId": 2025,
   "quizId": 305,
-  "enrollmentId": 407,
-  "attemptNumber": 2,
+  "enrollment": {
+    "enrollmentId": 407,
+    "courseId": 55,
+    "userId": 2025
+    // other fields from UserEnrollment if included
+  },
+  "attemptNumber": 1,
   "startedAt": "2025-09-28T14:00:00",
   "completedAt": "2025-09-28T14:30:00",
   "attemptStatus": "COMPLETED",
@@ -15,23 +20,21 @@
   "incorrectAnswers": 5,
   "unanswered": 0,
   "totalQuestions": 20,
-  "answerDetails": {
-    "Q1": {
+  "answers": [
+    {
       "question": "What is the capital of France?",
-      "selectedOption": "Paris",
-      "isCorrect": true
+      "selectedAnswer": "Paris",
+      "correctAnswer": "Paris"
     },
-    "Q2": {
+    {
       "question": "Which planet is known as the Red Planet?",
-      "selectedOption": "Mars",
-      "isCorrect": true
+      "selectedAnswer": "Mars",
+      "correctAnswer": "Mars"
     },
-    "Q3": {
+    {
       "question": "Who wrote 'Hamlet'?",
-      "selectedOption": "Charles Dickens",
-      "isCorrect": false,
-      "correctOption": "William Shakespeare"
+      "selectedAnswer": "Charles Dickens",
+      "correctAnswer": "William Shakespeare"
     }
-    // ... more questions
-  }
+  ]
 }
