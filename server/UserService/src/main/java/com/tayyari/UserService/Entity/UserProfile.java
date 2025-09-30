@@ -2,12 +2,16 @@ package com.tayyari.UserService.Entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 
 @Entity
 public class UserProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userProfileId;
+    @Column
+    private Long authUserId;
     @Column
     private String fullName;
     @Column
@@ -17,10 +21,49 @@ public class UserProfile {
     @Column
     private String ProfilePictureURL;
     @Column
-    private String updatedAt;
+    private String userStatus;
+    @Column
+    private String email;
+    @Column
+    private LocalDate createdAt;
+
+    @Column
+    private LocalDate updatedAt;
 
 
     public UserProfile() {
+    }
+
+    public Long getAuthUserId() {
+        return authUserId;
+    }
+
+    public void setAuthUserId(Long authUserId) {
+        this.authUserId = authUserId;
+    }
+
+    public String getUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(String userStatus) {
+        this.userStatus = userStatus;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public LocalDate getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Long getUserProfileId() {
@@ -63,11 +106,11 @@ public class UserProfile {
         ProfilePictureURL = profilePictureURL;
     }
 
-    public String getUpdatedAt() {
+    public LocalDate getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(String updatedAt) {
+    public void setUpdatedAt(LocalDate updatedAt) {
         this.updatedAt = updatedAt;
     }
 

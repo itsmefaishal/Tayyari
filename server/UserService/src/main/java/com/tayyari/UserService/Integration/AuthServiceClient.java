@@ -4,8 +4,8 @@ package com.tayyari.UserService.Integration;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@FeignClient(name="user-Service", path = "/user")
+@FeignClient(name="AuthService", path = "/auth")
 public interface AuthServiceClient {
-    @GetMapping("/getUser")
+    @GetMapping("/user-status")
     Boolean isUserActive(Long UserId);
 }
