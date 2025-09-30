@@ -15,7 +15,7 @@ public interface UserEnrollmentRepo extends JpaRepository<UserEnrollment,Long> {
 
 
 
-    Optional<Object> findByUserIdAndQuizId(Long userId, Long quizId);
+    Optional<UserEnrollment> findByUserIdAndQuizId(Long userId, Long quizId);
 
     List<UserEnrollment> findByExamCategory(String category);
 }

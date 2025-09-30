@@ -17,7 +17,7 @@ public class UserEnrollment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long UserEnrollmentId;
+    private Long userEnrollmentId;
 
     @Column(name = "user_id", nullable = false)
     private Long userId;
@@ -33,7 +33,7 @@ public class UserEnrollment {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 20)
-    private EnrollmentStatus EnrollStatus = EnrollmentStatus.ACTIVE;
+    private EnrollmentStatus status = EnrollmentStatus.ACTIVE;
 
     @Column(name = "target_completion_date")
     private LocalDate targetCompletionDate;
@@ -70,11 +70,11 @@ public class UserEnrollment {
     }
 
     public Long getUserEnrollmentId() {
-        return UserEnrollmentId;
+        return userEnrollmentId;
     }
 
     public void setUserEnrollmentId(Long userEnrollmentId) {
-        this.UserEnrollmentId = userEnrollmentId;
+        this.userEnrollmentId = userEnrollmentId;
     }
 
     public Long getUserId() {
@@ -110,11 +110,11 @@ public class UserEnrollment {
     }
 
     public EnrollmentStatus getEnrollStatus() {
-        return EnrollStatus;
+        return status;
     }
 
     public void setEnrollStatus(EnrollmentStatus status) {
-        this.EnrollStatus = status;
+        this.status = status;
     }
 
     public LocalDate getTargetCompletionDate() {

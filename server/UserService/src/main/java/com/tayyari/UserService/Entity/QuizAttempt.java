@@ -1,7 +1,19 @@
 package com.tayyari.UserService.Entity;
+
+import com.tayyari.UserService.DTO.AnswerDetailDto;
+import com.tayyari.UserService.ENUMS.AttemptStatus;
 import jakarta.persistence.*;
-import java.math.BigDecimal;
+
+
+import org.hibernate.annotations.Type;
+
+
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+
 import java.time.LocalDateTime;
+import java.util.List;
+
+
 
 
 @Entity
@@ -16,7 +28,7 @@ public class QuizAttempt {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long QuizAttemptId;
 
     @Column(name = "user_id", nullable = false)
     private Long userId;
@@ -24,8 +36,8 @@ public class QuizAttempt {
     @Column(name = "quiz_id", nullable = false)
     private Long quizId;
 
-    @ManyToOne
-    @JoinColumn(name = "enrollment_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "UserEnrollmentId")
     private UserEnrollment enrollment;
 
     @Column(name = "attempt_number", nullable = false)
@@ -37,96 +49,177 @@ public class QuizAttempt {
     @Column(name = "completed_at")
     private LocalDateTime completedAt;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status", length = 20)
-    private Status status = Status.INPROGRESS;
+    @Column
+    private AttemptStatus attemptStatus = AttemptStatus.IN_PROGRESS;
 
-    @Column(name = "score", precision = 5, scale = 2)
-    private BigDecimal score;
+    @Column(name = "score")
+    private double score;
 
-    @Column(name = "max_score", precision = 5, scale = 2)
-    private BigDecimal maxScore;
+    @Column(name = "max_score")
+    private double maxScore;
 
-    @Column(name = "percentage", precision = 5, scale = 2)
-    private BigDecimal percentage;
+    @Column(name = "percentage")
+    private double percentage;
 
     @Column(name = "time_taken")
-    private Integer timeTaken; // seconds
+    private Integer timeTaken; // in seconds
 
-    @Column(name = "correct_answers", nullable = false)
+    @Column(name = "correct_answers")
     private Integer correctAnswers = 0;
 
-    @Column(name = "incorrect_answers", nullable = false)
+    @Column(name = "incorrect_answers")
     private Integer incorrectAnswers = 0;
 
-    @Column(name = "unanswered", nullable = false)
+    @Column(name = "unanswered")
     private Integer unanswered = 0;
 
     @Column(name = "total_questions")
     private Integer totalQuestions;
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
 
-    public enum Status {
-        INPROGRESS,
-        COMPLETED,
-        ABANDONED,
-        TIMEOUT
-    }
+    @Type(JsonBinaryType.class)
+    @Column(name = "answer_details", columnDefinition = "jsonb")
+    private List<AnswerDetailDto> answers;
+
+
+
 
     public QuizAttempt() {
     }
 
-    // Getters and setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getQuizAttemptId() {
+        return QuizAttemptId;
+    }
 
-    public Long getUserId() { return userId; }
-    public void setUserId(Long userId) { this.userId = userId; }
+    public void setQuizAttemptId(Long quizAttemptId) {
+        QuizAttemptId = quizAttemptId;
+    }
 
-    public Long getQuizId() { return quizId; }
-    public void setQuizId(Long quizId) { this.quizId = quizId; }
+    public Long getUserId() {
+        return userId;
+    }
 
-    public UserEnrollment getEnrollment() { return enrollment; }
-    public void setEnrollment(UserEnrollment enrollment) { this.enrollment = enrollment; }
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
-    public Integer getAttemptNumber() { return attemptNumber; }
-    public void setAttemptNumber(Integer attemptNumber) { this.attemptNumber = attemptNumber; }
+    public Long getQuizId() {
+        return quizId;
+    }
 
-    public LocalDateTime getStartedAt() { return startedAt; }
-    public void setStartedAt(LocalDateTime startedAt) { this.startedAt = startedAt; }
+    public void setQuizId(Long quizId) {
+        this.quizId = quizId;
+    }
 
-    public LocalDateTime getCompletedAt() { return completedAt; }
-    public void setCompletedAt(LocalDateTime completedAt) { this.completedAt = completedAt; }
+    public UserEnrollment getEnrollment() {
+        return enrollment;
+    }
 
-    public Status getStatus() { return status; }
-    public void setStatus(Status status) { this.status = status; }
+    public void setEnrollment(UserEnrollment enrollment) {
+        this.enrollment = enrollment;
+    }
 
-    public BigDecimal getScore() { return score; }
-    public void setScore(BigDecimal score) { this.score = score; }
+    public Integer getAttemptNumber() {
+        return attemptNumber;
+    }
 
-    public BigDecimal getMaxScore() { return maxScore; }
-    public void setMaxScore(BigDecimal maxScore) { this.maxScore = maxScore; }
+    public void setAttemptNumber(Integer attemptNumber) {
+        this.attemptNumber = attemptNumber;
+    }
 
-    public BigDecimal getPercentage() { return percentage; }
-    public void setPercentage(BigDecimal percentage) { this.percentage = percentage; }
+    public LocalDateTime getStartedAt() {
+        return startedAt;
+    }
 
-    public Integer getTimeTaken() { return timeTaken; }
-    public void setTimeTaken(Integer timeTaken) { this.timeTaken = timeTaken; }
+    public void setStartedAt(LocalDateTime startedAt) {
+        this.startedAt = startedAt;
+    }
 
-    public Integer getCorrectAnswers() { return correctAnswers; }
-    public void setCorrectAnswers(Integer correctAnswers) { this.correctAnswers = correctAnswers; }
+    public LocalDateTime getCompletedAt() {
+        return completedAt;
+    }
 
-    public Integer getIncorrectAnswers() { return incorrectAnswers; }
-    public void setIncorrectAnswers(Integer incorrectAnswers) { this.incorrectAnswers = incorrectAnswers; }
+    public void setCompletedAt(LocalDateTime completedAt) {
+        this.completedAt = completedAt;
+    }
 
-    public Integer getUnanswered() { return unanswered; }
-    public void setUnanswered(Integer unanswered) { this.unanswered = unanswered; }
+    public AttemptStatus getAttemptStatus() {
+        return attemptStatus;
+    }
 
-    public Integer getTotalQuestions() { return totalQuestions; }
-    public void setTotalQuestions(Integer totalQuestions) { this.totalQuestions = totalQuestions; }
+    public void setAttemptStatus(AttemptStatus attemptStatus) {
+        this.attemptStatus = attemptStatus;
+    }
 
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
+    }
+
+    public double getMaxScore() {
+        return maxScore;
+    }
+
+    public void setMaxScore(double maxScore) {
+        this.maxScore = maxScore;
+    }
+
+    public double getPercentage() {
+        return percentage;
+    }
+
+    public void setPercentage(double percentage) {
+        this.percentage = percentage;
+    }
+
+    public int getTimeTaken() {
+        return timeTaken;
+    }
+
+    public void setTimeTaken(int timeTaken) {
+        this.timeTaken = timeTaken;
+    }
+
+    public Integer getCorrectAnswers() {
+        return correctAnswers;
+    }
+
+    public void setCorrectAnswers(Integer correctAnswers) {
+        this.correctAnswers = correctAnswers;
+    }
+
+    public Integer getIncorrectAnswers() {
+        return incorrectAnswers;
+    }
+
+    public void setIncorrectAnswers(Integer incorrectAnswers) {
+        this.incorrectAnswers = incorrectAnswers;
+    }
+
+    public Integer getUnanswered() {
+        return unanswered;
+    }
+
+    public void setUnanswered(Integer unanswered) {
+        this.unanswered = unanswered;
+    }
+
+    public Integer getTotalQuestions() {
+        return totalQuestions;
+    }
+
+    public void setTotalQuestions(Integer totalQuestions) {
+        this.totalQuestions = totalQuestions;
+    }
+
+    public List<AnswerDetailDto> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<AnswerDetailDto> answers) {
+        this.answers = answers;
+    }
 }

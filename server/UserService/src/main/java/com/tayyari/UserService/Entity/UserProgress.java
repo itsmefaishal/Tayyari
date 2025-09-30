@@ -2,7 +2,7 @@ package com.tayyari.UserService.Entity;
 
 
 import jakarta.persistence.*;
-import java.math.BigDecimal;
+
 import java.time.LocalDateTime;
 
 
@@ -26,7 +26,7 @@ public class UserProgress {
     private Long quizId;
 
     @ManyToOne
-    @JoinColumn(name = "enrollment_id", referencedColumnName = "id")
+    @JoinColumn(name = "UserEnrollmentId")
     private UserEnrollment enrollment;
 
     @Column(name = "total_attempts", nullable = false)
@@ -35,14 +35,14 @@ public class UserProgress {
     @Column(name = "completed_attempts", nullable = false)
     private Integer completedAttempts = 0;
 
-    @Column(name = "best_score", precision = 5, scale = 2)
-    private BigDecimal bestScore = BigDecimal.ZERO;
+    @Column(name = "best_score")
+    private Long bestScore ;
 
-    @Column(name = "average_score", precision = 5, scale = 2)
-    private BigDecimal averageScore = BigDecimal.ZERO;
+    @Column(name = "average_score")
+    private Long averageScore ;
 
-    @Column(name = "completion_rate", precision = 5, scale = 2)
-    private BigDecimal completionRate = BigDecimal.ZERO;
+    @Column(name = "completion_rate")
+    private Long completionRate ;
 
     @Column(name = "time_spent", nullable = false)
     private Integer timeSpent = 0; // in seconds
@@ -110,27 +110,27 @@ public class UserProgress {
         this.completedAttempts = completedAttempts;
     }
 
-    public BigDecimal getBestScore() {
+    public Long getBestScore() {
         return bestScore;
     }
 
-    public void setBestScore(BigDecimal bestScore) {
+    public void setBestScore(Long bestScore) {
         this.bestScore = bestScore;
     }
 
-    public BigDecimal getAverageScore() {
+    public Long getAverageScore() {
         return averageScore;
     }
 
-    public void setAverageScore(BigDecimal averageScore) {
+    public void setAverageScore(Long averageScore) {
         this.averageScore = averageScore;
     }
 
-    public BigDecimal getCompletionRate() {
+    public Long getCompletionRate() {
         return completionRate;
     }
 
-    public void setCompletionRate(BigDecimal completionRate) {
+    public void setCompletionRate(Long completionRate) {
         this.completionRate = completionRate;
     }
 

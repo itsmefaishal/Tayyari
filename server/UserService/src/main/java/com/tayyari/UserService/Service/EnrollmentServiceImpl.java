@@ -11,15 +11,22 @@ import com.tayyari.UserService.Integration.QuizServiceClient;
 import com.tayyari.UserService.Repo.UserEnrollmentRepo;
 import com.tayyari.UserService.Service.Interfaces.EnrollmentService;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+
+@Service
 public class EnrollmentServiceImpl implements EnrollmentService {
 
+
+    private static final Logger log = LogManager.getLogger(EnrollmentServiceImpl.class);
     @Autowired
     private  UserEnrollmentRepo enrollmentRepo;
     @Autowired
@@ -29,15 +36,18 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
     @Override
     public EnrollmentResponseDto enrollUserInQuiz(EnrollmentRequestDto request) {
+        log.info("inside enrollUserInQuiz : {}",request);
         // Validate user exists
         validateUserExists(request.getUserId());
 
         // Validate quiz exists and is active and get quiz active
         QuizBasicInfoDto quizBasicInfo = validateQuizExists(request.getQuizId());
+        log.info("QuizBasicInfoDto : {}",quizBasicInfo);
 
 
         // Check if already enrolled
         if (isUserEnrolledInQuiz(request.getUserId(), request.getQuizId())) {
+            log.info("inside Check if already enrolled  ");
             throw new BusinessException(ErrorCode.USER_ALREADY_ENROLLED);
         }
 
@@ -54,10 +64,12 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 LocalDateTime enrolledAt, UserEnrollment.EnrollmentStatus status, LocalDateTime createdAt,
 LocalDateTime updatedAt, QuizBasicInfoDto quizInfo) */
         UserEnrollment se = enrollmentRepo.save(enrollment);
+        log.info("UserEnrollment after saving : {}",se);
         EnrollmentResponseDto erd = new EnrollmentResponseDto(
                                 se.getUserEnrollmentId(),se.getUserId(),se.getQuizId(),se.getExamCategory()
                                 ,se.getEnrolledAt(),se.getEnrollStatus(),se.getCreatedAt(),
                                 se.getUpdatedAt(),quizBasicInfo );
+        log.info("Exiting from method enrollUserInQuiz : {}",erd);
         return erd;
     }
 
@@ -65,6 +77,7 @@ LocalDateTime updatedAt, QuizBasicInfoDto quizInfo) */
     @Transactional(readOnly = true)
     public List<EnrollmentResponseDto> getUserEnrollments(Long userId, UserEnrollment.EnrollmentStatus status) {
         List<UserEnrollment> enrollments;
+        log.info("inside  getUserEnrollments with user id : {} and enrollement status {}",userId,status);
 
         if (status != null) {
             enrollments = enrollmentRepo.findByUserIdAndStatus(userId, status);
@@ -76,11 +89,13 @@ LocalDateTime updatedAt, QuizBasicInfoDto quizInfo) */
         {
             throw new BusinessException(ErrorCode.NO_AVAILABLE_ENROLLMENT);
         }
+        log.info("Enrollments  : {}",enrollments);
 
             List<EnrollmentResponseDto> erd = new ArrayList<>();
 
             for(UserEnrollment enrollment:enrollments)
             {
+                log.info("inside for loop enrollment : {}",enrollment);
                 //this is a temporary approach will work on the optimization part
                 QuizBasicInfoDto quizBasicInfo = validateQuizExists(enrollment.getQuizId());
                 EnrollmentResponseDto enrollResponse = new EnrollmentResponseDto(
@@ -95,6 +110,7 @@ LocalDateTime updatedAt, QuizBasicInfoDto quizInfo) */
 
     @Override
     public void unenrollFromQuiz(Long userId, Long enrollmentId) {
+        log.info("inside unrollFromQuiz : userID {} and enrollments {}",userId,enrollmentId);
         UserEnrollment enrollment = enrollmentRepo.findById(enrollmentId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.NO_AVAILABLE_ENROLLMENT));
 
@@ -161,22 +177,30 @@ LocalDateTime updatedAt, QuizBasicInfoDto quizInfo) */
     }
 
 
-   private void  validateUserExists(Long userid) throws RuntimeException {
+
+
+    private void  validateUserExists(Long userid) throws RuntimeException {
+        log.info("inside validateUserExists with userid {}",userid);
        if (!authServiceClient.isUserActive(userid)) {
+           log.info("inside if block of  validateUserExists");
            throw new RuntimeException("User not found !!");
        }
    }
    private QuizBasicInfoDto validateQuizExists(Long quizId) {
+       log.info("inside validateQuizExists with quizId {}",quizId);
        QuizBasicInfoDto basicQuizInfo = quizServiceClient.getBasicQuizInfo(quizId);
        if(basicQuizInfo==null)
        {
+           log.info("inside basicQuizInfo==null ");
            throw new BusinessException(ErrorCode.QUIZ_NOT_AVAILABLE);
        }
        if(basicQuizInfo.getStatus().isBlank()&&
                basicQuizInfo.getStatus().equalsIgnoreCase("INACTIVE"))
        {
+           log.info("inside basicQuizInfo.getStatus().equalsIgnoreCase(INACTIVE)");
            throw new BusinessException(ErrorCode.QUIZ_INACTIVE);
        }
+       log.info("Exiting from method  validateQuizExists basicQuizInfo  {}",basicQuizInfo);
 
        return basicQuizInfo;
 
