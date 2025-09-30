@@ -5,8 +5,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 export default function DashboardPage() {
-  const { user, logout } = useAuth();
+  const { user, logout, loading : authLoading, isAuthenticated } = useAuth();
   const router = useRouter();
+
   
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [stats, setStats] = useState({
@@ -18,10 +19,10 @@ export default function DashboardPage() {
 
   // Redirect if not logged in
   useEffect(() => {
-    if (!user) {
+    if (!isAuthenticated) {
       router.push('/login');
     }
-  }, [user, router]);
+  }, [isAuthenticated, authLoading, router]);
 
   // Mock data for recent tests
   const recentTests = [
@@ -40,17 +41,20 @@ export default function DashboardPage() {
   ];
 
   const handleLogout = () => {
-    localStorage.clear();
     logout();
     router.push('/');
   };
 
-  if (!user) {
+  if (authLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-indigo-600"></div>
       </div>
     );
+  }
+
+  if(!isAuthenticated){
+    router.push('/');
   }
 
   const getDifficultyColor = (difficulty) => {
@@ -107,7 +111,13 @@ export default function DashboardPage() {
                 </svg>
                 Dashboard
               </Link>
-              <Link href="/tests" className="text-gray-700 hover:bg-gray-50 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+              <Link href="/" className="text-gray-700 hover:bg-gray-50 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                <svg className="mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span>Home</span>
+              </Link>
+              <Link href="/exams" className="text-gray-700 hover:bg-gray-50 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                 <svg className="mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
@@ -153,7 +163,7 @@ export default function DashboardPage() {
                   <div>
                     <div className="flex items-center">
                       <h1 className="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:leading-9 sm:truncate">
-                        Welcome back, {`${localStorage.getItem('name').split('-')[0]} `}!
+                        Welcome back, {`${localStorage.getItem('name')}`}!
                       </h1>
                     </div>
                     <dl className="mt-6 flex flex-col sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap">

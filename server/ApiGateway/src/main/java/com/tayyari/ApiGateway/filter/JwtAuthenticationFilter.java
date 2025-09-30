@@ -102,7 +102,8 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
         System.out.println("Inside isAuthEndpoint method body");
         return path.contains("/auth/") ||
                 path.contains("/login") ||
-                path.contains("/register");
+                path.contains("/register") ||
+                path.contains("/public");
     }
 
     private Mono<Void> unauthorizedResponse(ServerWebExchange exchange) {

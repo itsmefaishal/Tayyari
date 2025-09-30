@@ -1,5 +1,7 @@
 package com.questionService.questions.QuestionDTO;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
@@ -21,7 +23,7 @@ public class QuestionDTO {
     @JsonProperty("subject")
     private String subject;
     @JsonProperty("category")
-    private String category;
+    private List<String> category;
     @JsonProperty("subCat")
     private String subCat;
     @JsonProperty("multipleChoice")
@@ -86,11 +88,11 @@ public class QuestionDTO {
         this.subCat = subCat;
     }
 
-    public String getCategory() {
+    public List<String> getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(List<String> category) {
         this.category = category;
     }
 

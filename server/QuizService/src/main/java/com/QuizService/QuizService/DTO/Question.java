@@ -1,26 +1,18 @@
-package com.questionService.questions.Entity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+package com.QuizService.QuizService.DTO;
+
+
 import java.time.LocalDate;
 import java.util.List;
 
-@Entity
 public class Question {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long Id;
     private String QuestionContent;
     private String correctAns;
     private String optionOne;
     private String optionTwo;
     private String optionThree;
-    private String optionFour;
-    private List<String> category;
-    private String subCat;
     private String subject;
+    private String subCat;
     private Boolean multipleChoice;
     private String imageUrl;
     private int marks;
@@ -29,8 +21,26 @@ public class Question {
     private String createdBy;
     private LocalDate createdAt;
     private String updatedBy;
-    private LocalDate updatedAt;
+    private String optionFour;
+    private List<String> category;
 
+        @Override
+    public String toString() {
+        return "Question [Id=" + Id + ", QuestionContent=" + QuestionContent + ", correctAns=" + correctAns
+                + ", optionOne=" + optionOne + ", optionTwo=" + optionTwo + ", optionThree=" + optionThree
+                + ", subject=" + subject + ", subCat=" + subCat + ", multipleChoice=" + multipleChoice + ", imageUrl="
+                + imageUrl + ", marks=" + marks + ", negativeMarks=" + negativeMarks + ", difficulty=" + difficulty
+                + ", createdBy=" + createdBy + ", createdAt=" + createdAt + ", updatedBy=" + updatedBy + ", optionFour="
+                + optionFour + ", category=" + category + ", getId()=" + getId() + ", getQuestionContent()="
+                + getQuestionContent() + ", getCorrectAns()=" + getCorrectAns() + ", getOptionOne()=" + getOptionOne()
+                + ", getOptionTwo()=" + getOptionTwo() + ", getOptionThree()=" + getOptionThree() + ", getOptionFour()="
+                + getOptionFour() + ", getCategory()=" + getCategory() + ", getSubject()=" + getSubject()
+                + ", getSubCat()=" + getSubCat() + ", getMultipleChoice()=" + getMultipleChoice() + ", getImageUrl()="
+                + getImageUrl() + ", getMarks()=" + getMarks() + ", getNegativeMarks()=" + getNegativeMarks()
+                + ", getDifficulty()=" + getDifficulty() + ", getCreatedBy()=" + getCreatedBy() + ", getCreatedAt()="
+                + getCreatedAt() + ", getUpdatedBy()=" + getUpdatedBy() + ", getClass()=" + getClass() + ", hashCode()="
+                + hashCode() + ", toString()=" + super.toString() + "]";
+    }
 
     public Question() {
     }
@@ -99,20 +109,20 @@ public class Question {
         this.category = category;
     }
 
-    public String getSubCat() {
-        return subCat;
-    }
-
-    public void setSubCat(String subCat) {
-        this.subCat = subCat;
-    }
-
     public String getSubject() {
         return subject;
     }
 
     public void setSubject(String subject) {
         this.subject = subject;
+    }
+
+    public String getSubCat() {
+        return subCat;
+    }
+
+    public void setSubCat(String subCat) {
+        this.subCat = subCat;
     }
 
     public Boolean getMultipleChoice() {
@@ -179,11 +189,7 @@ public class Question {
         this.updatedBy = updatedBy;
     }
 
-    public LocalDate getUpdatedAt() {
-        return updatedAt;
-    }
 
-    public void setUpdatedAt(LocalDate updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+
 }
+

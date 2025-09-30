@@ -2,12 +2,11 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import { AuthProvider } from '@/contexts/AuthContext'
 
-
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Tayyari App',
-  description: 'Online testing platform',
+  title: 'Tayyari - Reach your dream',
+  description: 'Best platform to reach your dream!!!',
 }
 
 export default function RootLayout({ children }) {

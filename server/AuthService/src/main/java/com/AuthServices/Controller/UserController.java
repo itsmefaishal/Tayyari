@@ -122,6 +122,17 @@ public class UserController {
 
     }
 
+    @GetMapping("/me")
+    public User getCurrentUser(@RequestParam String token){
+        if(token == null || token.equals("undefined")){
+            return null;
+        }
+
+        User user = userService.getCurrentUser(token);
+
+        return user;
+    }
+
     @PostMapping("/verify-otp")
     public ResponseEntity<?> verifyOTP(@Valid @RequestBody VerifyOTPRequest request) {
         try {

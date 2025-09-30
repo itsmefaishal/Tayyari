@@ -11,10 +11,12 @@ export function AuthProvider({children}) {
 
     useEffect(() => {
 
-        const token = authService.getToken();
+        const user = authService.getCurrentUser();
+        console.log(user);
+        
 
-        if(token){
-            setUser(token)
+        if(user){
+            setUser(user)
         }
 
         setLoading(false)
@@ -32,13 +34,42 @@ export function AuthProvider({children}) {
         return userData;
     };
 
-    const logout = () => {
-        authService.logout();
-        setUser(null);
+    const loginWithGoogle = () => {
+        console.log("from authjs initiateGoogleLogin()");
+        authService.initiateGoogleLogin();
+    };
+
+    const handleGoogleCallback = async (token) => {
+        console.log("from authjs handleGoogleCallback()");
+        authService.handleGoogleCallback(token);
+    };
+
+    const isAuthenticated = async () => {
+        return authService.isAuthenticated();
     }
 
+    const verifyOTP = async (email, otp) => {
+        const res = await authService.verifyOTP(email, otp);
+        setUser(res.user);
+
+        return res;
+    };
+
+    const resendOTP = async (email) => {
+        const res = await authService.resendOTP(email);
+
+        return res;
+    };
+
+    const logout = () => {
+        console.log("logout in context");
+
+        authService.logout();
+        setUser(null);
+    };
+
     return (
-        <AuthContext.Provider value={{user, login, loading, logout, signup}}>
+        <AuthContext.Provider value={{user, login, loading, isAuthenticated, logout, signup, loginWithGoogle, handleGoogleCallback, verifyOTP, resendOTP}}>
             {children}
         </AuthContext.Provider>
     );

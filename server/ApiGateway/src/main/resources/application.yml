@@ -57,14 +57,23 @@ spring:
                 required-roles:
                 - ROLE_ADMIN
 
-        # User service routes (requires USER or ADMIN role)
-        - id: user-service
-          uri: lb://user-service
+        # Quiz service routes (requires User or Admin role)
+        - id: quiz-service-admin
+          uri: lb://QuizService
           predicates:
-            - Path=/user/**
+              - Path=/quiz/admin/**
           filters:
-            - StripPrefix=1
-            - JwtAuthenticationFilter
+            - name: JwtAuthenticationFilter
+              args:
+                required-roles:
+                  - ROLE_ADMIN
+
+        # User service routes (requires USER or ADMIN role)
+        - id: quiz-service-public
+          uri: lb://QuizService
+          predicates:
+            - Path=/quiz/public/**
+
 
         # Product service routes (authenticated users)
         - id: product-service

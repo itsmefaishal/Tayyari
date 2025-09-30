@@ -20,6 +20,8 @@ public class UserService {
     OTPService otpService;
     @Autowired
     PasswordEncoder encoder;
+    @Autowired
+    JwtUtil jwtUtil;
 
     public User addUser(String fname, String lname, String uName, String password,String status, Set<Role> role )
     {
@@ -48,6 +50,14 @@ public class UserService {
         userRepo.save(user);
 
         return "Email verified successfully. User is now active.";
+    }
+
+    public User getCurrentUser(String token){
+        String username = jwtUtil.extractUsername(token);
+
+        Optional<User> user = userRepo.findByEmail(username);
+
+        return user.get();
     }
 
     public String resendOTP(String email) {

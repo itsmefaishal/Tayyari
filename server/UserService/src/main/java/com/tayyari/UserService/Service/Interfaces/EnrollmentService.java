@@ -1,5 +1,4 @@
 package com.tayyari.UserService.Service.Interfaces;
-
 import com.tayyari.UserService.DTO.EnrollmentRequestDto;
 import com.tayyari.UserService.DTO.EnrollmentResponseDto;
 import com.tayyari.UserService.Entity.UserEnrollment;

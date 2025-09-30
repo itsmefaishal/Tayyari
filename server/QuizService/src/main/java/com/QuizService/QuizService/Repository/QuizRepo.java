@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface QuizRepo extends JpaRepository<Quiz, Long> {
-    List<QuizDTO> findByCategory(String category);
-    List<QuizDTO> findBySubject(String subject);
-    List<QuizDTO> findByPrev(Boolean isPrev, String cat);
+    List<Quiz> findByCategoryIgnoreCase(String category);
+    List<Quiz> findBySubjectIgnoreCase(String subject);
+    List<QuizDTO> findByPrevAndCategory(Boolean prev, String category);
 }

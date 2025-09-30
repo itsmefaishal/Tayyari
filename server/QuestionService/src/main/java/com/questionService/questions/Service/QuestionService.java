@@ -2,11 +2,9 @@ package com.questionService.questions.Service;
 
 import com.questionService.questions.Entity.Question;
 import com.questionService.questions.QuestionDTO.QuestionDTO;
-import com.questionService.questions.QuestionDTO.QuestionListDTO;
 import com.questionService.questions.Repository.QuestionRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -32,12 +30,11 @@ public class QuestionService {
         }
     }
 
-    public List<Question> getMultipleQuestions(QuestionListDTO listOfIds){
+    public List<Question> getMultipleQuestions(List<Long> listOfIds){
         try{
             List<Question> questionList = new ArrayList<>();
-            List<Long> ids = listOfIds.getIds();
 
-            for(Long id : ids){
+            for(Long id : listOfIds){
                 Question q = getQuestion(id);
                 if(q == null) continue;
                 questionList.add(q);
@@ -99,10 +96,11 @@ public class QuestionService {
 
             if(request.getCategory() != null){
                 question.setCategory(request.getCategory());
-				  }
-				  			if(request.getSubject() != null){
-							 question.setSubject(request.getSubject());
-							             }
+            }
+
+            if(request.getSubject() != null){
+                question.setSubject(request.getSubject());
+            }
 
             if(request.getOptionOne() != null){
                 question.setOptionOne(request.getOptionOne());

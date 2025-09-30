@@ -1,8 +1,6 @@
 package com.questionService.questions.Controller;
-
 import com.questionService.questions.Entity.Question;
 import com.questionService.questions.QuestionDTO.QuestionDTO;
-import com.questionService.questions.QuestionDTO.QuestionListDTO;
 import com.questionService.questions.Service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,12 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import javax.swing.text.html.Option;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/question")
@@ -41,11 +35,12 @@ public class QuestionController {
     }
 
     @PostMapping("/getMultipleQuestions")
-    public List<Question> getMultipleQuestions(@RequestBody QuestionListDTO ids){
+    public List<Question> getMultipleQuestions(@RequestBody List<Long> ids){
         try{
-
+            System.out.println(ids + "this is from question controller getMultiplequestions method this is request ids");
+            
             List<Question> list = questionService.getMultipleQuestions(ids);
-            System.out.println(list);
+            System.out.println(list + "this is from question controller getMultiplequestions method this is the list of question for response");
             return list;
         } catch (Exception e) {
             throw new RuntimeException(e);

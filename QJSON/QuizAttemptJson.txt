@@ -1,14 +1,6 @@
 {
-  "quizAttemptId": 101,
   "userId": 2025,
   "quizId": 305,
-  "enrollment": {
-    "enrollmentId": 407,
-    "courseId": 55,
-    "userId": 2025
-    // other fields from UserEnrollment if included
-  },
-  "attemptNumber": 1,
   "startedAt": "2025-09-28T14:00:00",
   "completedAt": "2025-09-28T14:30:00",
   "attemptStatus": "COMPLETED",
