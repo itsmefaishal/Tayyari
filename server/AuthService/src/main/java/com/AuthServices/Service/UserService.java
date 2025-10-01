@@ -21,7 +21,7 @@ public class UserService {
     @Autowired
     PasswordEncoder encoder;
     @Autowired
-    JwtUtil jwtUtil;
+    JwtUtil ju;
 
     public User addUser(String fname, String lname, String uName, String password,String status, Set<Role> role )
     {
@@ -29,11 +29,25 @@ public class UserService {
            User user = new User(fname,lname,uName,password,status,role);
            User save = userRepo.save(user);
 
+
            return save;
        } catch (Exception e) {
            throw new RuntimeException(e);
        }
     }
+
+    public User getUserFromToken(String token)
+    {
+		System.out.println("token  : "+token);
+		String username=ju.extractUsername(token);
+		System.out.println("username  : "+username);
+		User user = userRepo.findByEmail(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        System.out.println("user  : "+user.toString());
+
+                return user;
+
+		}
 
     public String verifyUserEmail(String email, String otpCode) {
         // Find user
@@ -50,14 +64,6 @@ public class UserService {
         userRepo.save(user);
 
         return "Email verified successfully. User is now active.";
-    }
-
-    public User getCurrentUser(String token){
-        String username = jwtUtil.extractUsername(token);
-
-        Optional<User> user = userRepo.findByEmail(username);
-
-        return user.get();
     }
 
     public String resendOTP(String email) {

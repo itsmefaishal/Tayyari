@@ -13,9 +13,13 @@ import org.springframework.http.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -28,6 +32,10 @@ public class GoogleAuthController {
 
     @Value("${spring.security.oauth2.client.registration.google.client-secret}")
     private String clientSecret;
+
+    
+   // @Value("${app.frontend.url:http://localhost:3000}")
+    private String frontendUrl ="http://localhost:3000";
 
     @Autowired
     private RestTemplate restTemplate;
@@ -90,28 +98,25 @@ public class GoogleAuthController {
                 userDetails = (UserDetails) userDetailsService.loadUserByUsername(email);
                 String jwtToken = jwtUtil.generateToken(userDetails);
 
-//                // Option 1: Return JSON response with token
-//                Map<String, Object> response = new HashMap<>();
-//                response.put("token", jwtToken);
-//                response.put("email", email);
-//                response.put("firstName", firstName);
-//                response.put("lastName", lastName);
-//                response.put("message", "Login successful");
-//
-//                return ResponseEntity.ok(response);
-
-                // Option 2: If you prefer redirect, uncomment below and comment above
-                
-                String redirectUrl = "http://localhost:3000/dashboard?token=" + jwtToken;
-                return ResponseEntity.status(HttpStatus.FOUND)
-                                     .header(HttpHeaders.LOCATION, redirectUrl)
-                                     .build();
-
+                // Redirect to frontend success page with token
+                HttpHeaders redirectHeaders = new HttpHeaders();
+                redirectHeaders.setLocation(URI.create(frontendUrl + "/auth/success?token=" + jwtToken));
+                return new ResponseEntity<>(redirectHeaders, HttpStatus.FOUND);
             }
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+
+            // Authentication failed - redirect to login with error
+            HttpHeaders redirectHeaders = new HttpHeaders();
+            redirectHeaders.setLocation(URI.create(frontendUrl + "/auth/success?error=oauth_failed"));
+            return new ResponseEntity<>(redirectHeaders, HttpStatus.FOUND);
+
         } catch (Exception e) {
-            System.out.println("Exception occurred while handleGoogleCallback " + e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            System.out.println("Exception occurred while handleGoogleCallback: " + e.getMessage());
+            e.printStackTrace();
+
+            // Server error - redirect to login with error
+            HttpHeaders redirectHeaders = new HttpHeaders();
+            redirectHeaders.setLocation(URI.create(frontendUrl + "/auth/success?error=server_error"));
+            return new ResponseEntity<>(redirectHeaders, HttpStatus.FOUND);
         }
     }
 }

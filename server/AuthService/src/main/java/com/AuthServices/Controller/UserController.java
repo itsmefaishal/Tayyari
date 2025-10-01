@@ -33,6 +33,20 @@ public class UserController {
     @Autowired
     OTPService otpService;
 
+	@GetMapping("/me")
+	public User getCurrentUser(@RequestParam String token)
+	{
+		if(token.equals("undefined") || token == null)
+		{
+			System.out.println("handling undefined request");
+			return null;
+		}
+			System.out.println("inside getCurrentUser   : "+token);
+		User usr=userService.getUserFromToken(token);
+		System.out.println("user from token   : "+usr.toString());
+		return usr;
+		}
+
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<User>> addUser(@RequestBody UserDTO user)
     {
@@ -122,7 +136,7 @@ public class UserController {
 
     }
 
-    @GetMapping("/me")
+ /*   @GetMapping("/me")
     public User getCurrentUser(@RequestParam String token){
         if(token == null || token.equals("undefined")){
             return null;
@@ -131,7 +145,7 @@ public class UserController {
         User user = userService.getCurrentUser(token);
 
         return user;
-    }
+    }*/
 
     @PostMapping("/verify-otp")
     public ResponseEntity<?> verifyOTP(@Valid @RequestBody VerifyOTPRequest request) {

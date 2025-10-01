@@ -14,24 +14,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/attempt")
+@RequestMapping("/user")
 public class UserAttemptController {
     private static final Logger logger = LoggerFactory.getLogger(UserAttemptController.class);
     @Autowired
     ProgressTrackingService progressTracking;
-    @PostMapping("/save")
+    @PostMapping("/attempt/save")
     public ApiResponse<AttemptResponseDto> postAttempt(@RequestBody AttemptRequestDto ard)
     {
 
-        try {
+//        try {
             logger.info("Entering into  postAttempt method with RequestDto: {} :",ard);
             AttemptResponseDto attemptResponse = progressTracking.recordQuizAttempt(ard);
             return  new ApiResponse<>(true,"Attempt posted Successfully",attemptResponse);
-        } catch (Exception e) {
-            logger.info("catch block  postAttempt method with RequestDto: {} :",ard);
-            e.printStackTrace();
-            return  new ApiResponse<>(false,"Attempt posting failed",null);
-
-        }
+//        } catch (Exception e) {
+//            logger.info("catch block  postAttempt method with RequestDto: {} :",ard);
+//            e.printStackTrace();
+//            return  new ApiResponse<>(false,"Attempt posting failed",null);
+//
+//        }
     }
 }

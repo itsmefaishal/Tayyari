@@ -22,13 +22,10 @@ public class DashboardController {
     {
         logger.info("Entering into DashboardController loadDashboardForUser method with user id: {} :",userId);
 
-        try {
+
             DashboardResponseDto dashboardResponse = dashboardService.LoadDashboard(userId);
             logger.info("Exiting from method with DashboardResponse : {}",dashboardResponse);
             return new ApiResponse<>(true,"Dashboard loaded successfully",dashboardResponse);
-        } catch (Exception e) {
-            logger.info("Exception  : {}",e);
-            return new ApiResponse<>(false,"Dashboard loading failed",null);
-        }
+
     }
 }

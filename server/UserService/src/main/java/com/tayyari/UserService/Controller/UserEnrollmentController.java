@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/enrollment")
+@RequestMapping("/user")
 public class UserEnrollmentController {
 
     private static final Logger log = LogManager.getLogger(UserEnrollmentController.class);
     @Autowired
     private EnrollmentService enrollmentService;
 
-    @PostMapping("/post")
+    @PostMapping("/enrollment/post")
     public ApiResponse<EnrollmentResponseDto> postEnrollmentForQuiz(@RequestBody EnrollmentRequestDto erd)
     {
         try {

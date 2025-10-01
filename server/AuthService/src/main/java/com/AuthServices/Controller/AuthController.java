@@ -79,6 +79,11 @@ public class AuthController {
         return "Authcontroller zinda hai";
     }
 
+     @GetMapping("/user-status")
+	    public Boolean UserStatus()
+	    {
+	        return true;
+    }
 
 }
 

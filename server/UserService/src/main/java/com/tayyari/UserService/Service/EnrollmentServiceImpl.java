@@ -35,7 +35,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     private  AuthServiceClient authServiceClient;
 
     @Override
-    public EnrollmentResponseDto enrollUserInQuiz(EnrollmentRequestDto request) {
+    public EnrollmentResponseDto enrollUserInQuiz(EnrollmentRequestDto request) throws BusinessException {
         log.info("inside enrollUserInQuiz : {}",request);
         // Validate user exists
         validateUserExists(request.getUserId());

@@ -75,14 +75,18 @@ spring:
             - Path=/quiz/public/**
 
 
-        # Product service routes (authenticated users)
-        - id: product-service
-          uri: lb://product-service
+        # User service routes (requires USER or ADMIN role)
+        - id: user-service
+          uri: lb://UserService
           predicates:
-            - Path=/products/**
+            - Path=/user/**
           filters:
-            - StripPrefix=1
-            - JwtAuthenticationFilter
+#            - StripPrefix=1
+            - name: JwtAuthenticationFilter
+              args:
+                required-roles:
+                  - ROLE_ADMIN
+                  - ROLE_USER
 
         # Order service routes (requires USER or ADMIN role)
         - id: order-service
