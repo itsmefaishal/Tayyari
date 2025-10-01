@@ -1,24 +1,12 @@
 package com.QuizService.QuizService.DTO;
 import java.util.List;
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class QuizAttemptRequestDTO {
     private long userId;
     private long quizId;
     private String uniqueKey;
-    
-    public String getUniqueKey() {
-        return uniqueKey;
-    }
-    public void setUniqueKey(String uniqueKey) {
-        this.uniqueKey = uniqueKey;
-    }
-    public List<QuestionAnswer> getQuestionAnswersList() {
-        return questionAnswersList;
-    }
-    public void setQuestionAnswersList(List<QuestionAnswer> questionAnswersList) {
-        this.questionAnswersList = questionAnswersList;
-    }
     private LocalDateTime startedAt;
     private LocalDateTime completedAt;
     private String attemptStatus;
@@ -31,6 +19,43 @@ public class QuizAttemptRequestDTO {
     private int unanswered;
     private int totalQuestions;
     private List<QuestionAnswer> questionAnswersList;
+
+    public int calculateTimeTaken(LocalDateTime st, LocalDateTime ct) throws Exception{
+        try{
+            Duration duration = Duration.between(st, ct);
+            return (int) duration.getSeconds();
+        }
+        catch(NullPointerException e){
+            e.printStackTrace();
+            throw new NullPointerException(e + "this exception for quiz service inside QuizAttemptRequestDTO");
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            throw new Exception(e + "this exception for quiz service inside QuizAttemptRequestDTO");
+        }
+    }
+    
+    @Override
+    public String toString() {
+        return "QuizAttemptRequestDTO [userId=" + userId + ", quizId=" + quizId + ", uniqueKey=" + uniqueKey
+                + ", startedAt=" + startedAt + ", completedAt=" + completedAt + ", attemptStatus=" + attemptStatus
+                + ", score=" + score + ", maxScore=" + maxScore + ", percentage=" + percentage + ", timeTaken="
+                + timeTaken + ", correctAnswers=" + correctAnswers + ", incorrectAnswers=" + incorrectAnswers
+                + ", unanswered=" + unanswered + ", totalQuestions=" + totalQuestions + ", questionAnswersList="
+                + questionAnswersList + "]";
+    }
+    public String getUniqueKey() {
+        return uniqueKey;
+    }
+    public void setUniqueKey(String uniqueKey) {
+        this.uniqueKey = uniqueKey;
+    }
+    public List<QuestionAnswer> getQuestionAnswersList() {
+        return questionAnswersList;
+    }
+    public void setQuestionAnswersList(List<QuestionAnswer> questionAnswersList) {
+        this.questionAnswersList = questionAnswersList;
+    }
 
     public long getUserId() { return userId; }
     public void setUserId(long userId) { this.userId = userId; }

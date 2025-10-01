@@ -166,6 +166,7 @@ public class QuizService {
             qDto.setOptionB(q.getOptionTwo());
             qDto.setOptionC(q.getOptionThree());
             qDto.setOptionD(q.getOptionFour());
+            qDto.setMarks(q.getMarks());
 
             qDtoList.add(qDto);
         }
@@ -179,12 +180,13 @@ public class QuizService {
         return quizRepo.findByPrevAndCategory(prev, category);
     }
 
-    public String submitQuiz(String uniqueKey, QuizResponseDTO quizWithQuestions){
+    public String submitQuiz(String uniqueKey, QuizResponseDTO quizWithQuestions) throws Exception{
         Long quizIdFromRequest = quizWithQuestions.getQuizId();
         
         QuizWithQuestions qWithQuestions = getQuizWithQuestions(quizIdFromRequest);
 
         QuizAttemptRequestDTO quizAttemptRequestDTO = quizAttemptCalculation.calculateAttempt(qWithQuestions, quizWithQuestions, uniqueKey);
+        System.out.println(quizAttemptRequestDTO.toString() + "this is from submitQuiz inside quizService");
 
         return feignClientInterface.submitQuizAttempt(quizAttemptRequestDTO);
     }

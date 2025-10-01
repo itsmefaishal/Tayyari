@@ -6,12 +6,12 @@ import com.QuizService.QuizService.DTO.QuizAttemptRequestDTO;
 
 @FeignClient(
     name = "user-service", 
-    url = "http://localhost:9090/user-service"
+    url = "http://localhost:9090/user"
 )
 
 public interface FeignClientInterface {
     
-    @PostMapping("/submit-attempt")
+    @PostMapping("/attempt/save")
     String submitQuizAttempt(@RequestBody QuizAttemptRequestDTO quizAttemptRequestDTO);
 
 }

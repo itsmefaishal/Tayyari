@@ -9,6 +9,15 @@ public class QuestionDTO {
     private String optionC;
     private String optionD;
     private String correctAns;
+    private double marks;
+
+    public double getMarks() {
+        return marks;
+    }
+
+    public void setMarks(double marks) {
+        this.marks = marks;
+    }
 
     public String getContent() {
         return content;
@@ -60,13 +69,9 @@ public class QuestionDTO {
 
     @Override
     public String toString() {
-        return "QuestionDTO{" +
-                "content='" + content + '\'' +
-                ", optionA='" + optionA + '\'' +
-                ", optionB='" + optionB + '\'' +
-                ", optionC='" + optionC + '\'' +
-                ", optionD='" + optionD + '\'' +
-                ", correctAns='" + correctAns + '\'' +
-                '}';
+        return "QuestionDTO [content=" + content + ", optionA=" + optionA + ", optionB=" + optionB + ", optionC="
+                + optionC + ", optionD=" + optionD + ", correctAns=" + correctAns + ", marks=" + marks + "]";
     }
+
+    
 }

@@ -5,7 +5,14 @@ public class QuizBasicInfo {
     private String title;
     private String description;
     private String status;
+
     
+    
+    @Override
+    public String toString() {
+        return "QuizBasicInfo [id=" + id + ", title=" + title + ", description=" + description + ", status=" + status
+                + "]";
+    }
     public long getId() {
         return id;
     }

@@ -39,8 +39,6 @@ public class QuestionServiceClient {
             System.out.println(response.getBody() + "print in getQuestionList data");
             return response.getBody();
         } catch (Exception e) {
-            // TODO: handle exception
-            // System.out.println(e.printStackTrace(););
             e.printStackTrace();
             System.out.println("inside try of restCLinet");
 

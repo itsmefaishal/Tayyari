@@ -5,7 +5,15 @@ public class QuestionAnswer {
     private String selectedAnswer;
     private String correctAnswer;
 
-    // Getters and Setters
+    @Override
+    public String toString() {
+        return "QuestionAnswer [question=" + question + ", selectedAnswer=" + selectedAnswer + ", correctAnswer="
+                + correctAnswer + "]";
+    }
+
+    public QuestionAnswer() {
+    }
+    
     public String getQuestion() { return question; }
     public void setQuestion(String question) { this.question = question; }
 

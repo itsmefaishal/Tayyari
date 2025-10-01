@@ -46,7 +46,7 @@ public class QuizControllerPublic {
     }
 
     @GetMapping("/submit-quiz")
-    public ResponseEntity<?> submitQuiz(@RequestParam String uniqueKey, @RequestBody QuizResponseDTO request){
+    public ResponseEntity<?> submitQuiz(@RequestParam String uniqueKey, @RequestBody QuizResponseDTO request) throws Exception{
         return ResponseEntity.ok(quizService.submitQuiz(uniqueKey,request));
     }
 

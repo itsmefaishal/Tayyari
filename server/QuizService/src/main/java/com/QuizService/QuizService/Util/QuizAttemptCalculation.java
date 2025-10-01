@@ -12,7 +12,7 @@ import com.QuizService.QuizService.DTO.*;
 
 @Service
 public class QuizAttemptCalculation {
-    public QuizAttemptRequestDTO calculateAttempt(QuizWithQuestions quiz, QuizResponseDTO quizResponseDTO, String uniqueKey){
+    public QuizAttemptRequestDTO calculateAttempt(QuizWithQuestions quiz, QuizResponseDTO quizResponseDTO, String uniqueKey) throws Exception{
         QuizAttemptRequestDTO quizAttemptRequestDTO = new QuizAttemptRequestDTO();
         quizAttemptRequestDTO.setUserId(quizResponseDTO.getUserId());
         quizAttemptRequestDTO.setQuizId(quizResponseDTO.getQuizId());
@@ -26,10 +26,13 @@ public class QuizAttemptCalculation {
 
         List<QuestionDTO> qListFromDB = quiz.getQuestion();
         Map<String,String> qContent = new HashMap<>();
+        Map<String,Double> marksOfQuestion = new HashMap<>();
         int correctAns = 0, incorrectAnswers = 0, totalQuestions = 0;
+        double marksObtained = 0.0;
 
         for(QuestionDTO q : qListFromDB){
             qContent.put(q.getContent(), q.getCorrectAns());
+            marksOfQuestion.put(q.getContent(), q.getMarks());
         }
 
         for (Pair QnA : quizResponseDTO.getListOfUserAttemptQuestionsAndAnswers()) {
@@ -39,6 +42,7 @@ public class QuizAttemptCalculation {
 
             if(QnA.getSelectedAnswer().equals(qContent.get(QnA.getContent()))){
                 correctAns += 1;
+                marksObtained += marksOfQuestion.get(QnA.getContent());
             }
             else if(!QnA.getSelectedAnswer().equals(qContent.get(QnA.getContent()))){
                 incorrectAnswers += 1;
@@ -54,6 +58,9 @@ public class QuizAttemptCalculation {
         quizAttemptRequestDTO.setIncorrectAnswers(incorrectAnswers);
         quizAttemptRequestDTO.setUnanswered(totalQuestions - quizResponseDTO.getListOfUserAttemptQuestionsAndAnswers().size());
         quizAttemptRequestDTO.setTotalQuestions(totalQuestions);
+        quizAttemptRequestDTO.setScore(marksObtained);
+        quizAttemptRequestDTO.setPercentage((marksObtained/quizAttemptRequestDTO.getMaxScore()*100.0));
+        quizAttemptRequestDTO.setTimeTaken(quizAttemptRequestDTO.getStartedAt(), quizAttemptRequestDTO.getCompletedAt());
 
         return quizAttemptRequestDTO;
     }
