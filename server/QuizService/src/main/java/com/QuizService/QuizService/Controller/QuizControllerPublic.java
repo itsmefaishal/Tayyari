@@ -58,8 +58,10 @@ public class QuizControllerPublic {
     }
 
     @GetMapping("/get-basic-info")
-    public ResponseEntity<QuizBasicInfo> getBasicQuizInfo(@RequestParam Long quizId){
-        System.out.println("inside getBasicQuizInfo controller");
-        return ResponseEntity.ok(quizService.getQuizBasicInfo(quizId));
+    public QuizBasicInfo getBasicQuizInfo(@RequestParam Long quizId){
+        System.out.println("inside get-basic-info-------------- :  ");
+        QuizBasicInfo quizBasicInfo = quizService.getQuizBasicInfo(quizId);
+        System.out.println(quizBasicInfo.toString());
+        return quizBasicInfo;
     }
 }

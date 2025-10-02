@@ -3,6 +3,7 @@ package com.tayyari.UserService.Service;
 import com.tayyari.UserService.DTO.AttemptRequestDto;
 import com.tayyari.UserService.DTO.AttemptResponseDto;
 import com.tayyari.UserService.DTO.ProgressResponseDto;
+import com.tayyari.UserService.DTO.RecordAttemptResponseDTO;
 import com.tayyari.UserService.Entity.QuizAttempt;
 import com.tayyari.UserService.Entity.UserEnrollment;
 import com.tayyari.UserService.Entity.UserProgress;
@@ -19,6 +20,7 @@ import com.tayyari.UserService.ENUMS.ErrorCode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -32,7 +34,7 @@ public class ProgressTrackingServiceImpl implements ProgressTrackingService {
     private UserEnrollmentRepo enrollmentRepository;
 
     @Override
-    public AttemptResponseDto recordQuizAttempt( AttemptRequestDto request) {
+    public RecordAttemptResponseDTO recordQuizAttempt(AttemptRequestDto request) {
         logger.info("Entering into  recordQuizAttempt method with RequestDto: {} ",request);
         // Get enrollment
         UserEnrollment enrollment = enrollmentRepository.findByUserIdAndQuizId(request.getUserId(), request.getQuizId())
@@ -58,6 +60,7 @@ public class ProgressTrackingServiceImpl implements ProgressTrackingService {
             attempt.setTimeTaken(request.getTimeTaken());
             attempt.setCorrectAnswers(request.getCorrectAnswers());
             attempt.setIncorrectAnswers(request.getIncorrectAnswers());
+            attempt.setUniqueKey(request.getUniqueKey());
             attempt.setUnanswered(request.getUnanswered());
             attempt.setTotalQuestions(request.getTotalQuestions());
             attempt.setAnswers(request.getAnswerDetails());
@@ -65,25 +68,17 @@ public class ProgressTrackingServiceImpl implements ProgressTrackingService {
             QuizAttempt sa = attemptRepository.save(attempt);
             logger.info("QuizAttempt : {} ",sa);
 
-            AttemptResponseDto ard=new AttemptResponseDto();
-
-            ard.setUserId(sa.getUserId());
-            ard.setQuizId(sa.getQuizId());
-            ard.setEnrollmentId(enrollment.getUserEnrollmentId());
-            ard.setAttemptNumber(sa.getAttemptNumber());
-            ard.setStartedAt(sa.getStartedAt());
-            ard.setCompletedAt(sa.getCompletedAt());
-            ard.setStatus(sa.getAttemptStatus().name());   // example status
+            RecordAttemptResponseDTO ard=new RecordAttemptResponseDTO();
+            ard.setUniqueKey(sa.getUniqueKey());
             ard.setScore(sa.getScore());
             ard.setMaxScore(sa.getMaxScore());
-            ard.setPercentage(sa.getPercentage());
             ard.setTimeTaken(sa.getTimeTaken());
             ard.setCorrectAnswers(sa.getCorrectAnswers());
             ard.setIncorrectAnswers(sa.getIncorrectAnswers());
-            ard.setTotalQuestions(sa.getTotalQuestions());
-            ard.setAnswerDetails(sa.getAnswers());
-            logger.info("AttemptResponseDto : {} ",ard);
+            ard.setUnanswered(sa.getUnanswered());
             return ard;
+
+
 
         } catch (Exception e) {
             logger.info("Inside catch block  : {}",e);
@@ -106,7 +101,35 @@ public class ProgressTrackingServiceImpl implements ProgressTrackingService {
     }
 
     @Override
-    public List<AttemptResponseDto> getUserAttempts(Long userId, Long quizId, Pageable pageable) {
-        return List.of();
+    public List<AttemptResponseDto> getUserAttempts(Long userId, Long quizId) {
+
+        List<QuizAttempt> attempts = attemptRepository.findByUserIdAndQuizId(userId, quizId);
+        List<AttemptResponseDto> listAR= new ArrayList<>();
+        for(QuizAttempt attempt:attempts)
+        {
+            AttemptResponseDto ard = new AttemptResponseDto();
+            ard.setUserId(attempt.getUserId());
+            ard.setQuizId(attempt.getQuizId());
+            ard.setEnrollmentId(attempt.getEnrollment().getUserEnrollmentId());
+            ard.setAttemptNumber(attempt.getAttemptNumber());
+            ard.setStartedAt(attempt.getStartedAt());
+            ard.setCompletedAt(attempt.getCompletedAt());
+            ard.setStatus(attempt.getAttemptStatus().name());   // example status
+            ard.setScore(attempt.getScore());
+            ard.setMaxScore(attempt.getMaxScore());
+            ard.setPercentage(attempt.getPercentage());
+            ard.setTimeTaken(attempt.getTimeTaken());
+            ard.setCorrectAnswers(attempt.getCorrectAnswers());
+            ard.setIncorrectAnswers(attempt.getIncorrectAnswers());
+            ard.setUnanswered(attempt.getUnanswered());
+            ard.setTotalQuestions(attempt.getTotalQuestions());
+            ard.setAnswerDetails(attempt.getAnswers() != null ? attempt.getAnswers() : new ArrayList<>());
+            listAR.add(ard);
+
+
+        }
+        logger.info("AttemptResponseDto : {} ",listAR);
+
+        return listAR;
     }
 }

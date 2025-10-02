@@ -82,6 +82,7 @@ public class AuthController {
      @GetMapping("/user-status")
 	    public Boolean UserStatus()
 	    {
+			System.out.println("inside user status ");
 	        return true;
     }
 

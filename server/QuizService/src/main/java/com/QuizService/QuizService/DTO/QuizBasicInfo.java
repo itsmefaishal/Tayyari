@@ -1,42 +1,56 @@
 package com.QuizService.QuizService.DTO;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class QuizBasicInfo {
-    private long id;
-    private String title;
-    private String description;
+   private Long quizId;
+    private String quizName;
+    private String quizDescription;
+    @JsonProperty("status")
     private String status;
 
-    
-    
-    @Override
-    public String toString() {
-        return "QuizBasicInfo [id=" + id + ", title=" + title + ", description=" + description + ", status=" + status
-                + "]";
+    public QuizBasicInfo() {
     }
-    public long getId() {
-        return id;
+
+    public Long getQuizId() {
+        return quizId;
     }
-    public void setId(long id) {
-        this.id = id;
+
+    public void setQuizId(Long quizId) {
+        this.quizId = quizId;
     }
-    public String getTitle() {
-        return title;
+
+    public String getQuizName() {
+        return quizName;
     }
-    public void setTitle(String title) {
-        this.title = title;
+
+    public void setQuizName(String quizName) {
+        this.quizName = quizName;
     }
-    public String getDescription() {
-        return description;
+
+    public String getQuizDescription() {
+        return quizDescription;
     }
-    public void setDescription(String description) {
-        this.description = description;
+
+    public void setQuizDescription(String quizDescription) {
+        this.quizDescription = quizDescription;
     }
+
     public String getStatus() {
         return status;
     }
+
     public void setStatus(String status) {
         this.status = status;
     }
 
-    
+    @Override
+    public String toString() {
+        return "QuizBasicInfo{" +
+                "quizId=" + quizId +
+                ", quizName='" + quizName + '\'' +
+                ", quizDescription='" + quizDescription + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

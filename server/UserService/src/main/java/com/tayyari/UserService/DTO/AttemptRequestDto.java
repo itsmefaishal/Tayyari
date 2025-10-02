@@ -4,6 +4,8 @@ import com.tayyari.UserService.ENUMS.AttemptStatus;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -12,44 +14,68 @@ import java.util.Map;
 
 public class AttemptRequestDto {
     @NotNull(message = "Quiz ID is required")
+	@JsonProperty("quizId")
     private Long quizId;
 
     @NotNull(message = "User ID is required")
+	@JsonProperty("userId")
     private Long userId;
 
+    @JsonProperty("uniqueKey")
+    private String uniqueKey;
+
     @NotNull(message = "Started at timestamp is required")
+	@JsonProperty("startedAt")
     private LocalDateTime startedAt;
 
+	@JsonProperty("completedAt")
     private LocalDateTime completedAt;
 
     @NotNull(message = "Status is required")
+	@JsonProperty("attemptStatus")
     private AttemptStatus status;
 
     @DecimalMin(value = "0.0", message = "Score must be non-negative")
+	@JsonProperty("score")
     private BigDecimal score;
 
     @DecimalMin(value = "0.0", message = "Max score must be non-negative")
+	@JsonProperty("maxScore")
     private BigDecimal maxScore;
 
     @Min(value = 0, message = "Time taken must be non-negative")
+	@JsonProperty("timeTaken")
     private Integer timeTaken;
 
     @Min(value = 0, message = "Correct answers must be non-negative")
+	@JsonProperty("correctAnswers")
     private Integer correctAnswers = 0;
 
     @Min(value = 0, message = "Incorrect answers must be non-negative")
+	@JsonProperty("incorrectAnswers")
     private Integer incorrectAnswers = 0;
 
     @Min(value = 0, message = "Unanswered must be non-negative")
+	@JsonProperty("unanswered")
     private Integer unanswered = 0;
 
     @Min(value = 1, message = "Total questions must be at least 1")
+	@JsonProperty("totalQuestions")
     private Integer totalQuestions;
+	@JsonProperty("percentage")
     private  double percentage;
-
+	@JsonProperty("questionAnswersList")
     private List<AnswerDetailDto> answerDetails;
 
     public AttemptRequestDto() {
+    }
+
+    public String getUniqueKey() {
+        return uniqueKey;
+    }
+
+    public void setUniqueKey(String uniqueKey) {
+        this.uniqueKey = uniqueKey;
     }
 
     public Long getQuizId() {
@@ -162,5 +188,26 @@ public class AttemptRequestDto {
 
     public void setAnswerDetails(List<AnswerDetailDto> answerDetails) {
         this.answerDetails = answerDetails;
+    }
+
+    @Override
+    public String toString() {
+        return "AttemptRequestDto{" +
+                "quizId=" + quizId +
+                ", userId=" + userId +
+                ", uniqueKey='" + uniqueKey + '\'' +
+                ", startedAt=" + startedAt +
+                ", completedAt=" + completedAt +
+                ", status=" + status +
+                ", score=" + score +
+                ", maxScore=" + maxScore +
+                ", timeTaken=" + timeTaken +
+                ", correctAnswers=" + correctAnswers +
+                ", incorrectAnswers=" + incorrectAnswers +
+                ", unanswered=" + unanswered +
+                ", totalQuestions=" + totalQuestions +
+                ", percentage=" + percentage +
+                ", answerDetails=" + answerDetails +
+                '}';
     }
 }

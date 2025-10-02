@@ -36,9 +36,9 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
     @Override
     public EnrollmentResponseDto enrollUserInQuiz(EnrollmentRequestDto request) throws BusinessException {
-        log.info("inside enrollUserInQuiz : {}",request);
+        log.info("inside enrollUserInQuiz : {}",request.toString());
         // Validate user exists
-        validateUserExists(request.getUserId());
+       // validateUserExists(request.getUserId());
 
         // Validate quiz exists and is active and get quiz active
         QuizBasicInfoDto quizBasicInfo = validateQuizExists(request.getQuizId());
@@ -54,7 +54,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         // Create enrollment
         UserEnrollment enrollment = new UserEnrollment();
         enrollment.setUserId(request.getUserId());
-        enrollment.setQuizId(request.getUserId());
+        enrollment.setQuizId(request.getQuizId());
         enrollment.setExamCategory(request.getExamCategory());
         enrollment.setEnrolledAt(LocalDateTime.now());
         enrollment.setEnrollStatus(UserEnrollment.EnrollmentStatus.ACTIVE);
@@ -189,6 +189,8 @@ LocalDateTime updatedAt, QuizBasicInfoDto quizInfo) */
    private QuizBasicInfoDto validateQuizExists(Long quizId) {
        log.info("inside validateQuizExists with quizId {}",quizId);
        QuizBasicInfoDto basicQuizInfo = quizServiceClient.getBasicQuizInfo(quizId);
+        log.info("inside basicQuizInfo  {}",basicQuizInfo);
+
        if(basicQuizInfo==null)
        {
            log.info("inside basicQuizInfo==null ");

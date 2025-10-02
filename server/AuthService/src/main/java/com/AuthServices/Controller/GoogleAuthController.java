@@ -25,7 +25,6 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/auth/google")
-@CrossOrigin(origins = "http://localhost:3000") // Add CORS support
 public class GoogleAuthController {
     @Value("${spring.security.oauth2.client.registration.google.client-id}")
     private String clientId;
