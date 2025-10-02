@@ -4,7 +4,6 @@ import java.util.List;
 
 public class QuizResponseDTO {
 
-    private long quizAttemptId;
     private long userId;
     private long quizId;
     private long enrollementId;
@@ -18,12 +17,6 @@ public class QuizResponseDTO {
     }
     public void setListOfUserAttemptQuestionsAndAnswers(List<Pair> listOfUserAttemptQuestionsAndAnswers) {
         this.listOfUserAttemptQuestionsAndAnswers = listOfUserAttemptQuestionsAndAnswers;
-    }
-    public long getQuizAttemptId() {
-        return quizAttemptId;
-    }
-    public void setQuizAttemptId(long quizAttemptId) {
-        this.quizAttemptId = quizAttemptId;
     }
     public long getUserId() {
         return userId;
@@ -60,7 +53,7 @@ public class QuizResponseDTO {
 	
 	 @Override
     public String toString() {
-        return "QuizResponseDTO [quizAttemptId=" + quizAttemptId + ", userId=" + userId + ", quizId=" + quizId
+        return "QuizResponseDTO [userId=" + userId + ", quizId=" + quizId
                 + ", enrollementId=" + enrollementId + ", startedAt=" + startedAt + ", submittedAt=" + submittedAt
                 + ", listOfUserAttemptQuestionsAndAnswers=" + listOfUserAttemptQuestionsAndAnswers + "]";
     }

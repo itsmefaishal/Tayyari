@@ -80,7 +80,7 @@ public class QuizControllerAdmin {
         return ResponseEntity.ok(quizService.getQuizBasicInfo(quizId));
     }
 
-    @GetMapping("/submit-quiz")
+    @PostMapping("/submit-quiz")
     public ResponseEntity<QuizAttemptResponseDTO> submitQuiz(@RequestParam String uniqueKey, @RequestBody QuizResponseDTO request) throws Exception{
         System.out.println("inside submitQuiz controller");
         return ResponseEntity.ok(quizService.submitQuiz(uniqueKey,request));

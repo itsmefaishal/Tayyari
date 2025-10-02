@@ -229,7 +229,11 @@ public class QuizService {
 
         QuizAttemptRequestDTO responseAfterQuizSubmit = feignClientInterface.submitQuizAttempt(quizAttemptRequestDTO);
 
-        QuizAttemptResponseDTO response = new QuizAttemptResponseDTO(responseAfterQuizSubmit.getUniqueKey(), responseAfterQuizSubmit.getScore(), responseAfterQuizSubmit.getMaxScore(),responseAfterQuizSubmit.getTimeTaken(),responseAfterQuizSubmit.getCorrectAnswers(),responseAfterQuizSubmit.getIncorrectAnswers(),responseAfterQuizSubmit.getUnanswered());
+        logger.info( "Inside Quiz service submitQuiz() printing QuizAttemptRequestDTO responseAfterQuizSubmit: " + responseAfterQuizSubmit.toString());
+
+        // try{
+            QuizAttemptResponseDTO response = new QuizAttemptResponseDTO(responseAfterQuizSubmit.getUniqueKey(), responseAfterQuizSubmit.getScore(), responseAfterQuizSubmit.getMaxScore(),responseAfterQuizSubmit.getTimeTaken(),responseAfterQuizSubmit.getCorrectAnswers(),responseAfterQuizSubmit.getIncorrectAnswers(),responseAfterQuizSubmit.getUnanswered());
+        // }
 
         logger.info( "Inside Quiz service exiting submitQuiz() with value QuizAttemptResponseDTO: " + response.toString());
 
