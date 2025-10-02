@@ -1,7 +1,8 @@
 package com.QuizService.QuizService.Service;
-
 import com.QuizService.QuizService.DTO.Question;
 import com.QuizService.QuizService.DTO.QuestionListDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -14,20 +15,23 @@ import java.util.List;
 public class QuestionServiceClient {
 
     private final RestTemplate restTemplate;
+    private static final Logger logger = LoggerFactory.getLogger(QuestionServiceClient.class);
 
     public QuestionServiceClient(RestTemplate restTemplate){
         this.restTemplate = restTemplate;
     }
 
     public List<Question> getQuestionList(List<Long> questionIds){
+        logger.info( "Inside Quiz service getQuestionList()");
 
         String url = "http://localhost:8085/question/getMultipleQuestions";
         System.out.println("calling this in http://localhost:8085/question/getMultipleQuestions in getQuestionList");
         QuestionListDTO qList = new QuestionListDTO();
         qList.setIds(questionIds);
 
-
         try {
+            logger.info( "Inside Quiz service -> getQuestionList() -> try block");
+
             ResponseEntity<List<Question>> response = restTemplate.exchange(
                 url,
                 HttpMethod.POST,
@@ -35,15 +39,14 @@ public class QuestionServiceClient {
                 new ParameterizedTypeReference<List<Question>>() {}
             );
 
-
-            System.out.println(response.getBody() + "print in getQuestionList data");
+            logger.info( "Inside Quiz service -> getQuestionList() -> try block returning List<Question>: " + response.getBody().toString());
             return response.getBody();
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("inside try of restCLinet");
+
+            logger.info( "Inside Quiz service -> getQuestionList() -> catch block");
 
             throw new RuntimeException();
         }
-
     }
 }

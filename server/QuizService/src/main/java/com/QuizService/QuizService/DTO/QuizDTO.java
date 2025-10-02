@@ -1,5 +1,4 @@
 package com.QuizService.QuizService.DTO;
-
 import java.util.List;
 
 public class QuizDTO {

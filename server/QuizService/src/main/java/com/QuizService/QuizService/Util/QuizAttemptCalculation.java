@@ -1,13 +1,11 @@
 package com.QuizService.QuizService.Util;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Service;
-import com.QuizService.QuizService.DTO.QuizAttemptRequestDTO;
-import com.QuizService.QuizService.DTO.QuizResponseDTO;
-import com.QuizService.QuizService.DTO.QuizWithQuestions;
-
 import com.QuizService.QuizService.DTO.*;
 
 @Service
@@ -60,8 +58,23 @@ public class QuizAttemptCalculation {
         quizAttemptRequestDTO.setTotalQuestions(totalQuestions);
         quizAttemptRequestDTO.setScore(marksObtained);
         quizAttemptRequestDTO.setPercentage((marksObtained/quizAttemptRequestDTO.getMaxScore()*100.0));
-        quizAttemptRequestDTO.setTimeTaken(quizAttemptRequestDTO.getStartedAt(), quizAttemptRequestDTO.getCompletedAt());
+        quizAttemptRequestDTO.setTimeTaken(calculateTimeTaken(quizAttemptRequestDTO.getStartedAt(), quizAttemptRequestDTO.getCompletedAt()));
 
         return quizAttemptRequestDTO;
+    }
+
+    private int calculateTimeTaken(LocalDateTime st, LocalDateTime ct) throws Exception{
+        try{
+            Duration duration = Duration.between(st, ct);
+            return (int) duration.getSeconds();
+        }
+        catch(NullPointerException e){
+            e.printStackTrace();
+            throw new NullPointerException(e + "this exception for quiz service inside QuizAttemptRequestDTO");
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            throw new Exception(e + "this exception for quiz service inside QuizAttemptRequestDTO");
+        }
     }
 }

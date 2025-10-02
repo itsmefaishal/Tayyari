@@ -1,6 +1,9 @@
 package com.QuizService.QuizService.Controller;
 
+import com.QuizService.QuizService.DTO.QuizAttemptResponseDTO;
+import com.QuizService.QuizService.DTO.QuizBasicInfo;
 import com.QuizService.QuizService.DTO.QuizDTO;
+import com.QuizService.QuizService.DTO.QuizResponseDTO;
 import com.QuizService.QuizService.DTO.QuizWithQuestions;
 import com.QuizService.QuizService.Entity.Quiz;
 import com.QuizService.QuizService.Service.QuizService;
@@ -69,5 +72,17 @@ public class QuizControllerAdmin {
     @GetMapping("/prev/{prev-cat}")
     public ResponseEntity<List<QuizDTO>> getPrev(@PathVariable Boolean prev, @PathVariable String category){
         return ResponseEntity.ok(quizService.getByPrev(prev,category));
+    }
+
+    @GetMapping("/get-basic-info")
+    public ResponseEntity<QuizBasicInfo> getBasicQuizInfo(@RequestParam Long quizId){
+        System.out.println("inside getBasicQuizInfo controller");
+        return ResponseEntity.ok(quizService.getQuizBasicInfo(quizId));
+    }
+
+    @GetMapping("/submit-quiz")
+    public ResponseEntity<QuizAttemptResponseDTO> submitQuiz(@RequestParam String uniqueKey, @RequestBody QuizResponseDTO request) throws Exception{
+        System.out.println("inside submitQuiz controller");
+        return ResponseEntity.ok(quizService.submitQuiz(uniqueKey,request));
     }
 }
