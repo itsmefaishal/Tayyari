@@ -48,6 +48,8 @@ public class QuizAttempt {
 
     @Column(name = "completed_at")
     private LocalDateTime completedAt;
+    @Column(name ="unique_key", nullable = false,unique = true)
+    private String uniqueKey;
 
     @Column
     private AttemptStatus attemptStatus = AttemptStatus.IN_PROGRESS;
@@ -141,6 +143,14 @@ public class QuizAttempt {
 
     public void setCompletedAt(LocalDateTime completedAt) {
         this.completedAt = completedAt;
+    }
+
+    public String getUniqueKey() {
+        return uniqueKey;
+    }
+
+    public void setUniqueKey(String uniqueKey) {
+        this.uniqueKey = uniqueKey;
     }
 
     public AttemptStatus getAttemptStatus() {

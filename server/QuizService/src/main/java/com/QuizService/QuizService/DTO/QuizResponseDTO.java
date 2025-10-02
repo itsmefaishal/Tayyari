@@ -12,12 +12,7 @@ public class QuizResponseDTO {
     private LocalDateTime submittedAt;
     private List<Pair> listOfUserAttemptQuestionsAndAnswers;
 
-    @Override
-    public String toString() {
-        return "QuizResponseDTO [quizAttemptId=" + quizAttemptId + ", userId=" + userId + ", quizId=" + quizId
-                + ", enrollementId=" + enrollementId + ", startedAt=" + startedAt + ", submittedAt=" + submittedAt
-                + ", listOfUserAttemptQuestionsAndAnswers=" + listOfUserAttemptQuestionsAndAnswers + "]";
-    }
+   
     public List<Pair> getListOfUserAttemptQuestionsAndAnswers() {
         return listOfUserAttemptQuestionsAndAnswers;
     }
@@ -61,5 +56,12 @@ public class QuizResponseDTO {
         this.submittedAt = submittedAt;
     }
     public QuizResponseDTO() {
+    }
+	
+	 @Override
+    public String toString() {
+        return "QuizResponseDTO [quizAttemptId=" + quizAttemptId + ", userId=" + userId + ", quizId=" + quizId
+                + ", enrollementId=" + enrollementId + ", startedAt=" + startedAt + ", submittedAt=" + submittedAt
+                + ", listOfUserAttemptQuestionsAndAnswers=" + listOfUserAttemptQuestionsAndAnswers + "]";
     }
 }

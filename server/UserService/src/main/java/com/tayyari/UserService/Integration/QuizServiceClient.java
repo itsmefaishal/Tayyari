@@ -3,11 +3,18 @@ package com.tayyari.UserService.Integration;
 import com.tayyari.UserService.DTO.QuizBasicInfoDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 
 
-@FeignClient(name = "quiz-service", path = "/quiz")
+/*@FeignClient(name = "QuizService", path = "/quiz/public")
 public interface QuizServiceClient {
 
-    @GetMapping("/getBasicQuizInfo")
-    QuizBasicInfoDto getBasicQuizInfo(Long quizId);
+    @GetMapping("/get-basic-info")
+    QuizBasicInfoDto getBasicQuizInfo(@RequestParam Long quizId);
+}*/
+@FeignClient(name = "quiz-service", url = "http://localhost:8072")
+public interface QuizServiceClient {
+
+    @GetMapping("/quiz/public/get-basic-info")
+    QuizBasicInfoDto getBasicQuizInfo(@RequestParam("quizId") Long quizId);
 }

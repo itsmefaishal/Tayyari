@@ -195,10 +195,11 @@ public class QuizService {
         QuizDTO quiz = getQuiz(quizId);
 
         QuizBasicInfo quizBasicInfo = new QuizBasicInfo();
-        quizBasicInfo.setId(quiz.getId());
-        quizBasicInfo.setDescription(quiz.getDescription());
+        quizBasicInfo.setQuizId(quiz.getId());
+        quizBasicInfo.setQuizDescription(quiz.getDescription());
         quizBasicInfo.setStatus(quiz.getStatus());
-        quizBasicInfo.setTitle(quiz.getTitle());
+        quizBasicInfo.setQuizName(quiz.getTitle());
+        System.out.println(quizBasicInfo.toString()+"Sent form method  getQuizBasicInfo");
 
         return quizBasicInfo;
     }
