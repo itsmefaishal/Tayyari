@@ -24,8 +24,8 @@ public class QuestionServiceClient {
     public List<Question> getQuestionList(List<Long> questionIds){
         logger.info( "Inside Quiz service getQuestionList()");
 
-        String url = "http://localhost:8085/question/getMultipleQuestions";
-        System.out.println("calling this in http://localhost:8085/question/getMultipleQuestions in getQuestionList");
+        String url = "https://tayyari-dbt8.onrender.com/question/getMultipleQuestions";
+        System.out.println("calling this in https://tayyari-dbt8.onrender.com/question/getMultipleQuestions in getQuestionList");
         QuestionListDTO qList = new QuestionListDTO();
         qList.setIds(questionIds);
 
