@@ -12,7 +12,7 @@ public interface QuizServiceClient {
     @GetMapping("/get-basic-info")
     QuizBasicInfoDto getBasicQuizInfo(@RequestParam Long quizId);
 }*/
-@FeignClient(name = "quiz-service", url = "http://localhost:8072")
+@FeignClient(name = "quiz-service", url = "https://tayyari-3xqy.onrender.com")
 public interface QuizServiceClient {
 
     @GetMapping("/quiz/public/get-basic-info")
