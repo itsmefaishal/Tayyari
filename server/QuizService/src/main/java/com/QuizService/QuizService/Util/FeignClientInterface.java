@@ -7,7 +7,7 @@ import com.QuizService.QuizService.DTO.QuizAttemptRequestDTO;
 
 @FeignClient(
     name = "user-service", 
-    url = "http://localhost:8071"
+    url = "https://tayyari-qchp.onrender.com"
     )
     
     public interface FeignClientInterface {
