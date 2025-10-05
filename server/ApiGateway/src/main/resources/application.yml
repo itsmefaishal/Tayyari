@@ -39,7 +39,7 @@ spring:
       routes:
         # Auth service routes (no authentication required)
         - id: auth-service
-          uri: lb://AUTHSERVICE
+          uri: https://tayyari-auth-service.onrender.com
           predicates:
             - Path=/auth/**
 #          filters:
@@ -47,7 +47,7 @@ spring:
 
         # Admin service routes (requires ADMIN role)
         - id: question-service
-          uri: lb://QuestionService
+          uri: https://tayyari-dbt8.onrender.com
           predicates:
             - Path=/question/**
           filters:
@@ -59,7 +59,7 @@ spring:
 
         # Quiz service routes (requires User or Admin role)
         - id: quiz-service-admin
-          uri: lb://QuizService
+          uri: https://tayyari-3xqy.onrender.com
           predicates:
               - Path=/quiz/admin/**
           filters:
@@ -70,14 +70,14 @@ spring:
 
         # User service routes (requires USER or ADMIN role)
         - id: quiz-service-public
-          uri: lb://QuizService
+          uri: https://tayyari-3xqy.onrender.com
           predicates:
             - Path=/quiz/public/**
 
 
         # User service routes (requires USER or ADMIN role)
         - id: user-service
-          uri: lb://UserService
+          uri: https://tayyari-qchp.onrender.com
           predicates:
             - Path=/user/**
           filters:
