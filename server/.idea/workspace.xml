@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="7deb94c3-de7a-4ac7-9d5d-cba4549f9c94" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../client/src/app/components/DashboardPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/app/components/DashboardPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/app/components/HomePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/app/components/HomePage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/app/components/LoginPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/app/components/LoginPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/app/components/SignupPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/app/components/SignupPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/contexts/AuthContext.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/contexts/AuthContext.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/lib/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/lib/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AuthService/src/main/java/com/AuthServices/Controller/GoogleAuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/AuthService/src/main/java/com/AuthServices/Controller/GoogleAuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AuthService/src/main/java/com/AuthServices/Controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/AuthService/src/main/java/com/AuthServices/Controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AuthService/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/AuthService/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AuthService/target/classes/AuthServiceApplication.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 7
+}]]></component>
+  <component name="ProjectId" id="32NoWLj0aMeBzfJjC3J9fP3qiSN" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/DELL/Desktop/Projects/Tayyari/server"
+  }
+}]]></component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7deb94c3-de7a-4ac7-9d5d-cba4549f9c94" name="Changes" comment="" />
+      <created>1757270427096</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1757270427096</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="GROUP_MULTIFILE_MERGE_BY_DIRECTORY" value="true" />
+  </component>
+</project>
