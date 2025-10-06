@@ -15,10 +15,12 @@ public class EmailService {
 
     //@Value("${spring.mail.username}")
     private String fromEmail ="pata51522@gmail.com";
+    @Value("${spring.mail.port}")
+    private String port;
 
     public void sendOTPEmail(String toEmail, String otpCode) {
         try {
-            System.out.println("inside try block of sendOtpEmail ");
+            System.out.println("inside try block of sendOtpEmail : with port " +port);
             SimpleMailMessage message = new SimpleMailMessage();
             System.out.println("fromEmail :" + fromEmail);
             message.setFrom(fromEmail);
