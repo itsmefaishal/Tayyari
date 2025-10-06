@@ -34,6 +34,12 @@ public class AuthController {
     JwtUtil jwtUtil;
     @Autowired
     private UserRepo userRepo;
+
+    @GetMapping("/test")
+    public ResponseEntity<String> testPoint(){
+        return ResponseEntity.ok("Auth Service Working !!!");
+    }
+
     @PostMapping("/login")
     public ResponseEntity<?> loginControl(@RequestBody LoginDTO loginDto)
     {
@@ -73,17 +79,17 @@ public class AuthController {
     }
 
 
-    @GetMapping("/test")
-    public String authTest()
-    {
-        return "Authcontroller zinda hai";
-    }
+    // @GetMapping("/test")
+    // public String authTest()
+    // {
+    //     return "Authcontroller zinda hai";
+    // }
 
-     @GetMapping("/user-status")
-	    public Boolean UserStatus()
-	    {
-			System.out.println("inside user status ");
-	        return true;
+    @GetMapping("/user-status")
+	public Boolean UserStatus()
+    {
+		System.out.println("inside user status ");
+        return true;
     }
 
 }

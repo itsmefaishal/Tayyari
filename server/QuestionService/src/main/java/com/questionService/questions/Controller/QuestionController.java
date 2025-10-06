@@ -19,6 +19,11 @@ public class QuestionController {
     @Autowired
     private QuestionService questionService;
 
+    @GetMapping("/test")
+    public ResponseEntity<String> testPoint(){
+        return ResponseEntity.ok("Question Service Working !!!");
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Question> getQuestion(@PathVariable Long id){
         try{

@@ -103,6 +103,7 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
         return path.contains("/auth/") ||
                 path.contains("/login") ||
                 path.contains("/register") ||
+                path.contains("/test") ||
                 path.contains("/public");
     }
 

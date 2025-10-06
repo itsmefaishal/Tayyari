@@ -20,6 +20,11 @@ public class QuizControllerPublic {
     @Autowired
     private QuizService quizService;
 
+    @GetMapping("/test")
+    public ResponseEntity<String> testPoint(){
+        return ResponseEntity.ok("Quiz Service Working !!!");
+    }
+
     @GetMapping("/get/{quizId}")
     public ResponseEntity<QuizWithQuestions> getQuiz(@PathVariable Long quizId){
         System.out.println("inside get_quiz controller");
