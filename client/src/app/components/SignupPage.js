@@ -223,7 +223,7 @@ export default function SignupPage() {
           ) : (
             <>
               <h2 className="text-2xl font-bold text-gray-900">Verify your email</h2>
-              <p className="mt-2 text-gray-600">We"ve sent a 6-digit code to {email}</p>
+              <p className="mt-2 text-gray-600">We&quot;ve sent a 6-digit code to {email}</p>
             </>
           )}
         </div>
