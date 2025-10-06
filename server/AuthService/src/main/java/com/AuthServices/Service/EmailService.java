@@ -12,8 +12,8 @@ public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
 
-    @Value("${spring.mail.username}")
-    private String fromEmail;
+    //@Value("${spring.mail.username}")
+    private String fromEmail ="pata51522@gmail.com";
 
     public void sendOTPEmail(String toEmail, String otpCode) {
         try {
