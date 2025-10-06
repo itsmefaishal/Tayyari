@@ -12,15 +12,15 @@ public class EmailService {
 
     @Autowired
     private JavaMailSender mailSender;
+    @Autowired
+    private EmailServiceBrevo emailServiceBrevo;
 
     //@Value("${spring.mail.username}")
     private String fromEmail ="pata51522@gmail.com";
-    @Value("${spring.mail.port}")
-    private String port;
 
     public void sendOTPEmail(String toEmail, String otpCode) {
-        try {
-            System.out.println("inside try block of sendOtpEmail : with port " +port);
+        /*try {
+            System.out.println("inside try block of sendOtpEmail ");
             SimpleMailMessage message = new SimpleMailMessage();
             System.out.println("fromEmail :" + fromEmail);
             message.setFrom(fromEmail);
@@ -40,7 +40,15 @@ public class EmailService {
         } catch (Exception e) {
 			System.out.println("inside catch block of sendOtpEmail ");
             throw new RuntimeException("Failed to send email: " + e.getMessage());
+        }*/
+        try{
+            emailServiceBrevo.sendEmail(toEmail,"Email Verification - OTP Code",buildOTPEmailBody(otpCode));
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
+
+
     }
 
     private String buildOTPEmailBody(String otpCode) {
