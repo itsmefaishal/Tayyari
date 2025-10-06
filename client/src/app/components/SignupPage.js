@@ -89,7 +89,7 @@ export default function SignupPage() {
 
     try {
       // Call registration API (this should send OTP to email)
-      const response = await fetch('http://localhost:8080/auth/register', {
+      const response = await fetch('https://tayyari-ma4h.onrender.com/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -137,7 +137,7 @@ export default function SignupPage() {
 
     try {
       // Call OTP verification API
-      const response = await fetch('http://localhost:8080/auth/verify-otp', {
+      const response = await fetch('https://tayyari-ma4h.onrender.com/auth/verify-otp', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -174,7 +174,7 @@ export default function SignupPage() {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:8080/auth/resend-otp', {
+      const response = await fetch('https://tayyari-ma4h.onrender.com/auth/resend-otp', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

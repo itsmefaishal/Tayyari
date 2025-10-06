@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 import axios from "axios";
 
-const BASE_URL = 'http://localhost:9090'
+const BASE_URL = 'https://tayyari-ma4h.onrender.com'
 
 const api = axios.create({
     baseURL : BASE_URL
