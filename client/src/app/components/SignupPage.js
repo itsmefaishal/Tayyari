@@ -1,20 +1,20 @@
-'use client';
-import { useState } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+"use client";
+import { useState } from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function SignupPage() {
   const [step, setStep] = useState(1); // 1: Registration Form, 2: OTP Verification
 
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [otp, setOtp] = useState('');
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [agreeToTerms, setAgreeToTerms] = useState(false);
@@ -42,57 +42,57 @@ export default function SignupPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
 
     // Validation
     if (!firstName.trim() || !lastName.trim() || !email || !password || !confirmPassword) {
-      setError('Please fill in all fields');
+      setError("Please fill in all fields");
       setLoading(false);
       return;
     }
 
     if (firstName.trim().length < 2) {
-      setError('First name must be at least 2 characters long');
+      setError("First name must be at least 2 characters long");
       setLoading(false);
       return;
     }
 
     if (lastName.trim().length < 2) {
-      setError('Last name must be at least 2 characters long');
+      setError("Last name must be at least 2 characters long");
       setLoading(false);
       return;
     }
 
     if (!/\S+@\S+\.\S+/.test(email)) {
-      setError('Please enter a valid email address');
+      setError("Please enter a valid email address");
       setLoading(false);
       return;
     }
 
     if (password.length < 6) {
-      setError('Password must be at least 6 characters long');
+      setError("Password must be at least 6 characters long");
       setLoading(false);
       return;
     }
 
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
+      setError("Passwords do not match");
       setLoading(false);
       return;
     }
 
     if (!agreeToTerms) {
-      setError('Please agree to the terms and conditions');
+      setError("Please agree to the terms and conditions");
       setLoading(false);
       return;
     }
 
     try {
       // Call registration API (this should send OTP to email)
-      const response = await fetch('https://tayyari-ma4h.onrender.com/auth/register', {
-        method: 'POST',
+      const response = await fetch("https://tayyari-ma4h.onrender.com/auth/register", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           firstName: firstName,
@@ -105,20 +105,20 @@ export default function SignupPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || 'Registration failed');
+        throw new Error(data.message || "Registration failed");
       }
 
       // If registration successful, move to OTP verification step
       setStep(2);
       startOtpTimer();
-      setError('');
+      setError("");
       
       const res = await signup(firstName, lastName, email, password);
       alert("done");
       console.log(res);
       
     } catch (err) {
-      setError(err.message || 'Registration failed. Please try again.');
+      setError(err.message || "Registration failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -127,20 +127,20 @@ export default function SignupPage() {
   const handleOtpVerification = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
 
     if (!otp || otp.length !== 6) {
-      setError('Please enter a valid 6-digit OTP');
+      setError("Please enter a valid 6-digit OTP");
       setLoading(false);
       return;
     }
 
     try {
       // Call OTP verification API
-      const response = await fetch('https://tayyari-ma4h.onrender.com/auth/verify-otp', {
-        method: 'POST',
+      const response = await fetch("https://tayyari-ma4h.onrender.com/auth/verify-otp", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           email: email,
@@ -152,16 +152,16 @@ export default function SignupPage() {
       console.log(data);
 
       if (!response.ok) {
-        throw new Error(data.message || 'OTP verification failed');
+        throw new Error(data.message || "OTP verification failed");
       }
 
       if (data.success) {
-        router.push('/dashboard');
+        router.push("/dashboard");
       } else {
-        throw new Error('No token received');
+        throw new Error("No token received");
       }
     } catch (err) {
-      setError(err.message || 'OTP verification failed. Please try again.');
+      setError(err.message || "OTP verification failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -171,13 +171,13 @@ export default function SignupPage() {
     if (!canResendOtp) return;
     
     setLoading(true);
-    setError('');
+    setError("");
 
     try {
-      const response = await fetch('https://tayyari-ma4h.onrender.com/auth/resend-otp', {
-        method: 'POST',
+      const response = await fetch("https://tayyari-ma4h.onrender.com/auth/resend-otp", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           email: email,
@@ -187,23 +187,23 @@ export default function SignupPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || 'Failed to resend OTP');
+        throw new Error(data.message || "Failed to resend OTP");
       }
 
       startOtpTimer();
-      setError('');
+      setError("");
       // Show success message briefly
-      setError('OTP sent successfully!');
-      setTimeout(() => setError(''), 3000);
+      setError("OTP sent successfully!");
+      setTimeout(() => setError(""), 3000);
     } catch (err) {
-      setError(err.message || 'Failed to resend OTP. Please try again.');
+      setError(err.message || "Failed to resend OTP. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   const handleOtpInputChange = (e) => {
-    const value = e.target.value.replace(/\D/g, '').slice(0, 6); // Only numbers, max 6 digits
+    const value = e.target.value.replace(/\D/g, "").slice(0, 6); // Only numbers, max 6 digits
     setOtp(value);
   };
 
@@ -223,18 +223,18 @@ export default function SignupPage() {
           ) : (
             <>
               <h2 className="text-2xl font-bold text-gray-900">Verify your email</h2>
-              <p className="mt-2 text-gray-600">We've sent a 6-digit code to {email}</p>
+              <p className="mt-2 text-gray-600">We"ve sent a 6-digit code to {email}</p>
             </>
           )}
         </div>
 
         {/* Progress Indicator */}
         <div className="flex items-center justify-center space-x-4">
-          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${step >= 1 ? 'bg-indigo-600 text-white' : 'bg-gray-300 text-gray-600'}`}>
+          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${step >= 1 ? "bg-indigo-600 text-white" : "bg-gray-300 text-gray-600"}`}>
             1
           </div>
-          <div className={`h-1 w-12 ${step >= 2 ? 'bg-indigo-600' : 'bg-gray-300'}`}></div>
-          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${step >= 2 ? 'bg-indigo-600 text-white' : 'bg-gray-300 text-gray-600'}`}>
+          <div className={`h-1 w-12 ${step >= 2 ? "bg-indigo-600" : "bg-gray-300"}`}></div>
+          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${step >= 2 ? "bg-indigo-600 text-white" : "bg-gray-300 text-gray-600"}`}>
             2
           </div>
         </div>
@@ -337,7 +337,7 @@ export default function SignupPage() {
                   <div className="relative">
                     <input
                       id="password"
-                      type={showPassword ? 'text' : 'password'}
+                      type={showPassword ? "text" : "password"}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-300 text-gray-900 bg-white"
@@ -365,10 +365,10 @@ export default function SignupPage() {
                   {/* Password Strength Indicator */}
                   <div className="mt-2">
                     <div className="flex items-center space-x-1">
-                      <div className={`h-1 w-1/4 rounded ${password.length >= 6 ? 'bg-green-500' : 'bg-gray-300'}`}></div>
-                      <div className={`h-1 w-1/4 rounded ${password.length >= 8 ? 'bg-green-500' : 'bg-gray-300'}`}></div>
-                      <div className={`h-1 w-1/4 rounded ${/[A-Z]/.test(password) ? 'bg-green-500' : 'bg-gray-300'}`}></div>
-                      <div className={`h-1 w-1/4 rounded ${/[0-9]/.test(password) ? 'bg-green-500' : 'bg-gray-300'}`}></div>
+                      <div className={`h-1 w-1/4 rounded ${password.length >= 6 ? "bg-green-500" : "bg-gray-300"}`}></div>
+                      <div className={`h-1 w-1/4 rounded ${password.length >= 8 ? "bg-green-500" : "bg-gray-300"}`}></div>
+                      <div className={`h-1 w-1/4 rounded ${/[A-Z]/.test(password) ? "bg-green-500" : "bg-gray-300"}`}></div>
+                      <div className={`h-1 w-1/4 rounded ${/[0-9]/.test(password) ? "bg-green-500" : "bg-gray-300"}`}></div>
                     </div>
                     <p className="text-xs text-gray-500 mt-1">Password should be at least 6 characters with numbers and uppercase letters</p>
                   </div>
@@ -382,7 +382,7 @@ export default function SignupPage() {
                   <div className="relative">
                     <input
                       id="confirmPassword"
-                      type={showConfirmPassword ? 'text' : 'password'}
+                      type={showConfirmPassword ? "text" : "password"}
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-300 text-gray-900 bg-white"
@@ -439,11 +439,11 @@ export default function SignupPage() {
                     disabled={loading}
                   />
                   <label htmlFor="agreeToTerms" className="ml-2 block text-sm text-gray-700">
-                    I agree to the{' '}
+                    I agree to the{" "}
                     <Link href="/terms" className="text-indigo-600 hover:text-indigo-800">
                       Terms of Service
                     </Link>
-                    {' '}and{' '}
+                    {" "}and{" "}
                     <Link href="/privacy" className="text-indigo-600 hover:text-indigo-800">
                       Privacy Policy
                     </Link>
@@ -465,7 +465,7 @@ export default function SignupPage() {
                       Sending OTP...
                     </>
                   ) : (
-                    'Send Verification Code'
+                    "Send Verification Code"
                   )}
                 </button>
               </form>
@@ -513,10 +513,10 @@ export default function SignupPage() {
             <form onSubmit={handleOtpVerification} className="space-y-6">
               {/* Error/Success Message */}
               {error && (
-                <div className={`border px-4 py-3 rounded-lg ${error.includes('successfully') ? 'bg-green-50 border-green-300 text-green-700' : 'bg-red-50 border-red-300 text-red-700'}`}>
+                <div className={`border px-4 py-3 rounded-lg ${error.includes("successfully") ? "bg-green-50 border-green-300 text-green-700" : "bg-red-50 border-red-300 text-red-700"}`}>
                   <div className="flex items-center">
                     <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                      {error.includes('successfully') ? (
+                      {error.includes("successfully") ? (
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       ) : (
                         <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
@@ -565,7 +565,7 @@ export default function SignupPage() {
                     disabled={loading || !canResendOtp}
                     className="text-sm text-indigo-600 hover:text-indigo-800 disabled:text-gray-400 disabled:cursor-not-allowed"
                   >
-                    Didn't receive the code? Resend
+                    Didn"t receive the code? Resend
                   </button>
                 )}
               </div>
@@ -585,7 +585,7 @@ export default function SignupPage() {
                     Verifying...
                   </>
                 ) : (
-                  'Verify & Create Account'
+                  "Verify & Create Account"
                 )}
               </button>
 
@@ -607,7 +607,7 @@ export default function SignupPage() {
           {step === 1 && (
             <div className="mt-8 text-center">
               <p className="text-sm text-gray-600">
-                Already have an account?{' '}
+                Already have an account?{" "}
                 <Link href="/login" className="font-medium text-indigo-600 hover:text-indigo-800">
                   Sign in here
                 </Link>

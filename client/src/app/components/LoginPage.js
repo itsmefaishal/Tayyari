@@ -1,14 +1,14 @@
-'use client';
-import { useState, useEffect } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+"use client";
+import { useState, useEffect } from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const {login, loginWithGoogle } = useAuth();
@@ -18,16 +18,16 @@ export default function LoginPage() {
   const handleGoogleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
 
     try {
       console.log("initiating google login from loginpage.js");
 
       loginWithGoogle();
-      router.push('/dashboard');
+      router.push("/dashboard");
     } catch (error) {
-      console.error('Error initiating Google OAuth:', error);
-      setError('Failed to initiate Google login. Please try again.');
+      console.error("Error initiating Google OAuth:", error);
+      setError("Failed to initiate Google login. Please try again.");
       setLoading(false);
     }
   };
@@ -35,17 +35,17 @@ export default function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
 
     // Basic validation
     if (!email || !password) {
-      setError('Please fill in all fields');
+      setError("Please fill in all fields");
       setLoading(false);
       return;
     }
 
     if (!/\S+@\S+\.\S+/.test(email)) {
-      setError('Please enter a valid email address');
+      setError("Please enter a valid email address");
       setLoading(false);
       return;
     }
@@ -54,15 +54,15 @@ export default function LoginPage() {
       const response = await login(email, password);
       
       // Safe localStorage usage
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('name', response.name);
+      if (typeof window !== "undefined") {
+        localStorage.setItem("name", response.name);
       }
       
       console.log(response);
       alert(response);
-      router.push('/dashboard');
+      router.push("/dashboard");
     } catch (err) {
-      setError(err.message || 'Login failed. Please try again.');
+      setError(err.message || "Login failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -127,7 +127,7 @@ export default function LoginPage() {
               <div className="relative">
                 <input
                   id="password"
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full text-gray-900 bg-white px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-300"
@@ -187,7 +187,7 @@ export default function LoginPage() {
                   Signing in...
                 </>
               ) : (
-                'Sign In'
+                "Sign In"
               )}
             </button>
           </form>
@@ -241,7 +241,7 @@ export default function LoginPage() {
           {/* Sign Up Link */}
           <div className="mt-8 text-center">
             <p className="text-sm text-gray-600">
-              Don't have an account?{' '}
+              Don&apos;t have an account?{" "}
               <Link href="/signup" className="font-medium text-indigo-600 hover:text-indigo-800">
                 Sign up here
               </Link>
