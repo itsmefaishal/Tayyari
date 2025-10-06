@@ -223,7 +223,7 @@ export default function SignupPage() {
           ) : (
             <>
               <h2 className="text-2xl font-bold text-gray-900">Verify your email</h2>
-              <p className="mt-2 text-gray-600">We&quot;ve sent a 6-digit code to {email}</p>
+              <p className="mt-2 text-gray-600">We&apos;ve sent a 6-digit code to {email}</p>
             </>
           )}
         </div>
@@ -565,7 +565,7 @@ export default function SignupPage() {
                     disabled={loading || !canResendOtp}
                     className="text-sm text-indigo-600 hover:text-indigo-800 disabled:text-gray-400 disabled:cursor-not-allowed"
                   >
-                    Didn"t receive the code? Resend
+                    Didn&apos;t receive the code? Resend
                   </button>
                 )}
               </div>
