@@ -35,7 +35,9 @@ public class OTPService {
 
         // Send email
         try {
+            System.out.println("email :"+email +"  otp : " +otpCode);
             emailService.sendOTPEmail(email, otpCode);
+            System.out.println("after Sending Otp------------");
         } catch (Exception e) {
             throw new RuntimeException("Failed to send OTP ");
         }

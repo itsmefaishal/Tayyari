@@ -2,6 +2,7 @@ package com.AuthServices.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -17,14 +18,25 @@ public class EmailService {
 
     public void sendOTPEmail(String toEmail, String otpCode) {
         try {
+            System.out.println("inside try block of sendOtpEmail ");
             SimpleMailMessage message = new SimpleMailMessage();
+            System.out.println("fromEmail :" + fromEmail);
             message.setFrom(fromEmail);
+            System.out.println("toEmaill " +toEmail);
             message.setTo(toEmail);
             message.setSubject("Email Verification - OTP Code");
             message.setText(buildOTPEmailBody(otpCode));
 
-            mailSender.send(message);
+            try {
+                mailSender.send(message);
+            } catch (MailException e) {
+                e.printStackTrace();
+                System.out.println("inside catch block of mail sender");
+                throw new RuntimeException(e);
+
+            }
         } catch (Exception e) {
+			System.out.println("inside catch block of sendOtpEmail ");
             throw new RuntimeException("Failed to send email: " + e.getMessage());
         }
     }
