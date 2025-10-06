@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/")
@@ -18,13 +18,13 @@ public class DashboardController {
     @Autowired
     private DashboardService dashboardService;
 
-    @GetMapping("/test")
+    @GetMapping("test")
     public ResponseEntity<String> testPoint(){
         return ResponseEntity.ok("User Service Working !!!");
     }
 
     @GetMapping("user-dashboard")
-    public ApiResponse<DashboardResponseDto> loadDashboardForUser(Long userId)
+    public ApiResponse<DashboardResponseDto> loadDashboardForUser(@RequestParam Long userId)
     {
         logger.info("Entering into DashboardController loadDashboardForUser method with user id: {} :",userId);
 
