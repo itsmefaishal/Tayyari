@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/")
 public class ServiceReg {
     
-    @GetMapping("/test")
+    @GetMapping("test")
     public ResponseEntity<String> test(){
         return ResponseEntity.ok("Service registry UPPPPPPP!!!!");
     }
