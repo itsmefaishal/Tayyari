@@ -32,7 +32,9 @@ spring:
         add-to-simple-url-handler-mapping: true
         corsConfigurations:
           '[/**]':
-            allowedOrigins: "https://tayyari-git-master-itsmefaishals-projects.vercel.app"
+            allowedOrigins: 
+              - "https://tayyari-git-master-itsmefaishals-projects.vercel.app"
+              - "https://tayyari-rho.vercel.app"
             allowedHeaders: "*"
             allowedMethods: "*"
             allowCredentials: true
