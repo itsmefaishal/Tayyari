@@ -137,7 +137,9 @@ export const authService = {
     }
     ,
     isAuthenticated(){
-        return Cookies.get('token')
+        console.log(Cookies.get('token') + "form auth.js isAuthenticated");
+        
+        return Cookies.get('token');
     }
     ,
     async getCurrentUser(token) {
@@ -145,7 +147,9 @@ export const authService = {
             const response = await api.get(`/auth/me?token=${token}`);
             return response.data;
         } catch (err) {
-            throw new Error(err.response?.data?.message || "Failed to get user data");
+            console.log(err);
+            
+            throw new Error("Failed to get user data");
         }
     },
     getCurrentUserFromStorage() {
