@@ -56,6 +56,7 @@ export default function LoginPage() {
       // Safe localStorage usage
       if (typeof window !== "undefined") {
         localStorage.setItem("name", response.name);
+        localStorage.setItem("token", response.jwt);
       }
       
       console.log(response);

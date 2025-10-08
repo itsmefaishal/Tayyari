@@ -7,23 +7,10 @@ import Cookies from 'js-cookie';
 import Navbar from '@/comps/Navbar';
 
 export default function HomePage() {
-  const { user, logout, isAuthenticated } = useAuth();
+  const { user, logout } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const router = useRouter();
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      router.push('/login');
-    }
-  },[user, isAuthenticated, router])
-
- const handleLogout = () => {
-    console.log("logout in home");
-    logout();
-    localStorage.clear();
-    Cookies.remove('token');
-    router.push('/');
- }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
@@ -42,19 +29,13 @@ export default function HomePage() {
             Take comprehensive tests, track your progress, and improve your knowledge with our interactive testing platform.
           </p>
           
-          {!user && !isAuthenticated ? (
+          {!user ? (
             <div className="mt-10 flex justify-center space-x-4">
               <Link 
                 href="/signup"
                 className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition duration-300 ease-in-out transform hover:scale-105"
               >
                 Get Started Free
-              </Link>
-              <Link 
-                href="/login"
-                className="bg-white hover:bg-gray-50 text-indigo-600 font-bold py-3 px-8 rounded-lg text-lg border-2 border-indigo-600 transition duration-300 ease-in-out"
-              >
-                Login
               </Link>
             </div>
           ) : (

@@ -10,8 +10,7 @@ export function AuthProvider({children}) {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-
-        const user = authService.getCurrentUser();
+        const user = authService.getToken();
         console.log(user);
         
 

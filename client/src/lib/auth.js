@@ -29,14 +29,14 @@ export const authService = {
         try{
             const response = await api.post('/auth/login',{username, password})
 
-            if(response.data.token){
-                Cookies.set('token', response.data.token, {expires : 7})
+            if(response.data.jwt){
+                Cookies.set('token', response.data.jwt,)
+                localStorage.setItem('token', response.data.jwt)
                 if (response.data.user) {
                     localStorage.setItem('user', JSON.stringify(response.data.user));
                 }
             }
-            
-            console.log(response.data  + "from authjs login");
+
             return response.data
         }
         catch(err){
@@ -136,9 +136,7 @@ export const authService = {
         localStorage.clear();
     }
     ,
-    isAuthenticated(){
-        console.log(Cookies.get('token') + "form auth.js isAuthenticated");
-        
+    isAuthenticated(){        
         return Cookies.get('token');
     }
     ,
