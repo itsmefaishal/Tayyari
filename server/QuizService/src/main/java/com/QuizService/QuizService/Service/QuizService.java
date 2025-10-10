@@ -18,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 @Service
 public class QuizService {
@@ -68,14 +70,16 @@ public class QuizService {
         return "Quiz deleted";
     }
 
-    public List<QuizDTO> getAllQuiz(){
+    public List<QuizDTO> getAllQuiz(int page){
         try{
             logger.info("Inside Quiz service exiting getAllQuiz()");
 
-            List<QuizDTO> list = new ArrayList<>();
-            list.add(getQuiz((long)7L));
+            PageRequest pageable = PageRequest.of(page, 13);
+            Page<Quiz> quizPage = quizRepo.findAll(pageable);
 
-            logger.info("Inside Quiz service -> deleteQuiz() returning List<QuizDTO> : " + list);
+            List<QuizDTO> list = quizPage.stream().map(this::convertToQuizDTO).toList();
+
+            logger.info("Inside Quiz service -> getAllQuiz() returning List<QuizDTO> : " + list);
             return list;
         } catch (RuntimeException e) {
             logger.error( "Inside Quiz service exiting getAllQuiz() with error: " + e);
@@ -254,5 +258,20 @@ public class QuizService {
         logger.info( "Inside Quiz service exiting getQuizBasicInfo() with value QuizBasicInfo: " + quizBasicInfo.toString());
 
         return quizBasicInfo;
+    }
+    private QuizDTO convertToQuizDTO(Quiz q) {
+        QuizDTO quizDTO = new QuizDTO();
+        quizDTO.setId(q.getId());
+        quizDTO.setTitle(q.getTitle());
+        quizDTO.setPrev(q.getPrev());
+        quizDTO.setCategory(q.getCategory());
+        quizDTO.setDescription(q.getDescription());
+        quizDTO.setDuration(q.getDuration());
+        quizDTO.setPassMarks(q.getPassMarks());
+        quizDTO.setSubject(q.getSubject());
+        quizDTO.setTotalMarks(q.getTotalMarks());
+        quizDTO.setQuestionList(q.getQuestionList());
+        quizDTO.setStatus(q.getStatus());
+        return quizDTO;
     }
 }

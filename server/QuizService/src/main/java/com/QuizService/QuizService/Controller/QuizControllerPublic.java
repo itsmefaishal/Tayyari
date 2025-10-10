@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-// @CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/quiz/public")
 public class QuizControllerPublic {
@@ -25,16 +25,16 @@ public class QuizControllerPublic {
         return ResponseEntity.ok("Quiz Service Working !!!");
     }
 
-    @GetMapping("/get")
-    public ResponseEntity<QuizWithQuestions> getQuiz(@RequestParam Long quizId){
+    @GetMapping("/get/{quizId}")
+    public ResponseEntity<QuizWithQuestions> getQuiz(@PathVariable Long quizId){
         System.out.println("inside get_quiz controller");
         return ResponseEntity.status(200).body(quizService.getQuizWithQuestions(quizId));
     }
 
-    @GetMapping("/get/all")
-    public ResponseEntity<List<QuizDTO>> getQuiz(){
+    @GetMapping("/get-multiple-quiz")
+    public ResponseEntity<List<QuizDTO>> getQuiz(@RequestParam int page){
         System.out.println("inside get_quiz all controller");
-        return ResponseEntity.status(200).body(quizService.getAllQuiz());
+        return ResponseEntity.status(200).body(quizService.getAllQuiz(page));
     }
 
 

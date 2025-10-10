@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-// @CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/quiz/admin")
 public class QuizControllerAdmin {
@@ -26,9 +26,9 @@ public class QuizControllerAdmin {
         return ResponseEntity.status(200).body(quizService.getQuizWithQuestions(quizId));
     }
 
-    @GetMapping("/get/all")
-    public ResponseEntity<List<QuizDTO>> getQuiz(){
-        return ResponseEntity.status(200).body(quizService.getAllQuiz());
+    @GetMapping("/get-multiple-quiz")
+    public ResponseEntity<List<QuizDTO>> getQuiz(@RequestParam int page){
+        return ResponseEntity.status(200).body(quizService.getAllQuiz(page));
     }
 
     @GetMapping("/delete/{id}")
