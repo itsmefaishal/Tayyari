@@ -25,8 +25,8 @@ public class QuizControllerPublic {
         return ResponseEntity.ok("Quiz Service Working !!!");
     }
 
-    @GetMapping("/get/{quizId}")
-    public ResponseEntity<QuizWithQuestions> getQuiz(@PathVariable Long quizId){
+    @GetMapping("/get")
+    public ResponseEntity<QuizWithQuestions> getQuiz(@RequestParam Long quizId){
         System.out.println("inside get_quiz controller");
         return ResponseEntity.status(200).body(quizService.getQuizWithQuestions(quizId));
     }
