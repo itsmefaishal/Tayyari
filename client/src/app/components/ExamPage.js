@@ -17,7 +17,7 @@ export default function ExamPage() {
     setError(null);
     
     try {
-      const res = await fetch(`http://localhost:8072/quiz/public/get-multiple-quiz?page=${page}`);
+      const res = await fetch(`https://tayyari-ma4h.onrender.com/quiz/public/get-multiple-quiz?page=${page}`);
       
       if (!res.ok) throw new Error('Failed to fetch exams');
 
