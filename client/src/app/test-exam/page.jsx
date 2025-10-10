@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import LiveExamInterface from '@/components/LiveExamInterface';
+import LiveExamInterface from '../components/LiveExamInterface';
 
 export default function DebugExamTest() {
   const [startExam, setStartExam] = useState(false);
