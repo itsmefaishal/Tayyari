@@ -5,50 +5,53 @@ import { useRouter } from 'next/navigation';
 export default function LiveExamInterface({ examData }) {
   const router = useRouter();
   
+  console.log('LiveExamInterface received examData:', examData);
+  
   // Exam state
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState({});
   const [markedForReview, setMarkedForReview] = useState(new Set());
   const [visited, setVisited] = useState(new Set([0]));
-  const [timeRemaining, setTimeRemaining] = useState(examData.duration * 60); // Convert minutes to seconds
+  const [timeRemaining, setTimeRemaining] = useState(examData?.duration ? examData.duration * 60 : 180 * 60); // Convert minutes to seconds
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
   const [warningCount, setWarningCount] = useState(0);
   const [showSubmitConfirm, setShowSubmitConfirm] = useState(false);
   const [isExamStarted, setIsExamStarted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
   
   const examContainerRef = useRef(null);
+  const startTime = useRef(null);
 
-  // Sample exam data structure
-  const sampleExamData = examData || {
-    title: "JEE Main 2024 Mock Test",
-    duration: 180, // minutes
-    totalMarks: 300,
-    sections: [
-      {
-        name: "Physics",
-        questions: [
+  // Sample exam data structure - ONLY used as fallback
+  const sampleExamData = examData && examData.sections && examData.sections.length > 0 
+    ? examData 
+    : {
+        title: "JEE Main 2024 Mock Test",
+        duration: 180,
+        totalMarks: 300,
+        sections: [
           {
-            id: 1,
-            text: "A particle moves in a circle of radius 5 cm with constant speed and time period 0.2π sec. The acceleration of the particle is:",
-            options: ["25 m/s²", "36 m/s²", "5 m/s²", "15 m/s²"],
-            correctAnswer: 0,
-            marks: 4,
-            negativeMarks: -1
-          },
-          // Add more questions
+            name: "Physics",
+            questions: [
+              {
+                id: 1,
+                text: "A particle moves in a circle of radius 5 cm with constant speed and time period 0.2π sec. The acceleration of the particle is:",
+                options: ["25 m/s²", "36 m/s²", "5 m/s²", "15 m/s²"],
+                correctAnswer: 0,
+                marks: 4,
+                negativeMarks: -1
+              }
+            ]
+          }
         ]
-      },
-      {
-        name: "Chemistry",
-        questions: []
-      },
-      {
-        name: "Mathematics",
-        questions: []
-      }
-    ]
-  };
+      };
+
+  // Flatten all questions from all sections
+  const allQuestions = sampleExamData.sections.flatMap(section => 
+    section.questions.map(q => ({ ...q, section: section.name }))
+  );
 
   // Debug logs
   useEffect(() => {
@@ -56,16 +59,12 @@ export default function LiveExamInterface({ examData }) {
     console.log('Exam Data:', examData);
     console.log('Sample Exam Data:', sampleExamData);
     console.log('All Questions:', allQuestions);
+    console.log('Number of questions:', allQuestions.length);
   }, []);
 
   useEffect(() => {
     console.log('isExamStarted changed:', isExamStarted);
   }, [isExamStarted]);
-
-  // Flatten all questions from all sections
-  const allQuestions = sampleExamData.sections.flatMap(section => 
-    section.questions.map(q => ({ ...q, section: section.name }))
-  );
 
   // Timer effect
   useEffect(() => {
@@ -94,24 +93,40 @@ export default function LiveExamInterface({ examData }) {
 
   // Fullscreen handling
   const enterFullScreen = async () => {
+    console.log('enterFullScreen called');
+    console.log('examContainerRef.current:', examContainerRef.current);
+    
     try {
       if (examContainerRef.current) {
+        console.log('Attempting to enter fullscreen...');
+        
         // Try different fullscreen methods for browser compatibility
         if (examContainerRef.current.requestFullscreen) {
+          console.log('Using requestFullscreen');
           await examContainerRef.current.requestFullscreen();
         } else if (examContainerRef.current.webkitRequestFullscreen) {
+          console.log('Using webkitRequestFullscreen');
           await examContainerRef.current.webkitRequestFullscreen();
         } else if (examContainerRef.current.mozRequestFullScreen) {
+          console.log('Using mozRequestFullScreen');
           await examContainerRef.current.mozRequestFullScreen();
         } else if (examContainerRef.current.msRequestFullscreen) {
+          console.log('Using msRequestFullscreen');
           await examContainerRef.current.msRequestFullscreen();
+        } else {
+          console.log('No fullscreen API available');
         }
+        
+        console.log('Setting isFullScreen and isExamStarted to true');
         setIsFullScreen(true);
         setIsExamStarted(true);
+      } else {
+        console.error('examContainerRef.current is null');
       }
     } catch (err) {
       console.error('Error entering fullscreen:', err);
       // If fullscreen fails, still start the exam (for testing)
+      console.log('Fullscreen failed, starting exam anyway for testing');
       alert('Fullscreen not supported. Starting exam in normal mode for testing.');
       setIsExamStarted(true);
     }
@@ -296,8 +311,8 @@ export default function LiveExamInterface({ examData }) {
               <div className="text-2xl font-bold text-purple-600">{allQuestions.length}</div>
             </div>
             <div className="bg-orange-50 p-4 rounded-lg">
-              <div className="text-sm text-gray-900">Sections</div>
-              <div className="text-2xl font-bold text-gray-700">{sampleExamData.sections.length}</div>
+              <div className="text-sm text-gray-600">Sections</div>
+              <div className="text-2xl font-bold text-orange-600">{sampleExamData.sections.length}</div>
             </div>
           </div>
 
@@ -308,9 +323,9 @@ export default function LiveExamInterface({ examData }) {
             </div>
           )}
 
-          <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6 text-gray-900">
+          <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
             <h3 className="font-bold text-yellow-800 mb-2">⚠️ Important Instructions</h3>
-            <ul className="list-disc list-inside space-y-2 text-sm ">
+            <ul className="list-disc list-inside space-y-2 text-sm text-yellow-900">
               <li>The exam will start in <strong>fullscreen mode</strong> and you cannot exit until submission</li>
               <li>Switching tabs or exiting fullscreen will trigger warnings</li>
               <li>After <strong>3 warnings</strong>, your exam will be auto-submitted</li>
@@ -324,7 +339,7 @@ export default function LiveExamInterface({ examData }) {
 
           <div className="bg-gray-50 p-4 rounded-lg mb-6">
             <h3 className="font-semibold text-gray-900 mb-3">Question Status Guide:</h3>
-            <div className="grid grid-cols-2 gap-3 text-sm text-gray-900">
+            <div className="grid grid-cols-2 gap-3 text-sm">
               <div className="flex items-center">
                 <div className="w-8 h-8 bg-green-500 rounded-full mr-3"></div>
                 <span>Answered</span>
@@ -344,9 +359,14 @@ export default function LiveExamInterface({ examData }) {
             </div>
           </div>
 
-          <div className="flex justify-center">
+          <div className="flex justify-center space-x-4">
             <button
-              onClick={enterFullScreen}
+              onClick={() => {
+                console.log('Start Exam button clicked');
+                console.log('hasQuestions:', hasQuestions);
+                console.log('allQuestions:', allQuestions);
+                enterFullScreen();
+              }}
               disabled={!hasQuestions}
               className={`font-bold py-4 px-8 rounded-lg text-lg transition duration-300 transform ${
                 hasQuestions 
@@ -354,7 +374,23 @@ export default function LiveExamInterface({ examData }) {
                   : 'bg-gray-400 text-gray-200 cursor-not-allowed'
               }`}
             >
-              {hasQuestions ? 'Start Exam' : 'No Questions Available'}
+              {hasQuestions ? 'Start Exam (Fullscreen)' : 'No Questions Available'}
+            </button>
+            
+            {/* Test button without fullscreen */}
+            <button
+              onClick={() => {
+                console.log('Test Mode: Starting exam without fullscreen');
+                setIsExamStarted(true);
+              }}
+              disabled={!hasQuestions}
+              className={`font-bold py-4 px-8 rounded-lg text-lg transition duration-300 ${
+                hasQuestions 
+                  ? 'bg-green-600 hover:bg-green-700 text-white cursor-pointer'
+                  : 'bg-gray-400 text-gray-200 cursor-not-allowed'
+              }`}
+            >
+              Test Mode (No Fullscreen)
             </button>
           </div>
         </div>

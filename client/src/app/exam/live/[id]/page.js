@@ -3,13 +3,11 @@
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import LiveExamInterface from '@/app/components/LiveExamInterface';
-import { useAuth } from '@/contexts/AuthContext';
 
 export default function LiveExamPage() {
   const params = useParams();
   const router = useRouter();
   const examId = params.id;
-  const {user} = useAuth();
   
   const [examData, setExamData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -20,44 +18,35 @@ export default function LiveExamPage() {
       try {
         setLoading(true);
         
-        // Fetch exam details
-        const examRes = await fetch(`http://localhost:8072/quiz/public/get/${examId}`);
+        // Fetch exam details with questions
+        const examRes = await fetch(`https://tayyari-ma4h.onrender.com/quiz/public/get/${examId}`);
         if (!examRes.ok) throw new Error('Failed to fetch exam details');
-        const exam = await examRes.json();
+        const data = await examRes.json();
 
-        console.log('Exam data:', exam);
+        console.log('API Response:', data);
 
-        // Check if exam has question IDs
-        if (!exam.question || exam.question.length === 0) {
+        const quiz = data.quiz;
+        const questions = data.question;
+
+        // Check if quiz has questions
+        if (!questions || questions.length === 0) {
           throw new Error('No questions found for this exam');
         }
-        
 
-        // Fetch questions using POST method with question IDs
-        // const questionsRes = await fetch('http://localhost:8085/question/getMultipleQuestions', {
-        //   method: 'POST',
-        //   headers: {
-        //     'Content-Type': 'application/json',
-        //     // 'Authorization': `Bearer ${user}`,
-        //   },
-        //   body: JSON.stringify(exam.question)
-        // });
-
-        // if (!questionsRes.ok) throw new Error('Failed to fetch questions');
-        const questions = exam.question;
-
+        console.log('Quiz data:', quiz);
         console.log('Questions data:', questions);
 
         // Transform the data to match LiveExamInterface format
         const formattedExamData = {
-          id: exam.quiz.id,
-          title: exam.quiz.title,
-          description: exam.quiz.description,
-          duration: exam.quiz.duration || 180, // minutes
-          totalMarks: exam.quiz.totalMarks || calculateTotalMarks(questions),
-          sections: 1
+          id: quiz.id,
+          title: quiz.title,
+          description: quiz.description,
+          duration: quiz.duration || 180, // minutes
+          totalMarks: quiz.totalMarks || calculateTotalMarks(questions),
+          sections: formatQuestionsBySection(questions, quiz.subject)
         };
 
+        console.log('Formatted Exam Data:', formattedExamData);
         setExamData(formattedExamData);
       } catch (err) {
         console.error('Error fetching exam:', err);
@@ -83,20 +72,31 @@ export default function LiveExamPage() {
     const sectionMap = {};
     
     questions.forEach(q => {
-      const sectionName = q.section || q.subject || 'General';
+      // Handle different possible field names from backend
+      const sectionName = q.section || q.subject || q.category || 'General';
       
       if (!sectionMap[sectionName]) {
         sectionMap[sectionName] = [];
       }
       
+      // Map all possible field name variations
+      const questionText = q.questionText || q.text || q.question || q.questionBody || '';
+      const option1 = q.option1 || q.optionA || q.options?.[0] || '';
+      const option2 = q.option2 || q.optionB || q.options?.[1] || '';
+      const option3 = q.option3 || q.optionC || q.options?.[2] || '';
+      const option4 = q.option4 || q.optionD || q.options?.[3] || '';
+      
+      // Filter out empty options
+      const options = [option1, option2, option3, option4].filter(opt => opt && opt.trim() !== '');
+      
       sectionMap[sectionName].push({
-        id: q.id,
-        text: q.questionText || q.text,
-        options: q.options || [q.option1, q.option2, q.option3, q.option4].filter(Boolean),
-        correctAnswer: q.correctAnswer || 0,
-        marks: q.marks || 4,
-        negativeMarks: q.negativeMarks || -1,
-        image: q.imageUrl || null
+        id: q.id || q.questionId,
+        text: questionText,
+        options: options,
+        correctAnswer: q.correctAnswer !== undefined ? q.correctAnswer : q.correctOption !== undefined ? q.correctOption : 0,
+        marks: q.marks !== undefined ? q.marks : q.marksAwarded !== undefined ? q.marksAwarded : 4,
+        negativeMarks: q.negativeMarks !== undefined ? q.negativeMarks : q.negativeMarking !== undefined ? q.negativeMarking : -1,
+        image: q.imageUrl || q.image || q.questionImage || null
       });
     });
 
