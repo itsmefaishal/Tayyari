@@ -360,3 +360,21 @@
 [12/10/2025, 2:58:06 am] https://tayyari-3xqy.onrender.com/quiz/public/test -> 200
 [12/10/2025, 2:58:07 am] https://tayyari-auth-service.onrender.com/auth/test -> 200
 [12/10/2025, 2:58:16 am] https://tayyari-qchp.onrender.com/test -> 200
+[12/10/2025, 3:02:44 am] === Pinging all services ===
+[12/10/2025, 3:02:44 am] https://tayyari-qchp.onrender.com/test -> 200
+[12/10/2025, 3:02:44 am] https://tayyari-ma4h.onrender.com/test -> 200
+[12/10/2025, 3:02:44 am] https://tayyari-auth-service.onrender.com/auth/test -> 200
+[12/10/2025, 3:02:44 am] https://tayyari-3xqy.onrender.com/quiz/public/test -> 200
+[12/10/2025, 3:02:44 am] https://tayyari-93rl.onrender.com/test -> 200
+[12/10/2025, 3:04:06 am] https://tayyari-dbt8.onrender.com/question/test -> 200
+[12/10/2025, 3:04:06 am] 6 services started successfully 
+0 services failed to start
+[12/10/2025, 3:08:06 am] === Pinging all services ===
+[12/10/2025, 3:08:06 am] https://tayyari-qchp.onrender.com/test -> 200
+[12/10/2025, 3:08:06 am] https://tayyari-ma4h.onrender.com/test -> 200
+[12/10/2025, 3:08:06 am] https://tayyari-auth-service.onrender.com/auth/test -> 200
+[12/10/2025, 3:08:06 am] https://tayyari-dbt8.onrender.com/question/test -> 200
+[12/10/2025, 3:08:06 am] https://tayyari-93rl.onrender.com/test -> 200
+[12/10/2025, 3:08:07 am] https://tayyari-3xqy.onrender.com/quiz/public/test -> 200
+[12/10/2025, 3:08:07 am] 6 services started successfully 
+0 services failed to start

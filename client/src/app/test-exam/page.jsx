@@ -136,8 +136,8 @@ export default function DebugExamTest() {
         </div>
 
         <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
-          <h3 className="font-semibold text-yellow-900 mb-2">⚠️ Testing Instructions:</h3>
-          <ul className="text-sm text-yellow-800 space-y-1">
+          <h3 className="font-semibold text-gray-800 mb-2">⚠️ Testing Instructions:</h3>
+          <ul className="text-sm text-gray-800 space-y-1">
             <li>1. Click "Start Test Exam" below</li>
             <li>2. Check browser console for debug logs</li>
             <li>3. Try clicking "Start Exam" button</li>

@@ -325,7 +325,7 @@ export default function LiveExamInterface({ examData }) {
 
           <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
             <h3 className="font-bold text-yellow-800 mb-2">⚠️ Important Instructions</h3>
-            <ul className="list-disc list-inside space-y-2 text-sm text-yellow-900">
+            <ul className="list-disc list-inside space-y-2 text-sm text-gray-800">
               <li>The exam will start in <strong>fullscreen mode</strong> and you cannot exit until submission</li>
               <li>Switching tabs or exiting fullscreen will trigger warnings</li>
               <li>After <strong>3 warnings</strong>, your exam will be auto-submitted</li>
@@ -560,7 +560,7 @@ export default function LiveExamInterface({ examData }) {
               </div>
               <div className="flex justify-between items-center">
                 <div className="flex items-center">
-                  <div className="w-4 h-4 bg-purple-500 rounded-full mr-2"></div>
+                  <div className="w-4 h-4 bg-purple-500 rounded-full mr-2 "></div>
                   <span>Marked</span>
                 </div>
                 <span className="font-semibold">{stats.marked}</span>
