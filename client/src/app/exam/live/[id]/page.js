@@ -41,9 +41,10 @@ export default function LiveExamPage() {
           id: quiz.id,
           title: quiz.title,
           description: quiz.description,
+          sections: ["JEE"],
           duration: quiz.duration || 180, // minutes
           totalMarks: quiz.totalMarks || calculateTotalMarks(questions),
-          sections: formatQuestionsBySection(questions, quiz.subject)
+          questions: formatQuestionsBySection(questions, quiz.subject)
         };
 
         console.log('Formatted Exam Data:', formattedExamData);
@@ -73,14 +74,14 @@ export default function LiveExamPage() {
     
     questions.forEach(q => {
       // Handle different possible field names from backend
-      const sectionName = q.section || q.subject || q.category || 'General';
+      const sectionName = 'General';
       
       if (!sectionMap[sectionName]) {
         sectionMap[sectionName] = [];
       }
       
       // Map all possible field name variations
-      const questionText = q.questionText || q.text || q.question || q.questionBody || '';
+      const questionText = q.content || q.text || q.question || q.questionBody || '';
       const option1 = q.option1 || q.optionA || q.options?.[0] || '';
       const option2 = q.option2 || q.optionB || q.options?.[1] || '';
       const option3 = q.option3 || q.optionC || q.options?.[2] || '';

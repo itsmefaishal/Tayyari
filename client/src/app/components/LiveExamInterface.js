@@ -25,7 +25,7 @@ export default function LiveExamInterface({ examData }) {
   const startTime = useRef(null);
 
   // Sample exam data structure - ONLY used as fallback
-  const sampleExamData = examData && examData.sections && examData.sections.length > 0 
+  const sampleExamData = examData && examData.questions.length > 0 
     ? examData 
     : {
         title: "JEE Main 2024 Mock Test",
@@ -49,10 +49,12 @@ export default function LiveExamInterface({ examData }) {
       };
 
   // Flatten all questions from all sections
-  const allQuestions = sampleExamData.sections.flatMap(section => 
-    section.questions.map(q => ({ ...q, section: section.name }))
-  );
+  console.log(sampleExamData.sections);
+  
+  const allQuestions = sampleExamData.questions[0].questions;
 
+  console.log(allQuestions);
+  
   // Debug logs
   useEffect(() => {
     console.log('LiveExamInterface mounted');
@@ -82,6 +84,12 @@ export default function LiveExamInterface({ examData }) {
 
     return () => clearInterval(timer);
   }, [isExamStarted]);
+
+useEffect(() => {
+  if (isExamStarted && examContainerRef.current) {
+    enterFullScreen();
+  }
+}, [isExamStarted]);
 
   // Format time
   const formatTime = (seconds) => {
@@ -291,6 +299,11 @@ export default function LiveExamInterface({ examData }) {
   if (!isExamStarted) {
     // Check if exam has questions
     const hasQuestions = allQuestions && allQuestions.length > 0;
+    console.log("printing all questions: ");
+    console.log(allQuestions);
+    console.log(hasQuestions);
+    
+        
     
     return (
       <div className="min-h-screen bg-gray-100 p-8">
@@ -339,7 +352,7 @@ export default function LiveExamInterface({ examData }) {
 
           <div className="bg-gray-50 p-4 rounded-lg mb-6">
             <h3 className="font-semibold text-gray-900 mb-3">Question Status Guide:</h3>
-            <div className="grid grid-cols-2 gap-3 text-sm">
+            <div className="grid grid-cols-2 gap-3 text-sm text-gray-800">
               <div className="flex items-center">
                 <div className="w-8 h-8 bg-green-500 rounded-full mr-3"></div>
                 <span>Answered</span>
@@ -365,7 +378,7 @@ export default function LiveExamInterface({ examData }) {
                 console.log('Start Exam button clicked');
                 console.log('hasQuestions:', hasQuestions);
                 console.log('allQuestions:', allQuestions);
-                enterFullScreen();
+                setIsExamStarted(true);
               }}
               disabled={!hasQuestions}
               className={`font-bold py-4 px-8 rounded-lg text-lg transition duration-300 transform ${
@@ -543,7 +556,7 @@ export default function LiveExamInterface({ examData }) {
           {/* Statistics */}
           <div className="mb-6">
             <h3 className="font-bold text-gray-900 mb-4">Question Status</h3>
-            <div className="space-y-2 text-sm">
+            <div className="space-y-2 text-sm text-gray-900">
               <div className="flex justify-between items-center">
                 <div className="flex items-center">
                   <div className="w-4 h-4 bg-green-500 rounded-full mr-2"></div>
@@ -576,12 +589,12 @@ export default function LiveExamInterface({ examData }) {
           </div>
 
           {/* Question Grid */}
-          {sampleExamData.sections.map((section, sectionIndex) => (
+          {sampleExamData.questions[0].map((questions, sectionIndex) => (
             <div key={sectionIndex} className="mb-6">
               <h4 className="font-semibold text-gray-900 mb-3">{section.name}</h4>
               <div className="grid grid-cols-5 gap-2">
                 {section.questions.map((_, qIndex) => {
-                  const globalIndex = sampleExamData.sections
+                  const globalIndex = sampleExamData.questions[0]
                     .slice(0, sectionIndex)
                     .reduce((sum, s) => sum + s.questions.length, 0) + qIndex;
                   

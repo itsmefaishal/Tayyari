@@ -206,6 +206,8 @@ public class QuizService {
             qDto.setOptionC(q.getOptionThree());
             qDto.setOptionD(q.getOptionFour());
             qDto.setMarks(q.getMarks());
+            qDto.setSubject(q.getSubject());
+            qDto.setNegativeMarks(q.getNegativeMarks());
 
             qDtoList.add(qDto);
         }

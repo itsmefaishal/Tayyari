@@ -10,6 +10,24 @@ public class QuestionDTO {
     private String optionD;
     private String correctAns;
     private double marks;
+    private String subject;
+    private double negativeMarks;
+
+    public double getNegativeMarks() {
+        return negativeMarks;
+    }
+
+    public void setNegativeMarks(double negativeMarks) {
+        this.negativeMarks = negativeMarks;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
 
     public double getMarks() {
         return marks;
@@ -70,8 +88,8 @@ public class QuestionDTO {
     @Override
     public String toString() {
         return "QuestionDTO [content=" + content + ", optionA=" + optionA + ", optionB=" + optionB + ", optionC="
-                + optionC + ", optionD=" + optionD + ", correctAns=" + correctAns + ", marks=" + marks + "]";
+                + optionC + ", optionD=" + optionD + ", correctAns=" + correctAns + ", marks=" + marks + ", subject="
+                + subject + ", negativeMarks=" + negativeMarks + "]";
     }
 
-    
 }

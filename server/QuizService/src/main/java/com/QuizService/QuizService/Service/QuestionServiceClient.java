@@ -40,7 +40,7 @@ public class QuestionServiceClient {
                 new ParameterizedTypeReference<List<Question>>() {}
             );
 
-            logger.info( "Inside Quiz service QuestionServiceClient -> getQuestionList() -> try block returning List<Question>: " + response.getBody().toString());
+            logger.info( "Inside Quiz service QuestionServiceClient -> getQuestionList() -> try block returning List<Question>: " + response.getBody());
             return response.getBody();
         } catch (Exception e) {
             e.printStackTrace();
