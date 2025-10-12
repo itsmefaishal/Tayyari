@@ -24,14 +24,14 @@ public class QuestionServiceClient {
     public List<Question> getQuestionList(List<Long> questionIds){
         logger.info( "Inside Quiz service getQuestionList()");
 
-        // String url = "https://tayyari-dbt8.onrender.com/question/getMultipleQuestions";
-        String url = "http://localhost:8085/question/getMultipleQuestions";
+        String url = "https://tayyari-dbt8.onrender.com/question/getMultipleQuestions";
+        // String url = "http://localhost:8085/question/getMultipleQuestions";
         System.out.println("calling this in https://tayyari-dbt8.onrender.com/question/getMultipleQuestions in getQuestionList");
         QuestionListDTO qList = new QuestionListDTO();
         qList.setIds(questionIds);
 
         try {
-            logger.info( "Inside Quiz service -> getQuestionList() -> try block");
+            logger.info( "Inside Quiz service QuestionServiceClient -> getQuestionList() -> try block");
 
             ResponseEntity<List<Question>> response = restTemplate.exchange(
                 url,
@@ -40,12 +40,12 @@ public class QuestionServiceClient {
                 new ParameterizedTypeReference<List<Question>>() {}
             );
 
-            logger.info( "Inside Quiz service -> getQuestionList() -> try block returning List<Question>: " + response.getBody().toString());
+            logger.info( "Inside Quiz service QuestionServiceClient -> getQuestionList() -> try block returning List<Question>: " + response.getBody().toString());
             return response.getBody();
         } catch (Exception e) {
             e.printStackTrace();
 
-            logger.info( "Inside Quiz service -> getQuestionList() -> catch block");
+            logger.info( "Inside Quiz service -> QuestionServiceClient -> getQuestionList() -> catch block");
 
             throw new RuntimeException();
         }

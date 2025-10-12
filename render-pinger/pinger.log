@@ -378,3 +378,84 @@
 [12/10/2025, 3:08:07 am] https://tayyari-3xqy.onrender.com/quiz/public/test -> 200
 [12/10/2025, 3:08:07 am] 6 services started successfully 
 0 services failed to start
+[12/10/2025, 3:17:35 am] === Pinging all services ===
+[12/10/2025, 3:17:35 am] https://tayyari-dbt8.onrender.com/question/test -> 200
+[12/10/2025, 3:17:35 am] https://tayyari-qchp.onrender.com/test -> 200
+[12/10/2025, 3:17:36 am] https://tayyari-ma4h.onrender.com/test -> 200
+[12/10/2025, 3:17:36 am] https://tayyari-93rl.onrender.com/test -> 200
+[12/10/2025, 3:17:36 am] https://tayyari-3xqy.onrender.com/quiz/public/test -> 200
+[12/10/2025, 3:17:36 am] https://tayyari-auth-service.onrender.com/auth/test -> 200
+[12/10/2025, 3:17:36 am] 6 services started successfully 
+0 services failed to start
+[12/10/2025, 3:18:17 am] === Pinging all services ===
+[12/10/2025, 3:18:17 am] https://tayyari-qchp.onrender.com/test -> 200
+[12/10/2025, 3:18:17 am] https://tayyari-dbt8.onrender.com/question/test -> 200
+[12/10/2025, 3:18:17 am] https://tayyari-ma4h.onrender.com/test -> 200
+[12/10/2025, 3:18:17 am] https://tayyari-93rl.onrender.com/test -> 200
+[12/10/2025, 3:18:17 am] https://tayyari-auth-service.onrender.com/auth/test -> 200
+[12/10/2025, 3:18:18 am] https://tayyari-3xqy.onrender.com/quiz/public/test -> 200
+[12/10/2025, 3:18:18 am] 6 services started successfully 
+0 services failed to start
+[12/10/2025, 3:23:27 am] === Pinging all services ===
+[12/10/2025, 3:23:28 am] https://tayyari-qchp.onrender.com/test -> 200
+[12/10/2025, 3:23:28 am] https://tayyari-dbt8.onrender.com/question/test -> 200
+[12/10/2025, 3:23:28 am] https://tayyari-auth-service.onrender.com/auth/test -> 200
+[12/10/2025, 3:23:28 am] https://tayyari-93rl.onrender.com/test -> 200
+[12/10/2025, 3:23:28 am] https://tayyari-3xqy.onrender.com/quiz/public/test -> 200
+[12/10/2025, 3:23:28 am] https://tayyari-ma4h.onrender.com/test -> 200
+[12/10/2025, 3:23:28 am] 6 services started successfully 
+0 services failed to start
+[12/10/2025, 3:24:05 am] === Pinging all services ===
+[12/10/2025, 3:24:05 am] https://tayyari-dbt8.onrender.com/question/test -> 200
+[12/10/2025, 3:24:05 am] https://tayyari-qchp.onrender.com/test -> 200
+[12/10/2025, 3:24:05 am] https://tayyari-93rl.onrender.com/test -> 200
+[12/10/2025, 3:24:05 am] https://tayyari-ma4h.onrender.com/test -> 200
+[12/10/2025, 3:24:05 am] https://tayyari-3xqy.onrender.com/quiz/public/test -> 200
+[12/10/2025, 3:24:06 am] https://tayyari-auth-service.onrender.com/auth/test -> 200
+[12/10/2025, 3:24:06 am] 6 services started successfully 
+0 services failed to start
+[12/10/2025, 3:26:29 am] === Pinging all services ===
+[12/10/2025, 3:26:30 am] https://tayyari-qchp.onrender.com/test -> 200
+[12/10/2025, 3:26:30 am] https://tayyari-dbt8.onrender.com/question/test -> 200
+[12/10/2025, 3:26:30 am] https://tayyari-93rl.onrender.com/test -> 200
+[12/10/2025, 3:26:30 am] https://tayyari-ma4h.onrender.com/test -> 200
+[12/10/2025, 3:26:30 am] https://tayyari-3xqy.onrender.com/quiz/public/test -> 200
+[12/10/2025, 3:26:30 am] https://tayyari-auth-service.onrender.com/auth/test -> 200
+[12/10/2025, 3:26:30 am] 6 services started successfully 
+0 services failed to start
+[12/10/2025, 3:36:38 am] === Pinging all services ===
+[12/10/2025, 3:36:38 am] https://tayyari-qchp.onrender.com/test -> 200
+[12/10/2025, 3:36:38 am] https://tayyari-dbt8.onrender.com/question/test -> 200
+[12/10/2025, 3:36:39 am] https://tayyari-ma4h.onrender.com/test -> 200
+[12/10/2025, 3:36:39 am] https://tayyari-auth-service.onrender.com/auth/test -> 200
+[12/10/2025, 3:36:39 am] https://tayyari-3xqy.onrender.com/quiz/public/test -> 200
+[12/10/2025, 3:36:39 am] https://tayyari-93rl.onrender.com/test -> 200
+[12/10/2025, 3:36:39 am] 6 services started successfully 
+0 services failed to start
+[12/10/2025, 3:39:27 am] === Pinging all services ===
+[12/10/2025, 3:39:27 am] https://tayyari-qchp.onrender.com/test -> 200
+[12/10/2025, 3:39:27 am] https://tayyari-dbt8.onrender.com/question/test -> 200
+[12/10/2025, 3:39:27 am] https://tayyari-ma4h.onrender.com/test -> 200
+[12/10/2025, 3:39:27 am] https://tayyari-3xqy.onrender.com/quiz/public/test -> 200
+[12/10/2025, 3:39:28 am] https://tayyari-93rl.onrender.com/test -> 200
+[12/10/2025, 3:39:28 am] https://tayyari-auth-service.onrender.com/auth/test -> 200
+[12/10/2025, 3:39:28 am] 6 services started successfully 
+0 services failed to start
+[12/10/2025, 3:00:36 pm] === Pinging all services ===
+[12/10/2025, 3:02:32 pm] https://tayyari-93rl.onrender.com/test -> 200
+[12/10/2025, 3:02:41 pm] https://tayyari-ma4h.onrender.com/test -> 200
+[12/10/2025, 3:02:50 pm] https://tayyari-auth-service.onrender.com/auth/test -> 200
+[12/10/2025, 3:02:51 pm] https://tayyari-dbt8.onrender.com/question/test -> 200
+[12/10/2025, 3:03:00 pm] https://tayyari-3xqy.onrender.com/quiz/public/test -> 200
+[12/10/2025, 3:03:42 pm] https://tayyari-qchp.onrender.com/test -> 200
+[12/10/2025, 3:03:42 pm] 6 services started successfully 
+0 services failed to start
+[12/10/2025, 3:29:28 pm] === Pinging all services ===
+[12/10/2025, 3:29:30 pm] https://tayyari-93rl.onrender.com/test -> 200
+[12/10/2025, 3:31:32 pm] https://tayyari-ma4h.onrender.com/test -> 200
+[12/10/2025, 3:31:51 pm] https://tayyari-3xqy.onrender.com/quiz/public/test -> 200
+[12/10/2025, 3:31:52 pm] https://tayyari-dbt8.onrender.com/question/test -> 200
+[12/10/2025, 3:32:04 pm] https://tayyari-auth-service.onrender.com/auth/test -> 200
+[12/10/2025, 3:32:33 pm] https://tayyari-qchp.onrender.com/test -> 200
+[12/10/2025, 3:32:33 pm] 6 services started successfully 
+0 services failed to start
