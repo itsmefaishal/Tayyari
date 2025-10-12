@@ -30,8 +30,18 @@ export const authService = {
             const response = await api.post('/auth/login',{username, password})
 
             if(response.data.jwt){
-                Cookies.set('token', response.data.jwt,)
-                localStorage.setItem('token', response.data.jwt)
+                Cookies.set('token', response.data.jwt,);
+                localStorage.setItem('token', response.data.jwt);
+
+                const base64Url = response.data.jwt.split('.')[1];
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                const decodedPayload = JSON.parse(atob(base64));
+                const userId = decodedPayload.sub;
+
+                localStorage.setItem('userId', userId);
+                console.log(localStorage.getItem('userId'));
+                
+
                 if (response.data.user) {
                     localStorage.setItem('user', JSON.stringify(response.data.user));
                 }
@@ -46,6 +56,14 @@ export const authService = {
     ,
     async signup(first, last, email, password) {
         const response = await api.post('/auth/register', { first, last, email, password });
+
+        const base64Url = response.data.jwt.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const decodedPayload = JSON.parse(atob(base64));
+        const userId = decodedPayload.sub;
+
+        localStorage.setItem('userId', userId);
+
         if (response.data.token) {
             Cookies.set('token', response.data.token, { expires: 7 });
             if (response.data.user) {

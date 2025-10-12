@@ -18,12 +18,12 @@ export default function LiveExamPage() {
       try {
         setLoading(true);
         
-        // Fetch exam details with questions
+        // Fetch exam details with questions - Returns QuizWithQuestions DTO
         const examRes = await fetch(`https://tayyari-ma4h.onrender.com/quiz/public/get/${examId}`);
         if (!examRes.ok) throw new Error('Failed to fetch exam details');
         const data = await examRes.json();
 
-        console.log('API Response:', data);
+        console.log('API Response (QuizWithQuestions):', data);
 
         const quiz = data.quiz;
         const questions = data.question;
@@ -41,10 +41,11 @@ export default function LiveExamPage() {
           id: quiz.id,
           title: quiz.title,
           description: quiz.description,
-          sections: ["JEE"],
-          duration: quiz.duration || 180, // minutes
-          totalMarks: quiz.totalMarks || calculateTotalMarks(questions),
-          questions: formatQuestionsBySection(questions, quiz.subject)
+          duration: quiz.duration || 60,
+          totalMarks: quiz.totalMarks,
+          passMarks: quiz.passMarks,
+          category: quiz.category,
+          sections: formatQuestionsBySubject(questions, quiz.subject)
         };
 
         console.log('Formatted Exam Data:', formattedExamData);
@@ -68,13 +69,13 @@ export default function LiveExamPage() {
   };
 
   // Helper function to format questions by section
-  const formatQuestionsBySection = (questions) => {
+  const formatQuestionsBySubject = (questions) => {
     // If questions already have sections, group them
     const sectionMap = {};
     
     questions.forEach(q => {
       // Handle different possible field names from backend
-      const sectionName = 'General';
+      const sectionName = q.section || q.subject || q.category || 'General';
       
       if (!sectionMap[sectionName]) {
         sectionMap[sectionName] = [];
