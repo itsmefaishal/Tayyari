@@ -18,7 +18,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.Optional;
 
 @RestController
@@ -62,6 +62,7 @@ public class AuthController {
                 Map<String,String> response= new HashMap<>();
                 response.put("name",user.get().getFirstName()+" "+user.get().getLastName());
                 response.put("jwt",token);
+                response.put("userId", Integer.toString(user.get().getId()));
                 return new ResponseEntity<>(response, HttpStatus.OK);
 
            }

@@ -311,7 +311,7 @@ export default function LiveExamInterface({ examData }) {
 
       // Prepare submission payload matching QuizResponseDTO
       const quizResponseDTO = {
-        userId: 2,
+        userId: userId,
         quizId: sampleExamData.id,
         enrollementId: enrollmentId, // Note: backend uses 'enrollement' not 'enrollment'
         startedAt: startedAt,

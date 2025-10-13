@@ -24,5 +24,6 @@ com\AuthServices\CustomException\CustomAuthenticationEntryPoint.class
 com\AuthServices\Repository\UserRepo.class
 com\AuthServices\Service\JwtAuthenticationFilter.class
 com\AuthServices\Controller\UserController.class
+com\AuthServices\Service\EmailServiceBrevo.class
 com\AuthServices\DTO\RoleDTO.class
 com\AuthServices\Entity\User.class

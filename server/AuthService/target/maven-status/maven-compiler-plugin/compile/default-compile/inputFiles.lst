@@ -20,6 +20,7 @@ C:\Users\DELL\Desktop\Projects\Tayyari_master\Tayyari\server\AuthService\src\mai
 C:\Users\DELL\Desktop\Projects\Tayyari_master\Tayyari\server\AuthService\src\main\java\com\AuthServices\Repository\UserRepo.java
 C:\Users\DELL\Desktop\Projects\Tayyari_master\Tayyari\server\AuthService\src\main\java\com\AuthServices\Response\ApiResponse.java
 C:\Users\DELL\Desktop\Projects\Tayyari_master\Tayyari\server\AuthService\src\main\java\com\AuthServices\Service\EmailService.java
+C:\Users\DELL\Desktop\Projects\Tayyari_master\Tayyari\server\AuthService\src\main\java\com\AuthServices\Service\EmailServiceBrevo.java
 C:\Users\DELL\Desktop\Projects\Tayyari_master\Tayyari\server\AuthService\src\main\java\com\AuthServices\Service\JwtAuthenticationFilter.java
 C:\Users\DELL\Desktop\Projects\Tayyari_master\Tayyari\server\AuthService\src\main\java\com\AuthServices\Service\JwtUtil.java
 C:\Users\DELL\Desktop\Projects\Tayyari_master\Tayyari\server\AuthService\src\main\java\com\AuthServices\Service\MyUserDetailsService.java
