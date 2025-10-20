@@ -8,8 +8,6 @@ import Cookies from 'js-cookie';
 export default function DashboardPage() {
   const { user, logout, loading : authLoading } = useAuth();
   const router = useRouter();
-
-  console.log(user);
   
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [stats, setStats] = useState({
@@ -21,10 +19,10 @@ export default function DashboardPage() {
 
   // Redirect if not logged in
   useEffect(() => {
-    if (!user) {
+    if (!user && !authLoading) {
       router.push('/login');
     }
-  }, [ authLoading, router]);
+  }, [ authLoading, router, user]);
 
   // Mock data for recent tests
   const recentTests = [

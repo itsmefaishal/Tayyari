@@ -8,14 +8,15 @@ const AuthContext = createContext();
 export function AuthProvider({children}) {
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
+    const [dashboard, setDashboard] = useState(null)
 
     useEffect(() => {
         const user = authService.getToken();
         console.log(user);
         
-
         if(user){
             setUser(user)
+            setDashboard(localStorage.getItem('dashboard'))
         }
 
         setLoading(false)
@@ -68,7 +69,7 @@ export function AuthProvider({children}) {
     };
 
     return (
-        <AuthContext.Provider value={{user, login, loading, isAuthenticated, logout, signup, loginWithGoogle, handleGoogleCallback, verifyOTP, resendOTP}}>
+        <AuthContext.Provider value={{dashboard, user, login, loading, isAuthenticated, logout, signup, loginWithGoogle, handleGoogleCallback, verifyOTP, resendOTP}}>
             {children}
         </AuthContext.Provider>
     );

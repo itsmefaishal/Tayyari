@@ -31,14 +31,18 @@ export const authService = {
 
             if(response.data.jwt){
                 Cookies.set('token', response.data.jwt,);
-                localStorage.setItem('token', response.data.jwt);
+                localStorage.setItem('user', response.data.jwt);
                 localStorage.setItem('userId', BigInt(response.data.userId));
+                console.log(localStorage.getItem('userId'));
+                
                 console.log(localStorage.getItem('userId'));
 
                 if (response.data.user) {
                     localStorage.setItem('user', JSON.stringify(response.data.user));
                 }
             }
+
+            await this.loadDashboard(BigInt(response.data.userId));
 
             return response.data
         }
@@ -52,15 +56,25 @@ export const authService = {
         
         if (response.data.token) {
             localStorage.setItem('userId', BigInt(response.data.userId));
-            Cookies.set('token', response.data.token, { expires: 7 });
-            if (response.data.user) {
-                localStorage.setItem('user', JSON.stringify(response.data.user));
-            }
+            localStorage.setItem('user', response.data.jwt);
+            Cookies.set('token', response.data.jwt, { expires: 7 });
         }
         console.log(response.data + "from authjs signup");
+        
         return response.data
+    },
+    async loadDashboard(userId){
+    try {
+      const res = await api.get(`/user-dashboard?userId=${userId}`);
+      if (res.data.success) {
+        setDashboard(res.data.data);
+        console.log(res);
+        localStorage.setItem("dashboard", JSON.stringify(res.data.data));
+      }
+    } catch (err) {
+      console.error("Error loading dashboard:", err);
     }
-    ,
+  },
     initiateGoogleLogin() {
         const params = new URLSearchParams({
             client_id: GOOGLE_OAUTH_CONFIG.clientId,
@@ -165,7 +179,7 @@ export const authService = {
     }
     ,
     getToken(){
-        return Cookies.get('token')
+        return Cookies.get('token') || localStorage.getItem('user');
     }
 }
 

@@ -213,7 +213,7 @@ export default function SignupPage() {
         {/* Header */}
         <div className="text-center">
           <Link href="/" className="inline-block">
-            <h1 className="text-3xl font-bold text-indigo-600 mb-2">TestBook</h1>
+            <h1 className="text-3xl font-bold text-indigo-600 mb-2">Tayyari</h1>
           </Link>
           {step === 1 ? (
             <>
