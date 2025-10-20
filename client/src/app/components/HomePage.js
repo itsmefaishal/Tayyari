@@ -11,11 +11,23 @@ export default function HomePage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const router = useRouter();
 
+  // Handle exam category click
+  const handleExamCategoryClick = (category) => {
+    if (!user) {
+      // Not logged in - redirect to login
+      console.log('User not logged in, redirecting to login');
+      router.push('/login');
+      return;
+    }
+    
+    // Logged in - redirect to exams page with category filter
+    console.log('User logged in, redirecting to exams with category:', category);
+    router.push(`/exams?category=${category.toLowerCase()}`);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       {/* Navigation */}
-
       <Navbar />
 
       {/* Hero Section */}
@@ -70,12 +82,12 @@ export default function HomePage() {
                 <div>• Physics, Chemistry, Mathematics</div>
                 <div>• 150+ Mock Tests Available</div>
               </div>
-              <Link 
-                href="/quiz/jee" 
+              <button 
+                onClick={() => handleExamCategoryClick('JEE')}
                 className="w-full bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium py-2 px-4 rounded-lg transition duration-200 block text-center"
               >
-                Start JEE Preparation
-              </Link>
+                {user ? 'Start JEE Preparation' : 'Start JEE Preparation'}
+              </button>
             </div>
 
             {/* NEET Card */}
@@ -94,12 +106,12 @@ export default function HomePage() {
                 <div>• Biology, Chemistry, Physics</div>
                 <div>• 100+ Mock Tests Available</div>
               </div>
-              <Link 
-                href="/quiz/neet" 
+              <button 
+                onClick={() => handleExamCategoryClick('NEET')}
                 className="w-full bg-green-500 hover:bg-green-600 text-white text-sm font-medium py-2 px-4 rounded-lg transition duration-200 block text-center"
               >
-                Start NEET Preparation
-              </Link>
+                {user ? 'Start NEET Preparation' : 'Start NEET Preparation'}
+              </button>
             </div>
 
             {/* SSC Card */}
@@ -118,12 +130,12 @@ export default function HomePage() {
                 <div>• Reasoning, Quantitative, English, GK</div>
                 <div>• 200+ Mock Tests Available</div>
               </div>
-              <Link 
-                href="/quiz/ssc" 
+              <button 
+                onClick={() => handleExamCategoryClick('SSC')}
                 className="w-full bg-purple-500 hover:bg-purple-600 text-white text-sm font-medium py-2 px-4 rounded-lg transition duration-200 block text-center"
               >
-                Start SSC Preparation
-              </Link>
+                {user ? 'Start SSC Preparation' : 'Start SSC Preparation'}
+              </button>
             </div>
 
             {/* UPSC Card */}
@@ -141,23 +153,21 @@ export default function HomePage() {
               <div className="text-xs text-gray-500 mb-3">
                 <div>• General Studies, Optional Subject</div>
                 <div>• 75+ Mock Tests Available</div>
-                <br/>
-                <br/>
-                <div><b>LAUNCHING SOON...</b></div>
               </div>
-              {/* <Link 
-                href="/exams/upsc" 
+              <button 
+                // onClick={() => handleExamCategoryClick('UPSC')}
                 className="w-full bg-red-500 hover:bg-red-600 text-white text-sm font-medium py-2 px-4 rounded-lg transition duration-200 block text-center"
               >
-                Start UPSC Preparation
-              </Link> */}
+                {/* {user ? 'Start UPSC Preparation' : 'Start UPSC Preparation'} */}
+                Coming soon ...
+              </button>
             </div>
           </div>
         </div>
 
         {/* Features Section */}
         <div className="mt-24">
-          <h3 className="text-2xl font-bold text-center text-gray-900 mb-8">What we offers</h3>
+          <h3 className="text-2xl font-bold text-center text-gray-900 mb-8">What we offer</h3>
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {/* Feature 1 */}
             <div className="bg-white rounded-lg shadow-md p-6 text-center">

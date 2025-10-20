@@ -65,7 +65,7 @@ export default function Navbar() {
                 <Link href="/dashboard" className={linkClass("/dashboard")}>
                   Dashboard
                 </Link>
-                <Link href="/tests" className={linkClass("/tests")}>
+                <Link href="/exams" className={linkClass("/tests")}>
                   My Tests
                 </Link>
                 <button
@@ -149,14 +149,14 @@ export default function Navbar() {
               Exams
             </Link>
             <Link
-              href="/aboutus"
+              href="/about"
               className="block text-gray-700 text-lg font-medium hover:text-indigo-600"
               onClick={() => setMobileMenuOpen(false)}
             >
               About
             </Link>
             <Link
-              href="/contactus"
+              href="/contact"
               className="block text-gray-700 text-lg font-medium hover:text-indigo-600"
               onClick={() => setMobileMenuOpen(false)}
             >
